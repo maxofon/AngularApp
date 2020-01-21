@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AngularApp.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,13 @@ namespace AngularApp
         {
             string connectionString = "Server=localhost\\SQLEXPRESS;Database=ProductShop;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
+
+            // установка конфигурации подключения
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
         }
@@ -41,6 +49,10 @@ namespace AngularApp
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseAuthentication();    // аутентификация
+            app.UseAuthorization();     // авторизация
+
             app.UseMvc();
         }
     }
