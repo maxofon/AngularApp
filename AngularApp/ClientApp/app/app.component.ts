@@ -18,11 +18,13 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.loadProducts();    // загрузка данных при старте компонента  
     }
+
     // получаем данные через сервис
     loadProducts() {
         this.dataService.getProducts()
             .subscribe((data: Product[]) => this.products = data);
     }
+
     // сохранение данных
     save() {
         if (this.product.id == null) {
@@ -34,17 +36,21 @@ export class AppComponent implements OnInit {
         }
         this.cancel();
     }
+
     editProduct(p: Product) {
         this.product = p;
     }
+
     cancel() {
         this.product = new Product();
         this.tableMode = true;
     }
+
     delete(p: Product) {
         this.dataService.deleteProduct(p.id)
             .subscribe(data => this.loadProducts());
     }
+
     add() {
         this.cancel();
         this.tableMode = false;
