@@ -22,7 +22,7 @@ namespace AngularApp
             string connectionString = "Server=localhost\\SQLEXPRESS;Database=ProductShop;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddMvc();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
