@@ -17,10 +17,12 @@ export class DataService {
     createProduct(product: Product) {
         return this.http.post(this.url, product);
     }
+
     updateProduct(product: Product) {
 
         return this.http.put(this.url + '/' + product.id, product);
     }
+
     deleteProduct(id: number) {
         return this.http.delete(this.url + '/' + id);
     }
