@@ -1,5 +1,8 @@
 ﻿using AngularApp.Models;
+using AngularApp.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +10,17 @@ using System.Threading.Tasks;
 
 namespace AngularApp.Controllers
 {
+    [Route("api/cart")]
     public class CartController : Controller
     {
-        ApplicationContext db;
-        public CartController(ApplicationContext context)
+        private ApplicationContext db;
+        private UserService _userServ;
+        public CartController(ApplicationContext context, UserService userServ)
         {
-            db = context;           
+            db = context;
+            _userServ = userServ;
         }
+
         [HttpGet]
         public IEnumerable<CartLine> Get()
         {
@@ -28,15 +35,39 @@ namespace AngularApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]CartLine cartLine)
+        [Route("{id}")]
+        public IActionResult Post(int id)
         {
-            if (ModelState.IsValid)
+            var product = db.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+                return NotFound("Item is not found.");
+
+            var user = _userServ.GetUser();
+            if (user == null)
+                return BadRequest("User is not authentificated.");           
+
+            var cartLine = db.CartLines.FirstOrDefault(c => c.UserId == user.Id && c.ProductId == product.Id);
+            if (cartLine == null)
             {
-                db.CartLines.Add(cartLine);
+                CartLine newItem = new CartLine
+                {
+                    Quantity = 1,
+                    ProductId = product.Id,
+                    Price = product.Price,
+                    UserId = user.Id
+                };
+
+                db.CartLines.Add(newItem);
+                db.SaveChanges();
+                return Ok(newItem);
+            }
+            else
+            {
+                cartLine.Quantity += 1;
+                db.Update(cartLine);
                 db.SaveChanges();
                 return Ok(cartLine);
-            }
-            return BadRequest(ModelState);
+            }                     
         }
 
         [HttpPut("{id}")]

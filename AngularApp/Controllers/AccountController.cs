@@ -1,8 +1,11 @@
 ﻿using AngularApp.Models;
+using AngularApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +17,22 @@ namespace AngularApp.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        ApplicationContext db;
-        public AccountController(ApplicationContext context)
+        private ApplicationContext db;
+        private UserService _userServ;
+        public AccountController(ApplicationContext context, UserService userServ)
         {
             db = context;
+            _userServ = userServ;
+        }
+
+        [HttpGet]
+        public string GetUser()
+        {
+            var user = _userServ.GetUser();
+            if (user == null)          
+                return "User is not authentificate";
+
+            return user.ToString();
         }
 
         [HttpPost]

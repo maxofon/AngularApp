@@ -1,5 +1,7 @@
 ﻿using AngularApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,12 @@ namespace AngularApp.Controllers
     [Route("api/products")]
     public class ProductController : Controller
     {
-        ApplicationContext db;
+        private ApplicationContext db;
+        
         public ProductController(ApplicationContext context)
         {
-            db = context;
+            db = context;            
+
             if (!db.Products.Any())
             {
                 db.Products.Add(new Product { Name = "iPhone X", Company = "Apple", Price = 79900 });
@@ -21,7 +25,8 @@ namespace AngularApp.Controllers
                 db.Products.Add(new Product { Name = "Pixel 2", Company = "Google", Price = 52900 });
                 db.SaveChanges();
             }
-        }
+        }        
+
         [HttpGet]
         public IEnumerable<Product> Get()
         {
