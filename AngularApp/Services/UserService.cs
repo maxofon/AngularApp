@@ -24,5 +24,10 @@ namespace AngularApp.Services
             var user = db.Users.FirstOrDefault(u => u.Email == userName);
             return user;
         }
+
+        public IRequestCookieCollection GetCookies()
+        {
+            return _servProv.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Request.Cookies;
+        }
     }
 }

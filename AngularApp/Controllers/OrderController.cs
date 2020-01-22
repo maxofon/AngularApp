@@ -32,15 +32,12 @@ namespace AngularApp.Controllers
         {
             User user = _userServ.GetUser();
             if (user == null)
-            {
                 return BadRequest("User is not authentificated.");
-            }
 
             if (!ModelState.IsValid)
-            {                
                 return BadRequest(ModelState);
-            }
 
+            order.OrderTime = DateTime.Now;
             db.Orders.Add(order);
             db.SaveChanges();
             
@@ -58,7 +55,8 @@ namespace AngularApp.Controllers
                     OrderId = order.Id
                 };
 
-                db.OrderLines.Add(orderLine);
+                db.OrderLines.Add(orderLine);                
+                db.CartLines.Remove(item);
                 db.SaveChanges();
             }
             

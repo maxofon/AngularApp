@@ -26,13 +26,23 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
-        public string GetUser()
+        public IActionResult GetUser()
         {
             var user = _userServ.GetUser();
             if (user == null)          
-                return "User is not authentificate";
+                return BadRequest("User is not authentificate");
 
-            return user.ToString();
+            return Ok(user);
+        }
+
+        [HttpGet]
+        public IActionResult GetCookies()
+        {
+            var cookies = _userServ.GetCookies();
+            if (cookies.Count == 0)
+                return BadRequest("Cookies is not assigned");
+
+            return Ok(cookies);
         }
 
         [HttpPost]
