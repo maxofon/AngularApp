@@ -2,15 +2,199 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Angular in ASP.NET Core</title>
-    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Список пользователей</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <app>Загрузка...</app>
+    <h2>Список продуктов</h2>
+    <form name="productForm">
+        <input type="hidden" name="id" value="0" />
+        <div class="form-group col-md-5">
+            <label for="name">Название модели:</label>
+            <input class="form-control" name="name" />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="company">Бренд:</label>
+            <input class="form-control" name="company" type="text" />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="price">Цена:</label>
+            <input class="form-control" name="price" type="number" />
+        </div>
+        <div class="panel-body">
+            <button type="submit" id="submit" class="btn btn-primary">Сохранить</button>
+            <a id="reset" class="btn btn-primary">Сбросить</a>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped  col-md-6">
+        <thead><tr><th>Id</th><th>Название модели</th><th>Бренд</th><th>Цена</th><th></th></tr></thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div>2019 © Metanit.com</div>
+    <script>
+        // Получение всех продуктов
+        async function GetProducts() {
+            // отправляет запрос и получаем ответ
+            const response = await fetch("/api/products", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            // если запрос прошел нормально
+            if (response.ok === true) {
+                // получаем данные
+                const products = await response.json();
+                let rows = document.querySelector("tbody");
+                products.forEach(product => {
+                    // добавляем полученные элементы в таблицу
+                    rows.append(row(product));
+                });
+            }
+        }
+        // Получение одного пользователя
+        async function GetProduct(id) {
+            const response = await fetch("/api/products/" + id, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const product = await response.json();
+                const form = document.forms["productForm"];
+                form.elements["id"].value = product.id;
+                form.elements["name"].value = product.name;
+                form.elements["company"].value = product.company;
+                form.elements["price"].value = product.price;
+            }
+        }
+        // Добавление пользователя
+        async function CreateProduct(productName, productCompany, productPrice) {
 
-    <script src="dist/polyfills.js"></script>
-    <script src="dist/app.js"></script>
+            const response = await fetch("api/products", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: productName,
+                    company: productCompany,
+                    price: parseFloat(productPrice, 10)
+                })
+            });
+            if (response.ok === true) {
+                const product = await response.json();
+                reset();
+                document.querySelector("tbody").append(row(product));
+            }
+        }
+        // Изменение пользователя
+        async function EditProduct(productId, productName, productCompany, productPrice) {
+            const response = await fetch("api/products/"  + productId, {
+                method: "PUT",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: parseInt(productId, 10),
+                    name: productName,
+                    company: productCompany,
+                    price: parseFloat(productPrice, 10)
+                })
+            });
+            if (response.ok === true) {
+                const product = await response.json();
+                reset();
+                document.querySelector("tr[data-rowid='" + product.id + "']").replaceWith(row(product));
+            }
+        }
+        // Удаление пользователя
+        async function DeleteProduct(id) {
+            const response = await fetch("/api/products/" + id, {
+                method: "DELETE",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const product = await response.json();
+                document.querySelector("tr[data-rowid='" + product.id + "']").remove();
+            }
+        }
+
+        // сброс формы
+        function reset() {
+            const form = document.forms["productForm"];
+            form.reset();
+            form.elements["id"].value = 0;
+        }
+        // создание строки для таблицы
+        function row(product) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", product.id);
+
+            const idTd = document.createElement("td");
+            idTd.append(product.id);
+            tr.append(idTd);
+
+            const nameTd = document.createElement("td");
+            nameTd.append(product.name);
+            tr.append(nameTd);
+
+            const companyTd = document.createElement("td");
+            companyTd.append(product.company);
+            tr.append(companyTd);
+
+            const priceTd = document.createElement("td");
+            priceTd.append(product.price);
+            tr.append(priceTd);
+
+            const linksTd = document.createElement("td");
+
+            const editLink = document.createElement("a");
+            editLink.setAttribute("data-id", product.id);
+            editLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            editLink.append("Изменить");
+            editLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                GetProduct(product.id);
+            });
+            linksTd.append(editLink);
+
+            const removeLink = document.createElement("a");
+            removeLink.setAttribute("data-id", product.id);
+            removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            removeLink.append("Удалить");
+            removeLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                DeleteProduct(product.id);
+            });
+
+            linksTd.append(removeLink);
+            tr.appendChild(linksTd);
+
+            return tr;
+        }
+        // сброс значений формы
+        document.getElementById("reset").click(function (e) {
+
+            e.preventDefault();
+            reset();
+        })
+
+        // отправка формы
+        document.forms["productForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            const form = document.forms["productForm"];
+            const id = form.elements["id"].value;
+            const name = form.elements["name"].value;
+            const company = form.elements["company"].value;
+            const price = form.elements["price"].value;
+            if (id == 0)
+                CreateProduct(name, company, price);
+            else
+                EditProduct(id, name, company, price);
+        });
+
+        // загрузка пользователей
+        GetProducts();
+
+    </script>
 </body>
 </html>
