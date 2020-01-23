@@ -4,9 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Список пользователей</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />    
 </head>
 <body>
+    <h6>Здравствуй, <span id="userName">Гость</span> !</h6>
+    <a class="btn" id="loginUser">Залогиниться</a>
     <h2>Список продуктов</h2>
     <form name="productForm">
         <input type="hidden" name="id" value="0" />
@@ -52,7 +54,8 @@
                 });
             }
         }
-        // Получение одного пользователя
+
+        // Получение одного продукта
         async function GetProduct(id) {
             const response = await fetch("/api/products/" + id, {
                 method: "GET",
@@ -67,7 +70,8 @@
                 form.elements["price"].value = product.price;
             }
         }
-        // Добавление пользователя
+
+        // Добавление продукта
         async function CreateProduct(productName, productCompany, productPrice) {
 
             const response = await fetch("api/products", {
@@ -85,9 +89,10 @@
                 document.querySelector("tbody").append(row(product));
             }
         }
-        // Изменение пользователя
+
+        // Изменение продукта
         async function EditProduct(productId, productName, productCompany, productPrice) {
-            const response = await fetch("api/products/"  + productId, {
+            const response = await fetch("api/products/" + productId, {
                 method: "PUT",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -103,7 +108,8 @@
                 document.querySelector("tr[data-rowid='" + product.id + "']").replaceWith(row(product));
             }
         }
-        // Удаление пользователя
+
+        // Удаление продукта
         async function DeleteProduct(id) {
             const response = await fetch("/api/products/" + id, {
                 method: "DELETE",
@@ -115,12 +121,25 @@
             }
         }
 
+        // Добавление продукта в корзину
+        async function AddToCart(id) {
+            const response = await fetch("/api/cart/" + id, {
+                method: "POST",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                //const product = await response.json();
+                //document.querySelector("tr[data-rowid='" + product.id + "']").remove();
+            }
+        }
+
         // сброс формы
         function reset() {
             const form = document.forms["productForm"];
             form.reset();
             form.elements["id"].value = 0;
         }
+
         // создание строки для таблицы
         function row(product) {
 
@@ -145,6 +164,7 @@
 
             const linksTd = document.createElement("td");
 
+            //кнопка "Изменить"
             const editLink = document.createElement("a");
             editLink.setAttribute("data-id", product.id);
             editLink.setAttribute("style", "cursor:pointer;padding:15px;");
@@ -156,6 +176,7 @@
             });
             linksTd.append(editLink);
 
+            //кнопка "Удалить"
             const removeLink = document.createElement("a");
             removeLink.setAttribute("data-id", product.id);
             removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
@@ -165,14 +186,27 @@
                 e.preventDefault();
                 DeleteProduct(product.id);
             });
-
             linksTd.append(removeLink);
+
+            //кнопка "Добавить в корзину"
+            const addToCartLink = document.createElement("a");
+            addToCartLink.setAttribute("data-id", product.id);
+            addToCartLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            addToCartLink.append("Добавить в корзину");
+            addToCartLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                AddToCart(product.id);
+            });
+            linksTd.append(addToCartLink);
+
             tr.appendChild(linksTd);
 
             return tr;
         }
+
         // сброс значений формы
-        document.getElementById("reset").click(function (e) {
+        document.getElementById("reset").addEventListener("click",function (e) {
 
             e.preventDefault();
             reset();
@@ -192,8 +226,53 @@
                 EditProduct(id, name, company, price);
         });
 
-        // загрузка пользователей
+        // загрузка продуктов
         GetProducts();
+
+        async function GetUserName() {
+            const response = await fetch("/api/account/getUser", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const user = await response.json();
+                spanItem = document.getElementById("userName");
+                spanItem.textContent = user.email;
+            }
+        }
+        // получение пользователя
+        GetUserName();
+
+         // Залогинивание пользователя
+        async function Login() {
+            const response = await fetch("api/account/login", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: "maxofon@tut.by",
+                    password: "12345"
+                })
+            });
+            if (response.ok === true) {
+                const user = await response.json();
+                spanItem = document.getElementById("userName");
+                spanItem.textContent = user.email;
+            }
+        }
+
+        document.getElementById("loginUser").addEventListener("click",function (e) {
+            e.preventDefault();                
+            Login();
+            GetUserName();
+        })
+
+        //function LoginUser() {
+            
+            
+        //}
+
+        //LoginUser();
+       
 
     </script>
 </body>

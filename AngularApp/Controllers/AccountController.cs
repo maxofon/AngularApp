@@ -36,6 +36,14 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetFirstUser()
+        {
+            var user = db.Users.FirstOrDefault();
+
+            return Ok(user);
+        }
+
+        [HttpGet]
         public IActionResult GetCookies()
         {
             var cookies = _userServ.GetCookies();
@@ -71,7 +79,7 @@ namespace AngularApp.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    db.Users.Add(new User { Email = model.Email, Password = model.Password });
+                    db.Users.Add(new User { Name = model.Name,Email = model.Email, Password = model.Password });
                     await db.SaveChangesAsync();
 
                     await Authenticate(model.Email); // аутентификация
