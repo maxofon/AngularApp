@@ -30,7 +30,7 @@ namespace AngularApp.Controllers
         {
             var user = _userServ.GetUser();
             if (user == null)          
-                return BadRequest("User is not authentificate");
+                return Unauthorized("User is not authentificated.");
 
             return Ok(user);
         }

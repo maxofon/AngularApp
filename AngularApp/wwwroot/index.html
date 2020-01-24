@@ -9,6 +9,7 @@
 <body>
     <h6>Здравствуй, <span id="userName">Гость</span> !</h6>
     <a class="btn" id="loginUser">Залогиниться</a>
+    <a class="btn" id="logoutUser">Разлогиниться</a>
     <h2>Список продуктов</h2>
     <form name="productForm">
         <input type="hidden" name="id" value="0" />
@@ -234,10 +235,12 @@
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
-            if (response.ok === true) {
-                const user = await response.json();
-                spanItem = document.getElementById("userName");
+            const user = await response.json();
+            spanItem = document.getElementById("userName");
+            if (response.ok === true) {                
                 spanItem.textContent = user.email;
+            } else {
+                spanItem.textContent = "Гость";
             }
         }
         // получение пользователя
@@ -260,20 +263,28 @@
             }
         }
 
+         // Разлогинивание пользователя
+        async function Logout() {
+            const response = await fetch("api/account/logout", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                spanItem = document.getElementById("userName");
+                spanItem.textContent = "Гость";
+            }
+        }
+
         document.getElementById("loginUser").addEventListener("click",function (e) {
             e.preventDefault();                
             Login();
             GetUserName();
         })
 
-        //function LoginUser() {
-            
-            
-        //}
-
-        //LoginUser();
-       
-
+        document.getElementById("logoutUser").addEventListener("click",function (e) {
+            e.preventDefault();                
+            Logout();
+        })     
     </script>
 </body>
 </html>
