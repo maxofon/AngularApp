@@ -2,6 +2,7 @@
 using AngularApp.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace AngularApp.Controllers
         [HttpGet]
         public IEnumerable<CartLine> Get()
         {
-            return db.CartLines.ToList();
+            return db.CartLines.Include(c => c.Product).ToList();
         }
 
         [HttpGet("{id}")]
