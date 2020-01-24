@@ -86,7 +86,7 @@ namespace AngularApp.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            CartLine cartLine = db.CartLines.FirstOrDefault(x => x.Id == id);
+            CartLine cartLine = db.CartLines.Include(c => c.Product).FirstOrDefault(x => x.Id == id);
             if (cartLine != null)
             {
                 db.CartLines.Remove(cartLine);
