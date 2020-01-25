@@ -10,41 +10,45 @@
     <h6>Здравствуй, <span id="userName">Гость</span> !</h6>
     <a class="btn" id="loginUser">Залогиниться</a>
     <a class="btn" id="logoutUser">Разлогиниться</a>
-    <!--<br />--><input id="createNewItemBtn" class="btn-primary" type="button" value="Создать новый продукт"></input>
+    <input id="createNewItemBtn" class="btn-primary" type="button" value="Создать новый продукт"></input>
+    <input id="makeCartVisible" class="btn-success" type="button" value="Показать корзину"></input>
 
-    <h2>Список продуктов</h2>
     <form id="productForm" name="productForm">
         <input type="hidden" name="id" value="0" />
         <div class="form-group col-md-5">
             <label for="name">Название модели:</label>
-            <input class="form-control" name="name" />
+            <input class="form-control" name="name" required/>
         </div>
         <div class="form-group col-md-5">
             <label for="company">Бренд:</label>
-            <input class="form-control" name="company" type="text" />
+            <input class="form-control" name="company" type="text" required/>
         </div>
         <div class="form-group col-md-5">
             <label for="price">Цена:</label>
-            <input class="form-control" name="price" type="number" />
+            <input class="form-control" name="price" type="number" required/>
         </div>
         <div class="panel-body">
             <button type="submit" id="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" id="cancel" class="btn btn-primary">Отмена</button>
             <a id="reset" class="btn btn-primary">Сбросить</a>
+            <!--<a id="cancel" class="btn btn-primary>Отмена</a>-->
         </div>
     </form>
+
     <!--Список продуктов-->
-    <table id="productList" class="table table-condensed table-striped  col-md-6">
+    <h2>Список продуктов</h2>
+    <table id="productList" class="table table-condensed table-striped col-md-6">
         <thead><tr><th>Id</th><th>Название модели</th><th>Бренд</th><th>Цена</th><th></th></tr></thead>
         <tbody>
         </tbody>
     </table>
-    <h2>Корзина</h2>
+
     <!--Корзина-->
-    <table id="cartList" class="table table-condensed table-striped  col-md-6">
+    <h2>Корзина <button id="makeCartInvisible"><small>Скрыть корзину</small></button><button id="makeOrder"><small>Оформить заказ</small></button></h2>
+    <table id="cartList" class="table table-condensed table-striped col-md-6">
         <thead><tr><th>Название модели</th><th>Бренд</th><th>Цена</th><th>Количество</th><th></th></tr></thead>
         <tbody id="cartListBody">
         </tbody>
-
     </table>
     <div>2020 © Reznikov Maxim</div>
     <script>
@@ -193,6 +197,12 @@
             form.elements["id"].value = 0;
         }
 
+        // отмена создания или редактирования продукта на форме
+        function cancel() {
+            reset();
+            productFormVisible(false);
+        }
+
         // создание строки для таблицы
         function row(product) {
 
@@ -222,10 +232,11 @@
             editLink.setAttribute("data-id", product.id);
             editLink.setAttribute("style", "cursor:pointer;padding:15px;");
             editLink.append("Изменить");
+            editLink.setAttribute("class", "text-warning");
             editLink.addEventListener("click", e => {
 
                 e.preventDefault();
-                document.getElementById("productForm").style.display = "block";
+                productFormVisible(true);
                 GetProduct(product.id);
             });
             linksTd.append(editLink);
@@ -234,6 +245,7 @@
             const removeLink = document.createElement("a");
             removeLink.setAttribute("data-id", product.id);
             removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            removeLink.setAttribute("class", "text-danger");
             removeLink.append("Удалить");
             removeLink.addEventListener("click", e => {
 
@@ -245,7 +257,8 @@
             //кнопка "Добавить в корзину"
             const addToCartLink = document.createElement("a");
             addToCartLink.setAttribute("data-id", product.id);
-            addToCartLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            addToCartLink.setAttribute("style", "cursor:pointer;padding:15px;");        
+            addToCartLink.setAttribute("class", "text-primary");
             addToCartLink.append("Добавить в корзину");
             addToCartLink.addEventListener("click", e => {
 
@@ -286,6 +299,7 @@
             //кнопка "Удалить из корзины"
             const removeLink = document.createElement("a");
             removeLink.setAttribute("data-cart-id", cartItem.id);
+            removeLink.setAttribute("class", "text-danger");
             removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
             removeLink.append("Удалить из корзины");
             removeLink.addEventListener("click", e => {
@@ -302,9 +316,14 @@
 
         // сброс значений формы
         document.getElementById("reset").addEventListener("click", function (e) {
-
             e.preventDefault();
             reset();
+        })
+
+        // сброс значений формы
+        document.getElementById("cancel").addEventListener("click", function (e) {
+            e.preventDefault();
+            cancel();
         })
 
         // форма для создания нового продукта
@@ -312,7 +331,7 @@
 
             e.preventDefault();
             reset();
-            document.getElementById("productForm").style.display = "block";
+            productFormVisible(true);
         })
 
         // отправка формы
@@ -328,7 +347,7 @@
             else
                 EditProduct(id, name, company, price);
 
-            document.getElementById("productForm").style.display = "none";
+            productFormVisible(false);
         });
 
         // загрузка продуктов
@@ -393,8 +412,31 @@
             Logout();
         })
 
-        document.getElementById("productForm").style.display = "none";
-                //alert(document.getElementById("logoutUser").style.display);
+        function productFormVisible(isVisible) {
+            var style = isVisible ? "block" : "none";
+            document.getElementById("productForm").style.display = style;
+        }
+
+        function cartListVisible(isVisible) {
+            var visibleStyle = isVisible ? "block" : "none";
+            var cartList = document.getElementById("cartList");
+            cartList.style.display = visibleStyle;
+            //console.log(cartList.previousElementSibling);
+            cartList.previousElementSibling.style.display = visibleStyle; 
+        }
+
+        document.getElementById("makeCartInvisible").addEventListener("click", function (e) {
+            e.preventDefault();
+            cartListVisible(false);
+        })
+
+        document.getElementById("makeCartVisible").addEventListener("click", function (e) {
+            e.preventDefault();
+            cartListVisible(true);
+        })
+
+        productFormVisible(false);
+        //cartListVisible(false);
     </script>
 </body>
 </html>
