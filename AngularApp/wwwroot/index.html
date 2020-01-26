@@ -15,6 +15,7 @@
     <input id="makeCartVisible" class="btn-success" type="button" value="Показать корзину" />
     <input id="makeCartInvisible" class="btn-success" type="button" value="Скрыть корзину" />
 
+    <!--Login form-->
     <form id="loginForm" name="loginForm">
         <div class="form-group col-md-5">
             <label for="email">Введите email:</label>
@@ -30,6 +31,7 @@
         </div>
     </form>
 
+    <!--Create or Update product form-->
     <form id="productForm" name="productForm">
         <input type="hidden" name="id" value="0" />
         <div class="form-group col-md-5">
@@ -46,6 +48,36 @@
         </div>
         <div class="panel-body">
             <button type="submit" id="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" id="cancel" class="btn btn-primary">Отмена</button>
+            <a id="reset" class="btn btn-primary">Сбросить</a>
+        </div>
+    </form>
+
+    <!--Order from-->
+    <form id="orderForm" name="orderForm">
+        <h5>Заполните форму заказа</h5>
+        <div class="form-group col-md-5">
+            <label for="name">Имя:</label>
+            <input class="form-control" name="name" type="text" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="surname">Фамилия:</label>
+            <input class="form-control" name="surname" type="text" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="address">Адрес:</label>
+            <input class="form-control" name="address" type="text" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="phone">Телефон:</label>
+            <input class="form-control" name="phone" type="text" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="email">Email:</label>
+            <input class="form-control" name="email" type="text" required />
+        </div>
+        <div class="panel-body">
+            <button type="submit" id="submit" class="btn btn-primary">Оформить</button>
             <button type="button" id="cancel" class="btn btn-primary">Отмена</button>
             <a id="reset" class="btn btn-primary">Сбросить</a>
         </div>
@@ -424,6 +456,28 @@
             document.getElementById("makeCartInvisible").value = "Скрыть корзину (" + total + " у.е.)";
         }
 
+        async function CreateOrder(name, surname, address, phone, email) {
+             const response = await fetch("api/orders", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                 body: JSON.stringify({
+                     name: name,
+                     surname: surname,
+                     address: address, 
+                     phone: phone,
+                     email: email
+                })
+            });
+            if (response.ok === true) {                
+                elementVisible("orderForm", false);
+                alert("Thank you! You've just created an order.");
+                GetTotalCart();
+                DeleteAllCart();
+                cartVisible(true);
+                cartListVisible(false);
+            }
+        }
+
         function AddSubmitHandlers() {
             // отправка формы логина
             document.forms["loginForm"].addEventListener("submit", e => {
@@ -431,9 +485,6 @@
                 const form = document.forms["loginForm"];
                 const email = form.elements["email"].value;
                 const password = form.elements["password"].value;
-                //console.log(email);
-                //console.log(password);
-                //console.log("asdfasf");
                 Login(email, password);
                 alert("You entered in system as " + email);
                 GetCartItems();
@@ -454,6 +505,20 @@
                     EditProduct(id, name, company, price);
 
                 elementVisible("productForm", false);
+            });
+
+            // отправка формы заказа
+            document.forms["orderForm"].addEventListener("submit", e => {
+                e.preventDefault();
+                const form = document.forms["orderForm"];
+                const name = form.elements["name"].value;
+                const surname = form.elements["surname"].value;
+                const address = form.elements["address"].value;
+                const phone = form.elements["phone"].value;
+                const email = form.elements["email"].value;
+
+                CreateOrder(name, surname, address, phone, email);
+                //elementVisible("orderForm", false);
             });
         }
 
