@@ -23,16 +23,24 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CartLine> Get()
+        public ActionResult<IEnumerable<CartLine>> Get()
         {
-            return db.CartLines.Include(c => c.Product).ToList();
+            var user = _userServ.GetUser();
+            if (user == null)
+                return BadRequest("User is not authentificated.");
+
+            return db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToList();
         }
 
         [HttpGet]
         [Route("getTotal")]
-        public decimal GetTotal()
+        public ActionResult<decimal> GetTotal()
         {
-            return db.CartLines.Sum(c => c.Price * c.Quantity);
+            var user = _userServ.GetUser();
+            if (user == null)
+                return BadRequest("User is not authentificated.");
+
+            return db.CartLines.Where(c => c.UserId == user.Id).Sum(c => c.Price * c.Quantity);
         }
 
         //[HttpGet("{id}")]

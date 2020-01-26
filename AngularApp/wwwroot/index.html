@@ -13,6 +13,7 @@
     <br />
     <input id="createNewItemBtn" class="btn-primary" type="button" value="Создать новый продукт" />
     <input id="makeCartVisible" class="btn-success" type="button" value="Показать корзину" />
+    <input id="makeCartInvisible" class="btn-success" type="button" value="Скрыть корзину" />
 
     <form id="loginForm" name="loginForm">
         <div class="form-group col-md-5">
@@ -59,7 +60,7 @@
     </table>
 
     <!--Корзина-->
-    <h2>Корзина <button id="makeCartInvisible"><small>Скрыть корзину</small></button><button id="makeOrder"><small>Оформить заказ</small></button></h2>
+    <button id="makeOrder"><small>Оформить заказ</small></button></h2>
     <table id="cartList" class="table table-condensed table-striped col-md-6">
         <thead><tr><th>Название модели</th><th>Бренд</th><th>Цена</th><th>Количество</th><th></th></tr></thead>
         <tbody id="cartListBody">
@@ -102,6 +103,13 @@
                     // добавляем полученные элементы в таблицу
                     rows.append(rowCart(cartItem));
                 });
+            }
+        }
+
+        function DeleteAllCart() {
+            const cartTable = document.getElementById("cartListBody");
+            while (cartTable.firstChild) {
+                cartTable.removeChild(cartTable.firstChild);
             }
         }
 
@@ -217,7 +225,7 @@
         // отмена создания или редактирования продукта на форме
         function cancel() {
             reset();
-            elementVisible("productForm",false);
+            elementVisible("productForm", false);
         }
 
         // создание строки для таблицы
@@ -251,7 +259,6 @@
             editLink.append("Изменить");
             editLink.setAttribute("class", "text-warning");
             editLink.addEventListener("click", e => {
-
                 e.preventDefault();
                 productFormVisible(true);
                 GetProduct(product.id);
@@ -278,7 +285,6 @@
             addToCartLink.setAttribute("class", "text-primary");
             addToCartLink.append("Добавить в корзину");
             addToCartLink.addEventListener("click", e => {
-
                 e.preventDefault();
                 AddToCart(product.id);
             });
@@ -331,59 +337,6 @@
             return tr;
         }
 
-        // сброс значений формы
-        document.getElementById("reset").addEventListener("click", function (e) {
-            e.preventDefault();
-            reset();
-        })
-
-        // сброс значений формы
-        document.getElementById("cancel").addEventListener("click", function (e) {
-            e.preventDefault();
-            cancel();
-        })
-
-        // форма для создания нового продукта
-        document.getElementById("createNewItemBtn").addEventListener("click", function (e) {
-
-            e.preventDefault();
-            reset();
-            elementVisible("productForm",true);
-        })
-
-        // отправка формы продукта
-        document.forms["productForm"].addEventListener("submit", e => {
-            e.preventDefault();
-            const form = document.forms["productForm"];
-            const id = form.elements["id"].value;
-            const name = form.elements["name"].value;
-            const company = form.elements["company"].value;
-            const price = form.elements["price"].value;
-            if (id == 0)
-                CreateProduct(name, company, price);
-            else
-                EditProduct(id, name, company, price);
-
-            elementVisible("productForm",false);
-        });
-
-         // отправка формы логина
-        document.forms["loginForm"].addEventListener("submit", e => {
-            e.preventDefault();
-            const form = document.forms["loginForm"];
-            const email = form.elements["email"].value;
-            const password = form.elements["password"].value;     
-            Login(email,password);
-
-            loginVisible(false);
-        });
-
-        // загрузка продуктов
-        GetProducts();
-
-        // загрузка товаров корзины
-        GetCartItems();
-
         async function GetUserName() {
             const response = await fetch("/api/account/getUser", {
                 method: "GET",
@@ -400,9 +353,6 @@
             }
         }
 
-        // получение пользователя
-        GetUserName();
-
         // Залогинивание пользователя
         async function Login(userEmail, userPassword) {
             const response = await fetch("api/account/login", {
@@ -418,6 +368,7 @@
                 spanItem = document.getElementById("userName");
                 spanItem.textContent = user.name;
                 loginVisible(false);
+                elementVisible("loginForm", false);
             }
         }
 
@@ -433,23 +384,15 @@
             }
         }
 
-        document.getElementById("loginUser").addEventListener("click", function (e) {
-            e.preventDefault();
-            Login("maxofon@tut.by","12345");
-            GetUserName();
-            loginVisible(false);
-        })
-
-        document.getElementById("logoutUser").addEventListener("click", function (e) {
-            e.preventDefault();
-            Logout();
-            loginVisible(true);
-        })
-
         function loginVisible(isLoginVisible) {
             makeInputButtonOrHidden("loginUser", isLoginVisible);
             makeInputButtonOrHidden("logoutUser", !isLoginVisible);
-        }       
+        }
+
+        function cartVisible(isCartVisible) {
+            makeInputButtonOrHidden("makeCartVisible", isCartVisible);
+            makeInputButtonOrHidden("makeCartInvisible", !isCartVisible);
+        }
 
         function elementVisible(elementName, isVisible) {
             var style = isVisible ? "block" : "none";
@@ -468,30 +411,136 @@
             cartList.previousElementSibling.style.display = visibleStyle;
         }
 
-        document.getElementById("makeCartInvisible").addEventListener("click", function (e) {
-            e.preventDefault();
-            cartListVisible(false);
-        })
-
         async function GetTotalCart() {
             const response = await fetch("/api/cart/getTotal", {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
+            var total = 0;
             if (response.ok === true) {
-                const total = await response.json();
-                document.getElementById("makeCartVisible").value = "Показать корзину (" + total + " у.е.)";
+                total = await response.json();
             }
+            document.getElementById("makeCartVisible").value = "Показать корзину (" + total + " у.е.)";
+            document.getElementById("makeCartInvisible").value = "Скрыть корзину (" + total + " у.е.)";
         }
 
-        GetTotalCart();
+        function AddSubmitHandlers() {
+            // отправка формы логина
+            document.forms["loginForm"].addEventListener("submit", e => {
+                e.preventDefault();
+                const form = document.forms["loginForm"];
+                const email = form.elements["email"].value;
+                const password = form.elements["password"].value;
+                //console.log(email);
+                //console.log(password);
+                //console.log("asdfasf");
+                Login(email, password);
+                alert("You entered in system as " + email);
+                GetCartItems();
+                GetTotalCart();
+            });
 
-        document.getElementById("makeCartVisible").addEventListener("click", function (e) {
-            e.preventDefault();
-            cartListVisible(true);
-        })
+            // отправка формы продукта
+            document.forms["productForm"].addEventListener("submit", e => {
+                e.preventDefault();
+                const form = document.forms["productForm"];
+                const id = form.elements["id"].value;
+                const name = form.elements["name"].value;
+                const company = form.elements["company"].value;
+                const price = form.elements["price"].value;
+                if (id == 0)
+                    CreateProduct(name, company, price);
+                else
+                    EditProduct(id, name, company, price);
 
-        elementVisible("productForm", false);
+                elementVisible("productForm", false);
+            });
+        }
+
+        function AddClickHandlers() {
+            // кнопка сброс значений формы
+            document.getElementById("reset").addEventListener("click", function (e) {
+                e.preventDefault();
+                reset();
+            })
+
+            // кнопка сброс значений формы
+            document.getElementById("cancel").addEventListener("click", function (e) {
+                e.preventDefault();
+                cancel();
+            })
+
+            // форма для создания нового продукта
+            document.getElementById("createNewItemBtn").addEventListener("click", function (e) {
+                e.preventDefault();
+                reset();
+                elementVisible("productForm", true);
+            })
+
+            //кнопка Войти
+            document.getElementById("loginUser").addEventListener("click", function (e) {
+                e.preventDefault();
+                elementVisible("loginForm", true);
+            })
+
+            //кнопка Выйти
+            document.getElementById("logoutUser").addEventListener("click", function (e) {
+                e.preventDefault();
+                Logout();
+                loginVisible(true);
+                alert("You exited from system.");
+                GetTotalCart();
+                DeleteAllCart();
+            })
+
+            //кнопка Отмена логина
+            document.getElementById("cancelLogin").addEventListener("click", function (e) {
+                e.preventDefault();
+                document.getElementById("loginForm").reset();
+                elementVisible("loginForm", false);
+            })
+
+            //кнопка Скрыть корзину
+            document.getElementById("makeCartInvisible").addEventListener("click", function (e) {
+                e.preventDefault();
+                cartVisible(true);
+                cartListVisible(false);
+            })
+
+            //кнопка Показать корзину
+            document.getElementById("makeCartVisible").addEventListener("click", function (e) {
+                e.preventDefault();
+                cartVisible(false);
+                cartListVisible(true);
+            })
+        }
+
+        function Init() {
+            // загрузка продуктов
+            GetProducts();
+
+            // загрузка товаров корзины
+            GetCartItems();
+
+            // получение пользователя
+            GetUserName();
+
+            //Получение общей суммы корзины
+            GetTotalCart();
+
+            //Делаем форму создания нового продукта невидимой при загрузке страницы
+            elementVisible("productForm", false);
+            elementVisible("loginForm", false);
+
+            cartListVisible(false);
+            cartVisible(true);
+        }
+
+        AddClickHandlers();
+
+        AddSubmitHandlers();
+
+        Init();
     </script>
 </body>
 </html>
