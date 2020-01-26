@@ -28,6 +28,21 @@ namespace AngularApp.Controllers
             return db.CartLines.Include(c => c.Product).ToList();
         }
 
+        [HttpGet]
+        [Route("getTotal")]
+        public decimal GetTotal()
+        {
+            return db.CartLines.Sum(c => c.Price * c.Quantity);
+        }
+
+        //[HttpGet("{id}")]
+        //[Route("getLineAmount")]                
+        //public decimal GetLineAmount(int id)
+        //{
+        //    var entry =  db.CartLines.FirstOrDefault(x => x.Id == id);
+        //    return entry.Price * entry.Quantity;
+        //}
+
         [HttpGet("{id}")]
         public CartLine Get(int id)
         {

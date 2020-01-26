@@ -8,30 +8,45 @@
 </head>
 <body>
     <h6>Здравствуй, <span id="userName">Гость</span> !</h6>
-    <a class="btn" id="loginUser">Залогиниться</a>
-    <a class="btn" id="logoutUser">Разлогиниться</a>
-    <input id="createNewItemBtn" class="btn-primary" type="button" value="Создать новый продукт"></input>
-    <input id="makeCartVisible" class="btn-success" type="button" value="Показать корзину"></input>
+    <input type="hidden" class="btn-info" id="loginUser" value="Войти" />
+    <input type="hidden" class="btn-info" id="logoutUser" value="Выйти" />
+    <br />
+    <input id="createNewItemBtn" class="btn-primary" type="button" value="Создать новый продукт" />
+    <input id="makeCartVisible" class="btn-success" type="button" value="Показать корзину" />
+
+    <form id="loginForm" name="loginForm">
+        <div class="form-group col-md-5">
+            <label for="email">Введите email:</label>
+            <input class="form-control" name="email" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="password">Введите пароль:</label>
+            <input class="form-control" name="password" type="password" required />
+        </div>
+        <div class="panel-body">
+            <button type="submit" id="submitLogin" class="btn btn-primary">Войти</button>
+            <button type="button" id="cancelLogin" class="btn btn-primary">Отмена</button>
+        </div>
+    </form>
 
     <form id="productForm" name="productForm">
         <input type="hidden" name="id" value="0" />
         <div class="form-group col-md-5">
             <label for="name">Название модели:</label>
-            <input class="form-control" name="name" required/>
+            <input class="form-control" name="name" required />
         </div>
         <div class="form-group col-md-5">
             <label for="company">Бренд:</label>
-            <input class="form-control" name="company" type="text" required/>
+            <input class="form-control" name="company" type="text" required />
         </div>
         <div class="form-group col-md-5">
             <label for="price">Цена:</label>
-            <input class="form-control" name="price" type="number" required/>
+            <input class="form-control" name="price" type="number" required />
         </div>
         <div class="panel-body">
             <button type="submit" id="submit" class="btn btn-primary">Сохранить</button>
             <button type="button" id="cancel" class="btn btn-primary">Отмена</button>
             <a id="reset" class="btn btn-primary">Сбросить</a>
-            <!--<a id="cancel" class="btn btn-primary>Отмена</a>-->
         </div>
     </form>
 
@@ -165,6 +180,7 @@
             if (response.ok === true) {
                 const cartItem = await response.json();
                 document.querySelector("tr[data-cart-rowid='" + cartItem.product.id + "']").remove();
+                GetTotalCart();
             }
         }
 
@@ -184,9 +200,10 @@
                 if (cartItem.quantity > 1) {
                     document.querySelector("tr[data-cart-rowid='" + id + "']").replaceWith(rowCart(cartItem));
                 } else {
-                    //console.log(cartItem);
                     document.getElementById("cartListBody").appendChild(rowCart(cartItem));
                 }
+
+                GetTotalCart();
             }
         }
 
@@ -200,7 +217,7 @@
         // отмена создания или редактирования продукта на форме
         function cancel() {
             reset();
-            productFormVisible(false);
+            elementVisible("productForm",false);
         }
 
         // создание строки для таблицы
@@ -257,7 +274,7 @@
             //кнопка "Добавить в корзину"
             const addToCartLink = document.createElement("a");
             addToCartLink.setAttribute("data-id", product.id);
-            addToCartLink.setAttribute("style", "cursor:pointer;padding:15px;");        
+            addToCartLink.setAttribute("style", "cursor:pointer;padding:15px;");
             addToCartLink.setAttribute("class", "text-primary");
             addToCartLink.append("Добавить в корзину");
             addToCartLink.addEventListener("click", e => {
@@ -331,10 +348,10 @@
 
             e.preventDefault();
             reset();
-            productFormVisible(true);
+            elementVisible("productForm",true);
         })
 
-        // отправка формы
+        // отправка формы продукта
         document.forms["productForm"].addEventListener("submit", e => {
             e.preventDefault();
             const form = document.forms["productForm"];
@@ -347,7 +364,18 @@
             else
                 EditProduct(id, name, company, price);
 
-            productFormVisible(false);
+            elementVisible("productForm",false);
+        });
+
+         // отправка формы логина
+        document.forms["loginForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            const form = document.forms["loginForm"];
+            const email = form.elements["email"].value;
+            const password = form.elements["password"].value;     
+            Login(email,password);
+
+            loginVisible(false);
         });
 
         // загрузка продуктов
@@ -364,28 +392,32 @@
             const user = await response.json();
             spanItem = document.getElementById("userName");
             if (response.ok === true) {
-                spanItem.textContent = user.email;
+                spanItem.textContent = user.name;
+                loginVisible(false);
             } else {
                 spanItem.textContent = "Гость";
+                loginVisible(true);
             }
         }
+
         // получение пользователя
         GetUserName();
 
         // Залогинивание пользователя
-        async function Login() {
+        async function Login(userEmail, userPassword) {
             const response = await fetch("api/account/login", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: "maxofon@tut.by",
-                    password: "12345"
+                    email: userEmail,
+                    password: userPassword
                 })
             });
             if (response.ok === true) {
                 const user = await response.json();
                 spanItem = document.getElementById("userName");
-                spanItem.textContent = user.email;
+                spanItem.textContent = user.name;
+                loginVisible(false);
             }
         }
 
@@ -403,26 +435,37 @@
 
         document.getElementById("loginUser").addEventListener("click", function (e) {
             e.preventDefault();
-            Login();
+            Login("maxofon@tut.by","12345");
             GetUserName();
+            loginVisible(false);
         })
 
         document.getElementById("logoutUser").addEventListener("click", function (e) {
             e.preventDefault();
             Logout();
+            loginVisible(true);
         })
 
-        function productFormVisible(isVisible) {
+        function loginVisible(isLoginVisible) {
+            makeInputButtonOrHidden("loginUser", isLoginVisible);
+            makeInputButtonOrHidden("logoutUser", !isLoginVisible);
+        }       
+
+        function elementVisible(elementName, isVisible) {
             var style = isVisible ? "block" : "none";
-            document.getElementById("productForm").style.display = style;
+            document.getElementById(elementName).style.display = style;
+        }
+
+        function makeInputButtonOrHidden(elementId, isButton) {
+            var type = isButton ? "button" : "hidden";
+            document.getElementById(elementId).setAttribute("type", type);
         }
 
         function cartListVisible(isVisible) {
             var visibleStyle = isVisible ? "block" : "none";
             var cartList = document.getElementById("cartList");
             cartList.style.display = visibleStyle;
-            //console.log(cartList.previousElementSibling);
-            cartList.previousElementSibling.style.display = visibleStyle; 
+            cartList.previousElementSibling.style.display = visibleStyle;
         }
 
         document.getElementById("makeCartInvisible").addEventListener("click", function (e) {
@@ -430,13 +473,25 @@
             cartListVisible(false);
         })
 
+        async function GetTotalCart() {
+            const response = await fetch("/api/cart/getTotal", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const total = await response.json();
+                document.getElementById("makeCartVisible").value = "Показать корзину (" + total + " у.е.)";
+            }
+        }
+
+        GetTotalCart();
+
         document.getElementById("makeCartVisible").addEventListener("click", function (e) {
             e.preventDefault();
             cartListVisible(true);
         })
 
-        productFormVisible(false);
-        //cartListVisible(false);
+        elementVisible("productForm", false);
     </script>
 </body>
 </html>
