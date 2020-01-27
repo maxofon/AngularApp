@@ -91,8 +91,7 @@
         </tbody>
     </table>
 
-    <!--Корзина-->
-    <button id="makeOrder"><small>Оформить заказ</small></button></h2>
+    <!--Корзина-->    
     <table id="cartList" class="table table-condensed table-striped col-md-6">
         <thead><tr><th>Название модели</th><th>Бренд</th><th>Цена</th><th>Количество</th><th></th></tr></thead>
         <tbody id="cartListBody">
@@ -443,6 +442,13 @@
             cartList.previousElementSibling.style.display = visibleStyle;
         }
 
+        function productListVisible(isVisible) {
+            var visibleStyle = isVisible ? "block" : "none";
+            var productList = document.getElementById("productList");
+            productList.style.display = visibleStyle;
+            productList.previousElementSibling.style.display = visibleStyle;
+        }
+
         async function GetTotalCart() {
             const response = await fetch("/api/cart/getTotal", {
                 method: "GET",
@@ -518,6 +524,7 @@
                 const email = form.elements["email"].value;
 
                 CreateOrder(name, surname, address, phone, email);
+                productListVisible(true);
                 //elementVisible("orderForm", false);
             });
         }
@@ -570,6 +577,8 @@
                 e.preventDefault();
                 cartVisible(true);
                 cartListVisible(false);
+                productListVisible(true);
+                elementVisible("orderForm",false);
             })
 
             //кнопка Показать корзину
@@ -577,6 +586,8 @@
                 e.preventDefault();
                 cartVisible(false);
                 cartListVisible(true);
+                productListVisible(false);
+                elementVisible("orderForm",true);
             })
         }
 
@@ -599,6 +610,8 @@
 
             cartListVisible(false);
             cartVisible(true);
+            elementVisible("orderForm", false);
+            productListVisible(true);
         }
 
         AddClickHandlers();
