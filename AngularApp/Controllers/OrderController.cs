@@ -37,13 +37,16 @@ namespace AngularApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            order.OrderTime = DateTime.Now;
-            db.Orders.Add(order);
-            db.SaveChanges();
-            
             List<CartLine> cartLines = db.CartLines.Where(c => c.UserId == user.Id).ToList();
             if (cartLines.Count == 0)
                 return BadRequest("Cart is empty.");
+
+            order.OrderTime = DateTime.Now;
+            order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
+            db.Orders.Add(order);
+            db.SaveChanges();
+            
+            
 
             foreach(var item in cartLines)
             {

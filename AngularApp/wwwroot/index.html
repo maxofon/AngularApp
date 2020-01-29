@@ -9,6 +9,7 @@
 <body>
     <h6>Здравствуй, <span id="userName">Гость</span> !</h6>
     <input type="hidden" class="btn-info" id="loginUser" value="Войти" />
+    <input type="hidden" class="btn-info" id="registerUser" value="Зарегистрироваться" />
     <input type="hidden" class="btn-info" id="logoutUser" value="Выйти" />
     <br />
     <input id="createNewItemBtn" class="btn-primary" type="button" value="Создать новый продукт" />
@@ -17,6 +18,7 @@
 
     <!--Login form-->
     <form id="loginForm" name="loginForm">
+        <h3>Форма логина пользователя</h3>
         <div class="form-group col-md-5">
             <label for="email">Введите email:</label>
             <input class="form-control" name="email" required />
@@ -28,6 +30,31 @@
         <div class="panel-body">
             <button type="submit" id="submitLogin" class="btn btn-primary">Войти</button>
             <button type="button" id="cancelLogin" class="btn btn-primary">Отмена</button>
+        </div>
+    </form>
+
+    <!--Register form-->
+    <form id="registerForm" name="registerForm">
+        <h3>Форма регистрации пользователя</h3>
+        <div class="form-group col-md-5">
+            <label for="name">Введите имя:</label>
+            <input class="form-control" name="name" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="email">Введите email:</label>
+            <input class="form-control" name="email" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="password">Введите пароль:</label>
+            <input class="form-control" name="password" type="password" required />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="confirmPassword">Подтвердите пароль:</label>
+            <input class="form-control" name="confirmPassword" type="password" required />
+        </div>
+        <div class="panel-body">
+            <button type="submit" id="submitRegister" class="btn btn-primary">Зарегистрироваться</button>
+            <button type="button" id="cancelRegister" class="btn btn-primary">Отмена</button>
         </div>
     </form>
 
@@ -293,7 +320,7 @@
             editLink.setAttribute("class", "text-warning");
             editLink.addEventListener("click", e => {
                 e.preventDefault();
-                productFormVisible(true);
+                elementVisible("productForm", true);
                 GetProduct(product.id);
             });
             linksTd.append(editLink);
@@ -405,6 +432,37 @@
             }
         }
 
+        // Регистрация нового пользователя
+        async function Register(userName, userEmail, userPassword) {
+            var form = document.forms["registerForm"];
+            var name = form.elements["name"].value;
+            var email = form.elements["email"].value;
+            var password = form.elements["password"].value;
+            var confirmPassword = form.elements["confirmPassword"].value;
+            if (password != confirmPassword) {
+                alert("Пароли не совпадают.");
+            } else {
+                const response = await fetch("api/account/register", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: userName,
+                    email: userEmail,
+                    password: userPassword
+                })
+                });
+                if (response.ok === true) {
+                    spanItem = document.getElementById("userName");
+                    spanItem.textContent = name;
+                    loginVisible(false);
+                    elementVisible("registerForm", false);
+                    alert("You've just joined system as " + name);
+                } else {
+                    alert("Пользователь с данным email уже существует.");
+                }
+            }            
+        }
+
         // Разлогинивание пользователя
         async function Logout() {
             const response = await fetch("api/account/logout", {
@@ -419,6 +477,7 @@
 
         function loginVisible(isLoginVisible) {
             makeInputButtonOrHidden("loginUser", isLoginVisible);
+            makeInputButtonOrHidden("registerUser", isLoginVisible);
             makeInputButtonOrHidden("logoutUser", !isLoginVisible);
         }
 
@@ -489,8 +548,24 @@
 
         function AddSubmitHandlers() {
             // отправка формы логина
+            document.forms["registerForm"].addEventListener("submit", e => {
+                e.preventDefault();
+                var form = document.forms["registerForm"];
+                var name = form.elements["name"].value;
+                var email = form.elements["email"].value;
+                var password = form.elements["password"].value;
+                var confirmPassword = form.elements["confirmPassword"].value;
+                if (password != confirmPassword) {
+                    alert("Пароли не совпадают.");
+                } else {
+                    Register(name, email, password);
+                }                
+            });
+
+            // отправка формы регистрации
             document.forms["loginForm"].addEventListener("submit", e => {
                 e.preventDefault();
+
                 const form = document.forms["loginForm"];
                 const email = form.elements["email"].value;
                 const password = form.elements["password"].value;
@@ -556,6 +631,12 @@
                 elementVisible("loginForm", true);
             })
 
+            //кнопка Зарегистрироваться
+            document.getElementById("registerUser").addEventListener("click", function (e) {
+                e.preventDefault();
+                elementVisible("registerForm", true);
+            })
+
             //кнопка Выйти
             document.getElementById("logoutUser").addEventListener("click", function (e) {
                 e.preventDefault();
@@ -571,6 +652,13 @@
                 e.preventDefault();
                 document.getElementById("loginForm").reset();
                 elementVisible("loginForm", false);
+            })
+
+            //кнопка Отмена регистрации
+            document.getElementById("cancelRegister").addEventListener("click", function (e) {
+                e.preventDefault();
+                document.getElementById("registerForm").reset();
+                elementVisible("registerForm", false);
             })
 
             //кнопка Скрыть корзину
@@ -628,6 +716,7 @@
             cartListVisible(false);
             cartVisible(true);
             elementVisible("orderForm", false);
+            elementVisible("registerForm", false);
             productListVisible(true);
         }
 
