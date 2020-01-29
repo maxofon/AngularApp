@@ -429,6 +429,13 @@
                 spanItem.textContent = user.name;
                 loginVisible(false);
                 elementVisible("loginForm", false);
+                alert("You entered in system as " + user.name);
+                //console.log(user);
+                GetCartItems();
+                GetTotalCart();
+            }
+            else {
+                alert("Неверный логин или пароль.");
             }
         }
 
@@ -569,10 +576,7 @@
                 const form = document.forms["loginForm"];
                 const email = form.elements["email"].value;
                 const password = form.elements["password"].value;
-                Login(email, password);
-                alert("You entered in system as " + email);
-                GetCartItems();
-                GetTotalCart();
+                Login(email, password);                
             });
 
             // отправка формы продукта
