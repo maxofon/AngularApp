@@ -26,9 +26,22 @@ namespace AngularApp
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                .AddCookie("Cookies", options => {
+                    options.Cookie.Name = "auth_cookie";
+                    options.Cookie.SameSite = SameSiteMode.None;
+                    options.Events = new CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = redirectContext =>
+                        {
+                            redirectContext.HttpContext.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        },
+                        OnRedirectToAccessDenied = redirectContext =>
+                        {
+                            redirectContext.HttpContext.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
@@ -44,11 +57,11 @@ namespace AngularApp
             {
                 app.UseDeveloperExceptionPage();
 
-                // добавляем сборку через webpack
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
+                //// добавляем сборку через webpack
+                //app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                //{
+                //    HotModuleReplacement = true
+                //});
             }
 
             app.UseDefaultFiles();
