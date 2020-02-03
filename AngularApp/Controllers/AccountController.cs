@@ -28,66 +28,104 @@ namespace AngularApp.Controllers
         [HttpGet]
         public IActionResult GetUser()
         {
-            var user = _userServ.GetUser();
-            if (user == null)          
-                return Unauthorized("User is not authentificated.");
+            try
+            {
+                var user = _userServ.GetUser();
+                if (user == null)
+                    return Unauthorized("User is not authentificated.");
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }           
         }
 
         [HttpGet]
         public IActionResult GetFirstUser()
         {
-            var user = db.Users.FirstOrDefault();
+            try
+            {
+                var user = db.Users.FirstOrDefault();
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+           
         }
 
         [HttpGet]
         public IActionResult GetCookies()
         {
-            var cookies = _userServ.GetCookies();
-            if (cookies.Count == 0)
-                return BadRequest("Cookies is not assigned");
+            try
+            {
+                var cookies = _userServ.GetCookies();
+                if (cookies.Count == 0)
+                    return BadRequest("Cookies is not assigned");
 
-            return Ok(cookies);
+                return Ok(cookies);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    await Authenticate(model.Email); // аутентификация
+                    User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    if (user != null)
+                    {
+                        await Authenticate(model.Email); // аутентификация
 
-                    return Ok(user);
-                }                
+                        return Ok(user);
+                    }
+
+                    return BadRequest($"Пользователь {model.Email} не найден.");
+                }
+
+                return BadRequest(ModelState);
             }
-
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
 
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
+                if (ModelState.IsValid)
                 {
-                    // добавляем пользователя в бд
-                    db.Users.Add(new User { Name = model.Name,Email = model.Email, Password = model.Password });
-                    await db.SaveChangesAsync();
+                    User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                    if (user == null)
+                    {
+                        // добавляем пользователя в бд
+                        db.Users.Add(new User { Name = model.Name, Email = model.Email, Password = model.Password });
+                        await db.SaveChangesAsync();
 
-                    await Authenticate(model.Email); // аутентификация
+                        await Authenticate(model.Email); // аутентификация
 
-                    return Ok(user);
-                }               
+                        return Ok(user);
+                    }
+                }
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }           
         }
 
         private async Task Authenticate(string userName)
@@ -106,8 +144,16 @@ namespace AngularApp.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok();
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+            
         }
     }
 }

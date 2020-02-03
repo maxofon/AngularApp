@@ -1,6 +1,7 @@
 ﻿using AngularApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -28,52 +29,87 @@ namespace AngularApp.Controllers
         }        
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
-            return db.Products.ToList();
+            try
+            {
+                return await db.Products.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
 
         [HttpGet("{id}")]
-        public Product Get(int id)
+        public async Task<ActionResult<Product>> Get(int id)
         {
-            Product product = db.Products.FirstOrDefault(x => x.Id == id);
-            return product;
+            try
+            {
+                return await db.Products.FirstOrDefaultAsync(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Product product)
+        public async Task<IActionResult> Post([FromBody]Product product)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Products.Add(product);
-                db.SaveChanges();
-                return Ok(product);
+                if (ModelState.IsValid)
+                {
+                    db.Products.Add(product);
+                    await db.SaveChangesAsync();
+                    return Ok(product);
+                }
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }           
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Product product)
+        public async Task<IActionResult> Put(int id, [FromBody]Product product)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Update(product);
-                db.SaveChanges();
-                return Ok(product);
+                if (ModelState.IsValid)
+                {
+                    db.Update(product);
+                    await db.SaveChangesAsync();
+                    return Ok(product);
+                }
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+           
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Product product = db.Products.FirstOrDefault(x => x.Id == id);
-            if (product != null)
+            try
             {
-                db.Products.Remove(product);
-                db.SaveChanges();
+                Product product = db.Products.FirstOrDefault(x => x.Id == id);
+                if (product != null)
+                {
+                    db.Products.Remove(product);
+                    await db.SaveChangesAsync();
+                }
+                return Ok(product);
             }
-            return Ok(product);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }           
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using AngularApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace AngularApp.Controllers
 {
@@ -22,48 +23,62 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Order> Get()
+        public async Task<ActionResult<IEnumerable<Order>>> Get()
         {
-            return db.Orders.ToList();
+            try
+            {
+                return await db.Orders.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Order order)
+        public async Task<IActionResult> Post([FromBody]Order order)
         {
-            User user = _userServ.GetUser();
-            if (user == null)
-                return BadRequest("User is not authentificated.");
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            List<CartLine> cartLines = db.CartLines.Where(c => c.UserId == user.Id).ToList();
-            if (cartLines.Count == 0)
-                return BadRequest("Cart is empty.");
-
-            order.OrderTime = DateTime.Now;
-            order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
-            db.Orders.Add(order);
-            db.SaveChanges();
-            
-            
-
-            foreach(var item in cartLines)
+            try
             {
-                var orderLine = new OrderLine
-                {
-                    Quantity = item.Quantity,
-                    Price = item.Price,
-                    ProductId = item.ProductId,
-                    OrderId = order.Id
-                };
+                User user = _userServ.GetUser();
+                if (user == null)
+                    return BadRequest("User is not authentificated.");
 
-                db.OrderLines.Add(orderLine);                
-                db.CartLines.Remove(item);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                List<CartLine> cartLines = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
+                if (cartLines.Count == 0)
+                    return BadRequest("Cart is empty.");
+
+                order.OrderTime = DateTime.Now;
+                order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
+                db.Orders.Add(order);
                 db.SaveChanges();
+
+
+
+                foreach (var item in cartLines)
+                {
+                    var orderLine = new OrderLine
+                    {
+                        Quantity = item.Quantity,
+                        Price = item.Price,
+                        ProductId = item.ProductId,
+                        OrderId = order.Id
+                    };
+
+                    db.OrderLines.Add(orderLine);
+                    db.CartLines.Remove(item);
+                    await db.SaveChangesAsync();
+                }
+
+                return Ok(order);
             }
-            
-            return Ok(order);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
     }
 }

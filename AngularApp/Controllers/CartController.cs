@@ -23,99 +23,136 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CartLine>> Get()
+        public async Task<ActionResult<IEnumerable<CartLine>>> Get()
         {
-            var user = _userServ.GetUser();
-            if (user == null)
-                return BadRequest("User is not authentificated.");
+            try
+            {
+                var user = _userServ.GetUser();
+                if (user == null)
+                    return BadRequest("User is not authentificated.");
 
-            return db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToList();
+                return await db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }           
         }
 
         [HttpGet]
         [Route("getTotal")]
-        public ActionResult<decimal> GetTotal()
+        public async Task<ActionResult<decimal>> GetTotal()
         {
-            var user = _userServ.GetUser();
-            if (user == null)
-                return BadRequest("User is not authentificated.");
+            try
+            {
+                var user = _userServ.GetUser();
+                if (user == null)
+                    return BadRequest("User is not authentificated.");
 
-            return db.CartLines.Where(c => c.UserId == user.Id).Sum(c => c.Price * c.Quantity);
+                var entities = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
+
+                return entities.Sum(c => c.Price * c.Quantity);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }            
         }
 
-        //[HttpGet("{id}")]
-        //[Route("getLineAmount")]                
-        //public decimal GetLineAmount(int id)
-        //{
-        //    var entry =  db.CartLines.FirstOrDefault(x => x.Id == id);
-        //    return entry.Price * entry.Quantity;
-        //}
-
         [HttpGet("{id}")]
-        public CartLine Get(int id)
+        public async Task<ActionResult<CartLine>> Get(int id)
         {
-            CartLine cartLine = db.CartLines.FirstOrDefault(x => x.Id == id);
-            return cartLine;
+            try
+            {
+                return await db.CartLines.FirstOrDefaultAsync(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }           
         }
 
         [HttpPost]
         [Route("{id}")]
-        public IActionResult Post(int id)
+        public async Task<IActionResult> Post(int id)
         {
-            var product = db.Products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
-                return NotFound("Item is not found.");
-
-            var user = _userServ.GetUser();
-            if (user == null)
-                return BadRequest("User is not authentificated.");           
-
-            var cartLine = db.CartLines.FirstOrDefault(c => c.UserId == user.Id && c.ProductId == product.Id);
-            if (cartLine == null)
+            try
             {
-                CartLine newItem = new CartLine
+                var product = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
+                if (product == null)
+                    return NotFound("Item is not found.");
+
+                var user = _userServ.GetUser();
+                if (user == null)
+                    return BadRequest("User is not authentificated.");
+
+                var cartLine = await db.CartLines.FirstOrDefaultAsync(c => c.UserId == user.Id && c.ProductId == product.Id);
+                if (cartLine == null)
                 {
-                    Quantity = 1,
-                    ProductId = product.Id,
-                    Price = product.Price,
-                    UserId = user.Id
-                };
+                    CartLine newItem = new CartLine
+                    {
+                        Quantity = 1,
+                        ProductId = product.Id,
+                        Price = product.Price,
+                        UserId = user.Id
+                    };
 
-                db.CartLines.Add(newItem);
-                db.SaveChanges();
-                return Ok(newItem);
+                    db.CartLines.Add(newItem);
+                    await db.SaveChangesAsync();
+                    return Ok(newItem);
+                }
+                else
+                {
+                    cartLine.Quantity += 1;
+                    db.Update(cartLine);
+                    await db.SaveChangesAsync();
+                    return Ok(cartLine);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                cartLine.Quantity += 1;
-                db.Update(cartLine);
-                db.SaveChanges();
-                return Ok(cartLine);
-            }                     
+                return BadRequest($"{ex.Message}");
+            }                       
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]CartLine cartLine)
+        public async Task<IActionResult> Put(int id, [FromBody]CartLine cartLine)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Update(cartLine);
-                db.SaveChanges();
-                return Ok(cartLine);
+                if (ModelState.IsValid)
+                {
+                    db.Update(cartLine);
+                    await db.SaveChangesAsync();
+                    return Ok(cartLine);
+                }
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+            
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            CartLine cartLine = db.CartLines.Include(c => c.Product).FirstOrDefault(x => x.Id == id);
-            if (cartLine != null)
+            try
             {
-                db.CartLines.Remove(cartLine);
-                db.SaveChanges();
+                CartLine cartLine = db.CartLines.Include(c => c.Product).FirstOrDefault(x => x.Id == id);
+                if (cartLine != null)
+                {
+                    db.CartLines.Remove(cartLine);
+                    await db.SaveChangesAsync();
+                }
+                return Ok(cartLine);
             }
-            return Ok(cartLine);
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+           
         }
     }
 }
