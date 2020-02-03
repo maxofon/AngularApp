@@ -21,9 +21,9 @@ namespace AngularApp.Controllers
 
             if (!db.Products.Any())
             {
-                db.Products.Add(new Product { Name = "iPhone X", Company = "Apple", Price = 79900 });
-                db.Products.Add(new Product { Name = "Galaxy S8", Company = "Samsung", Price = 49900 });
-                db.Products.Add(new Product { Name = "Pixel 2", Company = "Google", Price = 52900 });
+                db.Products.Add(new Product { Name = "iPhone X", Company = "Apple", Price = 1200 });
+                db.Products.Add(new Product { Name = "Galaxy S8", Company = "Samsung", Price = 750 });
+                db.Products.Add(new Product { Name = "Pixel 2", Company = "Google", Price = 450 });
                 db.SaveChanges();
             }
         }        
