@@ -258,6 +258,12 @@
                 method: "POST",
                 headers: { "Accept": "application/json" }
             });
+
+            if (response.status == 401) {
+                alert("Войдите в систему или зарегистрируйтесь!");
+                return;
+            }
+
             if (response.ok === true) {
                 //const cartTable = document.getElementById("cartListBody");
                 //while (cartTable.firstChild) {
@@ -404,6 +410,8 @@
             });
             const user = await response.json();
             spanItem = document.getElementById("userName");
+            console.log(response.status);
+            console.log(response.status == 401);
             if (response.ok === true) {
                 spanItem.textContent = user.name;
                 loginVisible(false);
@@ -542,6 +550,7 @@
                     email: email
                 })
             });
+            
             if (response.ok === true) {
                 elementVisible("orderForm", false);
                 DeleteAllCart();

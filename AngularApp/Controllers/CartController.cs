@@ -29,7 +29,7 @@ namespace AngularApp.Controllers
             {
                 var user = _userServ.GetUser();
                 if (user == null)
-                    return BadRequest("User is not authentificated.");
+                    return Unauthorized("User is not authentificated.");
 
                 return await db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToListAsync();
             }
@@ -47,7 +47,7 @@ namespace AngularApp.Controllers
             {
                 var user = _userServ.GetUser();
                 if (user == null)
-                    return BadRequest("User is not authentificated.");
+                    return Unauthorized("User is not authentificated.");
 
                 var entities = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
 
@@ -84,7 +84,7 @@ namespace AngularApp.Controllers
 
                 var user = _userServ.GetUser();
                 if (user == null)
-                    return BadRequest("User is not authentificated.");
+                    return Unauthorized("User is not authentificated.");
 
                 var cartLine = await db.CartLines.FirstOrDefaultAsync(c => c.UserId == user.Id && c.ProductId == product.Id);
                 if (cartLine == null)
