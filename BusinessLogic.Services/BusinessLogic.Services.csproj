@@ -4,4 +4,16 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic.Interfaces\BusinessLogic.Interfaces.csproj" />
+    <ProjectReference Include="..\BusinessLogic.ModelsDTO\BusinessLogic.ModelsDTO.csproj" />
+    <ProjectReference Include="..\DataAccess.Database\DataAccess.Database.csproj" />
+    <ProjectReference Include="..\DataAccess.Models\DataAccess.Models.csproj" />
+  </ItemGroup>
+
 </Project>

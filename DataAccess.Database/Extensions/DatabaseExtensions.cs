@@ -19,7 +19,7 @@ namespace DataAccess.Database.Extensions
             services.AddTransient<IProductContext, ProductContext>();
 
             services.AddDbContext<ProductContext>(
-                options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Database")));
+                options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccess.Database")));
 
             services.AddEntityFrameworkSqlServer();
 
