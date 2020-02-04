@@ -44,7 +44,7 @@ namespace BusinessLogic.Services.Repositories
         {
             using (var context = _contextFactory.GetProductContext())
             {
-                var entity = await context.CartLines.FirstOrDefaultAsync(x => x.Id == id);
+                var entity = await context.CartLines.Include(c => c.Product).FirstOrDefaultAsync(x => x.Id == id);
                 return _mapper.Map<BL.CartLine>(entity);
             }
         }
@@ -64,13 +64,13 @@ namespace BusinessLogic.Services.Repositories
                     if (entityModel == null)
                     {
                         entityModel = new DA.CartLine();
-                        MapForUpdateEntity(entity, entityModel,context);
+                        MapForUpdateEntity(entity, entityModel);
                         
                         await context.CartLines.AddAsync(entityModel);
                     }
                     else
                     {
-                        MapForUpdateEntity(entity, entityModel,context);
+                        MapForUpdateEntity(entity, entityModel);
                     }
 
                     context.SaveChanges();
@@ -132,13 +132,15 @@ namespace BusinessLogic.Services.Repositories
             }
         }
     
-        private void MapForUpdateEntity(BL.CartLine entity, DA.CartLine daEntity, IProductContext context)
+        private void MapForUpdateEntity(BL.CartLine entity, DA.CartLine daEntity)
         {
             daEntity.Id = entity.Id;
             daEntity.Price = entity.Price;
             daEntity.Quantity = entity.Quantity;
-            daEntity.User = context.Users.Find(entity.User.Id);
-            daEntity.Product = context.Products.Find(entity.Product.Id);
+            daEntity.UserId = entity.UserId;
+            //daEntity.User = _mapper.Map<DA.User>(entity);
+            daEntity.ProductId = entity.ProductId;
+            //daEntity.Product = _mapper.Map<DA.Product>(entity);
         }       
     }
 }

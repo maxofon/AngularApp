@@ -1,11 +1,7 @@
-﻿using AngularApp.Services;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +38,6 @@ namespace AngularApp.Controllers
         {
             try
             {
-                //return await db.Orders.ToListAsync();
                 var entities = await _orderLineRepo.GetAsync();
 
                 return entities.Select(item =>
@@ -76,9 +71,7 @@ namespace AngularApp.Controllers
                 order.OrderTime = DateTime.Now;
                 order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
 
-                //db.Orders.Add(order);
-                //db.SaveChanges();
-                await _orderRepo.SaveAsync(_mapper.Map<BL.Order>(order));
+                var newOrderId = await _orderRepo.SaveAsync(_mapper.Map<BL.Order>(order));
 
                 foreach (var item in cartLines)
                 {
@@ -87,12 +80,9 @@ namespace AngularApp.Controllers
                         Quantity = item.Quantity,
                         Price = item.Price,
                         ProductId = item.ProductId,
-                        OrderId = order.Id
+                        OrderId = newOrderId
                     };
 
-                    //db.OrderLines.Add(orderLine);
-                    //db.CartLines.Remove(item);
-                    //await db.SaveChangesAsync();
                     await _orderLineRepo.SaveAsync(orderLine);
                     await _cartLineRepo.DeleteAsync(item.Id);
                 }

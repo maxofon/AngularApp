@@ -2,10 +2,7 @@
 using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +26,7 @@ namespace AngularApp.Controllers
                             IMapper mapper)
         {
             _cartLineRepo = cartLineRepo;
+            _productRepo = productRepo;
             _userServ = userServ;
             _mapper = mapper;
         }
@@ -42,7 +40,6 @@ namespace AngularApp.Controllers
                 if (user == null)
                     return Unauthorized("User is not authentificated.");
 
-                //return await db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToListAsync();
                 var entities = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
 
                 return entities.Select(item =>
@@ -67,7 +64,6 @@ namespace AngularApp.Controllers
                 if (user == null)
                     return Unauthorized("User is not authentificated.");
 
-                //var entities = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
                 var entities = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
 
                 return entities.Sum(c => c.Price * c.Quantity);
@@ -97,7 +93,6 @@ namespace AngularApp.Controllers
         {
             try
             {
-                //var product = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
                 var product = await _productRepo.GetByIdAsync(id);
                 if (product == null)
                     return NotFound("Item is not found.");
@@ -118,16 +113,13 @@ namespace AngularApp.Controllers
                         UserId = user.Id
                     };
 
-                    //db.CartLines.Add(newItem);
-                    //await db.SaveChangesAsync();
-                    await _cartLineRepo.SaveAsync(newItem);
+                    var newItemId = await _cartLineRepo.SaveAsync(newItem);
+                    newItem = await _cartLineRepo.GetByIdAsync(newItemId);
                     return Ok(newItem);
                 }
                 else
                 {
                     cartLine.Quantity += 1;
-                    //db.Update(cartLine);
-                    //await db.SaveChangesAsync();
                     await _cartLineRepo.SaveAsync(cartLine);
                     return Ok(cartLine);
                 }
@@ -145,8 +137,6 @@ namespace AngularApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //db.Update(cartLine);
-                    //await db.SaveChangesAsync();
                     await _cartLineRepo.SaveAsync(_mapper.Map<BL.CartLine>(cartLine));
 
                     return Ok(cartLine);
@@ -168,11 +158,11 @@ namespace AngularApp.Controllers
                 BL.CartLine cartLine = await _cartLineRepo.GetByIdAsync(id);
                 if (cartLine != null)
                 {
-                    //db.CartLines.Remove(cartLine);
-                    //await db.SaveChangesAsync();
                     await _cartLineRepo.DeleteAsync(id);
+                    return Ok(cartLine);
                 }
-                return Ok(cartLine);
+
+                return BadRequest("Item not found.");
             }
             catch (Exception ex)
             {

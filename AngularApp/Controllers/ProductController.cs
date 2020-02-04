@@ -1,11 +1,6 @@
-﻿using AngularApp.Services;
-using AutoMapper;
-using BusinessLogic.Interfaces;
+﻿using AutoMapper;
 using BusinessLogic.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,22 +12,7 @@ namespace AngularApp.Controllers
 {
     [Route("api/products")]
     public class ProductController : Controller
-    {
-        //private ApplicationContext db;
-        
-        //public ProductController(ApplicationContext context)
-        //{
-        //    db = context;            
-
-        //    if (!db.Products.Any())
-        //    {
-        //        db.Products.Add(new Product { Name = "iPhone X", Company = "Apple", Price = 1200 });
-        //        db.Products.Add(new Product { Name = "Galaxy S8", Company = "Samsung", Price = 750 });
-        //        db.Products.Add(new Product { Name = "Pixel 2", Company = "Google", Price = 450 });
-        //        db.SaveChanges();
-        //    }
-        //}
-
+    {        
         private readonly IRepository<BL.Product> _productRepo;
         private readonly IMapper _mapper;
 
@@ -48,7 +28,6 @@ namespace AngularApp.Controllers
         {
             try
             {
-                //return await db.Products.ToListAsync();
                 var entities = await _productRepo.GetAsync();
 
                 return entities.Select(item =>
@@ -68,7 +47,6 @@ namespace AngularApp.Controllers
         {
             try
             {
-                //return await db.Products.FirstOrDefaultAsync(x => x.Id == id);
                 var entity = await _productRepo.GetByIdAsync(id);
                 
                 return _mapper.Map<API.Product>(entity);
@@ -86,10 +64,8 @@ namespace AngularApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //db.Products.Add(product);
-                    //await db.SaveChangesAsync();
-                    await _productRepo.SaveAsync(_mapper.Map<BL.Product>(product));
-                    return Ok(product);
+                    var newItemId = await _productRepo.SaveAsync(_mapper.Map<BL.Product>(product));
+                    return Ok(await _productRepo.GetByIdAsync(newItemId));
                 }
                 return BadRequest(ModelState);
             }
@@ -106,10 +82,8 @@ namespace AngularApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //db.Update(product);
-                    //await db.SaveChangesAsync();
-                    await _productRepo.SaveAsync(_mapper.Map<BL.Product>(product));
-                    return Ok(product);
+                    var newItemId = await _productRepo.SaveAsync(_mapper.Map<BL.Product>(product));                    
+                    return Ok(await _productRepo.GetByIdAsync(newItemId));
                 }
                 return BadRequest(ModelState);
             }
@@ -125,14 +99,14 @@ namespace AngularApp.Controllers
         {
             try
             {
-                var product = _productRepo.GetByIdAsync(id);
+                var product = await _productRepo.GetByIdAsync(id);
                 if (product != null)
                 {
-                    //db.Products.Remove(product);
-                    //await db.SaveChangesAsync();
                     await _productRepo.DeleteAsync(id);
+                    return Ok(product);
                 }
-                return Ok(product);
+
+                return BadRequest("Item not found.");                
             }
             catch (Exception ex)
             {
