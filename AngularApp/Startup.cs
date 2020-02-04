@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AngularApp.Models;
 using AngularApp.Profiles;
-using AngularApp.Services;
 using AutoMapper;
 using BusinessLogic.Services.Extensions;
 using BusinessLogic.Services.Profiles;
@@ -14,8 +12,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +21,7 @@ namespace AngularApp
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,35 +30,7 @@ namespace AngularApp
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        {
-            //string connectionString = "Server=localhost\\SQLEXPRESS;Database=ProductShop;Trusted_Connection=True;MultipleActiveResultSets=true";
-            //services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
-
-            //// установка конфигурации подключения
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie("Cookies", options => {
-            //        options.Cookie.Name = "auth_cookie";
-            //        options.Cookie.SameSite = SameSiteMode.None;
-            //        options.Events = new CookieAuthenticationEvents
-            //        {
-            //            OnRedirectToLogin = redirectContext =>
-            //            {
-            //                redirectContext.HttpContext.Response.StatusCode = 401;
-            //                return Task.CompletedTask;
-            //            },
-            //            OnRedirectToAccessDenied = redirectContext =>
-            //            {
-            //                redirectContext.HttpContext.Response.StatusCode = 401;
-            //                return Task.CompletedTask;
-            //            }
-            //        };
-            //    });
-
-            //services.AddMvc(option => option.EnableEndpointRouting = false);
-
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddScoped<UserService>();
-
+        {            
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie("Cookies", options => {

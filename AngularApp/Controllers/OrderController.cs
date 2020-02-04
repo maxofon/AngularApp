@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using BL = BusinessLogic.ModelsDTO;
 namespace AngularApp.Controllers
 {
     [Route("api/orders")]
+    [ApiController]
     public class OrderController : Controller
     {
         private IUserService _userServ;
@@ -53,6 +55,7 @@ namespace AngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody]API.Order order)
         {
             try
@@ -65,12 +68,13 @@ namespace AngularApp.Controllers
                     return BadRequest(ModelState);
 
                 var cartLines = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
-                if (cartLines.Count == 0)
-                    return BadRequest("Cart is empty.");
+                //if (cartLines.Count == 0)
+                //    return BadRequest("Cart is empty.");
 
                 order.OrderTime = DateTime.Now;
                 order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
 
+                //маппировка, сохранение, получение ID новой записи 
                 var newOrderId = await _orderRepo.SaveAsync(_mapper.Map<BL.Order>(order));
 
                 foreach (var item in cartLines)
@@ -83,8 +87,8 @@ namespace AngularApp.Controllers
                         OrderId = newOrderId
                     };
 
-                    await _orderLineRepo.SaveAsync(orderLine);
-                    await _cartLineRepo.DeleteAsync(item.Id);
+                    await _orderLineRepo.SaveAsync(orderLine);  //сохранение новой записи строки заказа
+                    await _cartLineRepo.DeleteAsync(item.Id);   //удаление строки корзины на основании которой создана строка заказа
                 }
 
                 return Ok(order);

@@ -369,7 +369,6 @@
             tr.setAttribute("data-cart-rowid", cartItem.productId);
 
             const modelTd = document.createElement("td");
-            console.log(cartItem); //test
             modelTd.append(cartItem.product.name);
             tr.append(modelTd);
 
@@ -401,7 +400,6 @@
             linksTd.append(removeLink);
 
             tr.appendChild(linksTd);
-            //console.log(tr);
             return tr;
         }
 
@@ -410,11 +408,10 @@
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
-            const user = await response.json();
+            
             spanItem = document.getElementById("userName");
-            console.log(response.status);
-            console.log(response.status == 401);
             if (response.ok === true) {
+                const user = await response.json();
                 spanItem.textContent = user.name;
                 loginVisible(false);
             } else {
@@ -440,7 +437,6 @@
                 loginVisible(false);
                 elementVisible("loginForm", false);
                 alert("You entered in system as " + user.name);
-                //console.log(user);
                 GetCartItems();
                 GetTotalCart();
             }

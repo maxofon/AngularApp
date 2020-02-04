@@ -11,6 +11,7 @@ using BL = BusinessLogic.ModelsDTO;
 namespace AngularApp.Controllers
 {
     [Route("api/products")]
+    [ApiController]
     public class ProductController : Controller
     {        
         private readonly IRepository<BL.Product> _productRepo;

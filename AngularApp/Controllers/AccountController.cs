@@ -3,6 +3,7 @@ using BusinessLogic.Interfaces;
 using BusinessLogic.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ using BL = BusinessLogic.ModelsDTO;
 namespace AngularApp.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiController]
     public class AccountController : Controller
     {
         private IUserService _userServ;
@@ -27,13 +29,14 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult GetUser()
         {
             try
             {
                 var user = _userServ.GetUser();
-                if (user == null)
-                    return Unauthorized("User is not authentificated.");
+                //if (user == null)
+                //    return Unauthorized("User is not authentificated.");
 
                 return Ok(user);
             }

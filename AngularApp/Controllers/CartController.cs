@@ -2,6 +2,7 @@
 using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using BL = BusinessLogic.ModelsDTO;
 namespace AngularApp.Controllers
 {
     [Route("api/cart")]
+    [ApiController]
     public class CartController : Controller
     {
         private IUserService _userServ;
@@ -32,13 +34,14 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<API.CartLine>>> Get()
         {
             try
             {
                 var user = _userServ.GetUser();
-                if (user == null)
-                    return Unauthorized("User is not authentificated.");
+                //if (user == null)
+                //    return Unauthorized("User is not authentificated.");
 
                 var entities = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
 
@@ -56,13 +59,14 @@ namespace AngularApp.Controllers
 
         [HttpGet]
         [Route("getTotal")]
+         [Authorize]
         public async Task<ActionResult<decimal>> GetTotal()
         {
             try
             {
                 var user = _userServ.GetUser();
-                if (user == null)
-                    return Unauthorized("User is not authentificated.");
+                //if (user == null)
+                //    return Unauthorized("User is not authentificated.");
 
                 var entities = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
 
@@ -89,6 +93,7 @@ namespace AngularApp.Controllers
 
         [HttpPost]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Post(int id)
         {
             try
@@ -98,8 +103,8 @@ namespace AngularApp.Controllers
                     return NotFound("Item is not found.");
 
                 var user = _userServ.GetUser();
-                if (user == null)
-                    return Unauthorized("User is not authentificated.");
+                //if (user == null)
+                //    return Unauthorized("User is not authentificated.");
 
                 var cartLineList = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id && c.ProductId == product.Id);
                 var cartLine = cartLineList.FirstOrDefault();
