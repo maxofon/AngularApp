@@ -1,33 +1,55 @@
-﻿using AngularApp.Models;
+﻿using AngularApp.Services;
+using AutoMapper;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Interfaces.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
-using AngularApp.Services;
-using Microsoft.EntityFrameworkCore;
+using API = AngularApp.Models;
+using BL = BusinessLogic.ModelsDTO;
 
 namespace AngularApp.Controllers
 {
     [Route("api/orders")]
     public class OrderController : Controller
     {
-        private ApplicationContext db;
-        private UserService _userServ;
-        public OrderController(ApplicationContext context, UserService userServ)
+        private IUserService _userServ;
+        private readonly IRepository<BL.OrderLine> _orderLineRepo;
+        private readonly IRepository<BL.CartLine> _cartLineRepo;
+        private readonly IRepository<BL.Order> _orderRepo;
+        private readonly IMapper _mapper;
+
+        public OrderController(IRepository<BL.OrderLine> orderLineRepo,
+                            IRepository<BL.Order> orderRepo,
+                            IRepository<BL.CartLine> cartLineRepo,
+                            IUserService userServ,
+                            IMapper mapper)
         {
-            db = context;
+            _orderLineRepo = orderLineRepo;
+            _cartLineRepo = cartLineRepo;
+            _orderRepo = orderRepo;
             _userServ = userServ;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> Get()
+        public async Task<ActionResult<IEnumerable<API.Order>>> Get()
         {
             try
             {
-                return await db.Orders.ToListAsync();
+                //return await db.Orders.ToListAsync();
+                var entities = await _orderLineRepo.GetAsync();
+
+                return entities.Select(item =>
+                {
+                    var mapEntity = _mapper.Map<API.Order>(item);
+                    return mapEntity;
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -36,31 +58,31 @@ namespace AngularApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Order order)
+        public async Task<IActionResult> Post([FromBody]API.Order order)
         {
             try
             {
-                User user = _userServ.GetUser();
+                var user = _userServ.GetUser();
                 if (user == null)
-                    return BadRequest("User is not authentificated.");
+                    return Unauthorized("User is not authentificated.");
 
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                List<CartLine> cartLines = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
+                var cartLines = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
                 if (cartLines.Count == 0)
                     return BadRequest("Cart is empty.");
 
                 order.OrderTime = DateTime.Now;
                 order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
-                db.Orders.Add(order);
-                db.SaveChanges();
 
-
+                //db.Orders.Add(order);
+                //db.SaveChanges();
+                await _orderRepo.SaveAsync(_mapper.Map<BL.Order>(order));
 
                 foreach (var item in cartLines)
                 {
-                    var orderLine = new OrderLine
+                    var orderLine = new BL.OrderLine
                     {
                         Quantity = item.Quantity,
                         Price = item.Price,
@@ -68,9 +90,11 @@ namespace AngularApp.Controllers
                         OrderId = order.Id
                     };
 
-                    db.OrderLines.Add(orderLine);
-                    db.CartLines.Remove(item);
-                    await db.SaveChangesAsync();
+                    //db.OrderLines.Add(orderLine);
+                    //db.CartLines.Remove(item);
+                    //await db.SaveChangesAsync();
+                    await _orderLineRepo.SaveAsync(orderLine);
+                    await _cartLineRepo.DeleteAsync(item.Id);
                 }
 
                 return Ok(order);

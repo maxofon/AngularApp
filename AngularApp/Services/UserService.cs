@@ -11,23 +11,23 @@ namespace AngularApp.Services
     public class UserService
     {
         private ApplicationContext db;
-        private IServiceProvider _servProv;
-        public UserService(ApplicationContext context, IServiceProvider servProv)
+        private IHttpContextAccessor _httpContextAccessor;
+        public UserService(ApplicationContext context, IHttpContextAccessor httpContextAccessor)
         {
             db = context;
-            _servProv = servProv;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public User GetUser()
         {
-            var userName = _servProv.GetRequiredService<IHttpContextAccessor>()?.HttpContext.User.Identity.Name;
+            var userName = _httpContextAccessor?.HttpContext.User.Identity.Name;
             var user = db.Users.FirstOrDefault(u => u.Email == userName);
             return user;
         }
 
         public IRequestCookieCollection GetCookies()
         {
-            return _servProv.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Request.Cookies;
+            return _httpContextAccessor?.HttpContext.Request.Cookies;
         }
     }
 }

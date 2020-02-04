@@ -1,5 +1,8 @@
 ﻿using AngularApp.Models;
-using AngularApp.Services;
+using AutoMapper;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Interfaces.Repositories;
+using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -11,18 +14,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BL = BusinessLogic.ModelsDTO;
 
 namespace AngularApp.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        private ApplicationContext db;
-        private UserService _userServ;
-        public AccountController(ApplicationContext context, UserService userServ)
+        private IUserService _userServ;
+        private readonly IRepository<BL.User> _userRepo;
+        private readonly IMapper _mapper;
+
+        public AccountController(IRepository<BL.User> userRepo, IUserService userServ, IMapper mapper)
         {
-            db = context;
+            _userRepo = userRepo;
             _userServ = userServ;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -43,11 +50,11 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetFirstUser()
+        public async Task<IActionResult> GetFirstUser()
         {
             try
             {
-                var user = db.Users.FirstOrDefault();
+                var user = await _userRepo.GetByIdAsync(1);
 
                 return Ok(user);
             }
@@ -82,10 +89,12 @@ namespace AngularApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    //User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    var userList = await _userRepo.FindByAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    var user = userList.FirstOrDefault();
                     if (user != null)
                     {
-                        await Authenticate(model.Email); // аутентификация
+                        await Authenticate(user.Email); // аутентификация
 
                         return Ok(user);
                     }
@@ -108,12 +117,15 @@ namespace AngularApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                    //User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                    var userList = await _userRepo.FindByAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    var user = userList.FirstOrDefault();
                     if (user == null)
                     {
                         // добавляем пользователя в бд
-                        db.Users.Add(new User { Name = model.Name, Email = model.Email, Password = model.Password });
-                        await db.SaveChangesAsync();
+                        //db.Users.Add(new User { Name = model.Name, Email = model.Email, Password = model.Password });
+                        //await db.SaveChangesAsync();
+                        await _userRepo.SaveAsync(new BL.User { Name = model.Name, Email = model.Email, Password = model.Password });
 
                         await Authenticate(model.Email); // аутентификация
 

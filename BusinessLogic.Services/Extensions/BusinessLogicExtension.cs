@@ -1,7 +1,9 @@
-﻿using BusinessLogic.Interfaces.Repositories;
-using DataAccess.Models;
+﻿using BusinessLogic.Interfaces;
+using BusinessLogic.Interfaces.Repositories;
+using BusinessLogic.ModelsDTO;
+using BusinessLogic.Services.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-
 
 namespace BusinessLogic.Services.Extensions
 {
@@ -19,6 +21,9 @@ namespace BusinessLogic.Services.Extensions
             services.AddTransient<IRepository<OrderLine>, OrderLineRepository>();
             services.AddTransient<IRepository<CartLine>, CartLineRepository>();
             services.AddTransient<IRepository<User>, UserRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IUserService, UserService>();
 
             return services;
         }

@@ -1,5 +1,7 @@
-﻿using AngularApp.Models;
-using AngularApp.Services;
+﻿using AngularApp.Services;
+using AutoMapper;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,22 +10,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API = AngularApp.Models;
+using BL = BusinessLogic.ModelsDTO;
 
 namespace AngularApp.Controllers
 {
     [Route("api/cart")]
     public class CartController : Controller
     {
-        private ApplicationContext db;
-        private UserService _userServ;
-        public CartController(ApplicationContext context, UserService userServ)
+        private IUserService _userServ;
+        private readonly IRepository<BL.CartLine> _cartLineRepo;
+        private readonly IRepository<BL.Product> _productRepo;
+        private readonly IMapper _mapper;
+
+        public CartController(IRepository<BL.CartLine> cartLineRepo, 
+                            IRepository<BL.Product> productRepo,
+                            IUserService userServ, 
+                            IMapper mapper)
         {
-            db = context;
+            _cartLineRepo = cartLineRepo;
             _userServ = userServ;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CartLine>>> Get()
+        public async Task<ActionResult<IEnumerable<API.CartLine>>> Get()
         {
             try
             {
@@ -31,7 +42,14 @@ namespace AngularApp.Controllers
                 if (user == null)
                     return Unauthorized("User is not authentificated.");
 
-                return await db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToListAsync();
+                //return await db.CartLines.Where(c => c.UserId == user.Id).Include(c => c.Product).ToListAsync();
+                var entities = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
+
+                return entities.Select(item =>
+                {
+                    var mapEntity = _mapper.Map<API.CartLine>(item);
+                    return mapEntity;
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -49,7 +67,8 @@ namespace AngularApp.Controllers
                 if (user == null)
                     return Unauthorized("User is not authentificated.");
 
-                var entities = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
+                //var entities = await db.CartLines.Where(c => c.UserId == user.Id).ToListAsync();
+                var entities = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id);
 
                 return entities.Sum(c => c.Price * c.Quantity);
             }
@@ -60,12 +79,12 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CartLine>> Get(int id)
+        public async Task<ActionResult<API.CartLine>> Get(int id)
         {
             try
             {
-                return await db.CartLines.FirstOrDefaultAsync(x => x.Id == id);
-            }
+                var entity = await _cartLineRepo.GetByIdAsync(id);
+                return _mapper.Map<API.CartLine>(entity);            }
             catch (Exception ex)
             {
                 return BadRequest($"{ex.Message}");
@@ -78,7 +97,8 @@ namespace AngularApp.Controllers
         {
             try
             {
-                var product = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
+                //var product = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
+                var product = await _productRepo.GetByIdAsync(id);
                 if (product == null)
                     return NotFound("Item is not found.");
 
@@ -86,10 +106,11 @@ namespace AngularApp.Controllers
                 if (user == null)
                     return Unauthorized("User is not authentificated.");
 
-                var cartLine = await db.CartLines.FirstOrDefaultAsync(c => c.UserId == user.Id && c.ProductId == product.Id);
+                var cartLineList = await _cartLineRepo.FindByAsync(c => c.UserId == user.Id && c.ProductId == product.Id);
+                var cartLine = cartLineList.FirstOrDefault();
                 if (cartLine == null)
                 {
-                    CartLine newItem = new CartLine
+                    BL.CartLine newItem = new BL.CartLine
                     {
                         Quantity = 1,
                         ProductId = product.Id,
@@ -97,15 +118,17 @@ namespace AngularApp.Controllers
                         UserId = user.Id
                     };
 
-                    db.CartLines.Add(newItem);
-                    await db.SaveChangesAsync();
+                    //db.CartLines.Add(newItem);
+                    //await db.SaveChangesAsync();
+                    await _cartLineRepo.SaveAsync(newItem);
                     return Ok(newItem);
                 }
                 else
                 {
                     cartLine.Quantity += 1;
-                    db.Update(cartLine);
-                    await db.SaveChangesAsync();
+                    //db.Update(cartLine);
+                    //await db.SaveChangesAsync();
+                    await _cartLineRepo.SaveAsync(cartLine);
                     return Ok(cartLine);
                 }
             }
@@ -116,14 +139,16 @@ namespace AngularApp.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]CartLine cartLine)
+        public async Task<IActionResult> Put(int id, [FromBody]API.CartLine cartLine)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Update(cartLine);
-                    await db.SaveChangesAsync();
+                    //db.Update(cartLine);
+                    //await db.SaveChangesAsync();
+                    await _cartLineRepo.SaveAsync(_mapper.Map<BL.CartLine>(cartLine));
+
                     return Ok(cartLine);
                 }
                 return BadRequest(ModelState);
@@ -140,11 +165,12 @@ namespace AngularApp.Controllers
         {
             try
             {
-                CartLine cartLine = db.CartLines.Include(c => c.Product).FirstOrDefault(x => x.Id == id);
+                BL.CartLine cartLine = await _cartLineRepo.GetByIdAsync(id);
                 if (cartLine != null)
                 {
-                    db.CartLines.Remove(cartLine);
-                    await db.SaveChangesAsync();
+                    //db.CartLines.Remove(cartLine);
+                    //await db.SaveChangesAsync();
+                    await _cartLineRepo.DeleteAsync(id);
                 }
                 return Ok(cartLine);
             }

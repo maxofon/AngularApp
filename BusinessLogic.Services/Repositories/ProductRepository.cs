@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using BL = BusinessLogic.ModelsDTO;
 using DA = DataAccess.Models;
 
-namespace Services.Repositories
+namespace BusinessLogic.Services.Repositories
 {
     public class ProductRepository : IRepository<BL.Product>
     {
