@@ -1,5 +1,4 @@
-﻿using AngularApp.Services;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
