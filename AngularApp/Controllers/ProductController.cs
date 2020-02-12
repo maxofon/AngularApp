@@ -14,10 +14,10 @@ namespace AngularApp.Controllers
     [ApiController]
     public class ProductController : Controller
     {        
-        private readonly IRepository<BL.Product> _productRepo;
+        private readonly IProductRepository<BL.Product> _productRepo;
         private readonly IMapper _mapper;
 
-        public ProductController(IRepository<BL.Product> productRepo,
+        public ProductController(IProductRepository<BL.Product> productRepo,
                                 IMapper mapper)
         {
             _productRepo = productRepo;

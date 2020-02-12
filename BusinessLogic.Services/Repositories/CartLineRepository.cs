@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BL = BusinessLogic.ModelsDTO;
@@ -12,7 +13,7 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class CartLineRepository : IRepository<BL.CartLine>
+    public class CartLineRepository : ICartLineRepository<BL.CartLine>
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
@@ -107,14 +108,15 @@ namespace BusinessLogic.Services.Repositories
             }
         }
 
-        public async Task<ICollection<BL.CartLine>> FindByAsync(Func<BL.CartLine, bool> predicate)
+        public async Task<ICollection<BL.CartLine>> FindByAsync(Expression<Func<DA.CartLine, bool>> predicate)
         {
             try
             {
                 using (var context = _contextFactory.GetProductContext())
                 {
                     var entity = await context
-                        .CartLines                         
+                        .CartLines
+                        .Where(predicate)
                         .Include(c => c.Product)
                         .ToListAsync();
 
@@ -123,7 +125,7 @@ namespace BusinessLogic.Services.Repositories
                                             var mapEntity = _mapper.Map<BL.CartLine>(item);
                                             return mapEntity;
                                         })
-                                .Where(predicate).ToList();
+                                .ToList();
                 }
             }
             catch (Exception ex)
