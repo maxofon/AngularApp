@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BL = BusinessLogic.ModelsDTO;
@@ -12,7 +13,7 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class OrderLineRepository : IRepository<BL.OrderLine>
+    public class OrderLineRepository : IOrderLineRepository<BL.OrderLine>
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
@@ -115,7 +116,7 @@ namespace BusinessLogic.Services.Repositories
 
         }
 
-        public async Task<ICollection<BL.OrderLine>> FindByAsync(Func<BL.OrderLine, bool> predicate)
+        public async Task<ICollection<BL.OrderLine>> FindByAsync(Expression<Func<DA.OrderLine, bool>> predicate)
         {
             try
             {
@@ -123,15 +124,16 @@ namespace BusinessLogic.Services.Repositories
                 {
                     var entity = await context
                         .OrderLines
+                        .Where(predicate)
                         .Include(c => c.Order)
                         .ToListAsync();
 
                     return entity.Select(item =>
-                    {
-                        var mapEntity = _mapper.Map<BL.OrderLine>(item);
-                        return mapEntity;
-                    })
-                                .Where(predicate).ToList();
+                        {
+                            var mapEntity = _mapper.Map<BL.OrderLine>(item);
+                            return mapEntity;
+                        })
+                        .ToList();
                 }
             }
             catch (Exception ex)

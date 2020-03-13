@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BL = BusinessLogic.ModelsDTO;
@@ -12,7 +13,7 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class UserRepository : IRepository<BL.User>
+    public class UserRepository : IUserRepository<BL.User>
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
@@ -112,7 +113,7 @@ namespace BusinessLogic.Services.Repositories
             //daEntity.RoleId = entity.RoleId;           
         }
 
-        public async Task<ICollection<BL.User>> FindByAsync(Func<BL.User, bool> predicate)
+        public async Task<ICollection<BL.User>> FindByAsync(Expression<Func<DA.User, bool>> predicate)
         {
             try
             {
@@ -121,14 +122,15 @@ namespace BusinessLogic.Services.Repositories
                     var entity = await context
                         .Users
                         //.Include(u => u.Role)
+                        .Where(predicate)
                         .ToListAsync();
 
                     return entity.Select(item =>
-                                            {
-                                                var mapEntity = _mapper.Map<BL.User>(item);
-                                                return mapEntity;
-                                            })
-                                .Where(predicate).ToList();
+                                {
+                                    var mapEntity = _mapper.Map<BL.User>(item);
+                                    return mapEntity;
+                                })
+                                .ToList();
                 }
             }
             catch (Exception ex)
