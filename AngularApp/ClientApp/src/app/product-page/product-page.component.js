@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../shared/products.service';
+import { ProductsService } from '../shared/services/products.service';
 import { switchMap } from 'rxjs/operators';
 var ProductPageComponent = /** @class */ (function () {
     function ProductPageComponent(route, productsService) {

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ProductsService } from "../../shared/products.service";
+import { ProductsService } from "../../shared/services/products.service";
 import { AlertService } from "../shared/services/alert.service";
 var CreatePageComponent = /** @class */ (function () {
     function CreatePageComponent(alert, productsService) {

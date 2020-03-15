@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { ProductsService } from '../shared/products.service';
+import { ProductsService } from '../shared/services/products.service';
 var HomePageComponent = /** @class */ (function () {
     //products: Product[]
     function HomePageComponent(productsService) {

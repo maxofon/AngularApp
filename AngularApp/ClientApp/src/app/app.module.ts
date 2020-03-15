@@ -9,7 +9,8 @@ import { MainLayoutComponent } from './shared/components/main-layout/main-layout
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { ProductComponent } from './shared/components/product/product.component';
-import {AdminModule} from './admin/admin.module';
+import {AdminModule} from './admin/admin.module';;
+import { CartPageComponent } from './cart-page/cart-page.component'
 
 
 
@@ -26,7 +27,8 @@ import {AdminModule} from './admin/admin.module';
         MainLayoutComponent,
         HomePageComponent,
         ProductPageComponent,
-        ProductComponent
+        ProductComponent,
+        CartPageComponent
     ],
     bootstrap: [AppComponent]
 })

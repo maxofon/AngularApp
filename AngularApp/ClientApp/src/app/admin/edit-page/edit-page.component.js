@@ -20,7 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../../shared/products.service';
+import { ProductsService } from '../../shared/services/products.service';
 import { switchMap } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from "../shared/services/alert.service";
@@ -41,7 +41,8 @@ var EditPageComponent = /** @class */ (function () {
             _this.product = product;
             _this.form = new FormGroup({
                 name: new FormControl(product.name, Validators.required),
-                company: new FormControl(product.company, Validators.required)
+                company: new FormControl({ value: product.company, disabled: true }, Validators.required),
+                price: new FormControl(product.price, Validators.required)
             });
         });
     };
@@ -51,7 +52,7 @@ var EditPageComponent = /** @class */ (function () {
             return;
         }
         this.submitted = true;
-        this.uSub = this.productsService.update(__assign(__assign({}, this.product), { name: this.form.value.name, company: this.form.value.company })).subscribe(function () {
+        this.uSub = this.productsService.update(__assign(__assign({}, this.product), { name: this.form.value.name, price: this.form.value.price })).subscribe(function () {
             _this.submitted = false;
             _this.alert.success('Продукт был обновлен');
         });

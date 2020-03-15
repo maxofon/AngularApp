@@ -44,10 +44,10 @@ var LoginPageComponent = /** @class */ (function () {
             return;
         }
         this.submitted = true;
-        var user = {
-            email: this.form.value.email,
-            password: this.form.value.password
-        };
+        // const user: User = {
+        //   email: this.form.value.email,
+        //   password: this.form.value.password
+        // }
         // this.auth.login(user).subscribe(() => {
         //   this.form.reset;
         //   this.router.navigate(['/admin','dashboard'])

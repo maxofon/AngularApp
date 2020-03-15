@@ -1,5 +1,11 @@
-<nav class="navbar main">
+<nav class="navbar bg-primary">
   <h1>Angular Blog</h1>
+
+  <ul *ngIf="auth.isAuthenticated()">
+    <li routerLinkActive="active">
+      <a [routerLink]="['cart']">Корзина</a>
+    </li>
+  </ul>
 </nav>
 
 <div class="container">

@@ -1,0 +1,30 @@
+<div *ngIf="carts.length; else loading">
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let cart of carts ; let idx = index">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ cart.product.name }}</td>
+            <td>{{ cart.quantity }}</td>
+            <td>{{ cart.price | currency:'USD' }}</td>
+            <td>
+                <a (click)="remove(cart.id)">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loading>
+    <p class="text-center">Идет загрузка...</p>
+</ng-template>
+
