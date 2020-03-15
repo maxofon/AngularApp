@@ -5,7 +5,7 @@
     [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
     class="form-control"
   >
-    <label for="title">Название продукта:</label>
+    <label for="name">Название продукта:</label>
     <input id="name" type="text" formControlName="name">
     <div
       *ngIf="form.get('name').touched && form.get('name').invalid"
@@ -17,16 +17,11 @@
     </div>
   </div>
 
-  <!--<div class="form-control">
-    <label>Контент поста:</label>
-    <quill-editor formControlName="text"></quill-editor>
-  </div>-->
-
   <div
     [ngClass]="{invalid: form.get('company').touched && form.get('company').invalid}"
     class="form-control"
   >
-    <label for="company">Автор поста:</label>
+    <label for="company">Название компании:</label>
     <input id="company" type="text" formControlName="company">
     <div
       *ngIf="form.get('company').touched && form.get('company').invalid"
@@ -35,6 +30,22 @@
       <small
         *ngIf="form.get('company').errors.required"
       >Введите название компании</small>
+    </div>
+  </div>
+
+  <div
+          [ngClass]="{invalid: form.get('price').touched && form.get('price').invalid}"
+          class="form-control"
+  >
+    <label for="price">Цена продукта:</label>
+    <input id="price" type="number" formControlName="price">
+    <div
+            *ngIf="form.get('price').touched && form.get('price').invalid"
+            class="validation"
+    >
+      <small
+              *ngIf="form.get('price').errors.required"
+      >Введите цену продукта</small>
     </div>
   </div>
 

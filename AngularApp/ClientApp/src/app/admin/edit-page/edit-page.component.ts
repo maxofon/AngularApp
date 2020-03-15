@@ -33,7 +33,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
         this.product = product
         this.form = new FormGroup({
           name: new FormControl(product.name, Validators.required),
-          company: new FormControl(product.company, Validators.required)
+          company: new FormControl({value: product.company, disabled: true}, Validators.required),
+          price: new FormControl(product.price, Validators.required)
         })
       })
   }
@@ -48,7 +49,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.uSub = this.productsService.update({
       ...this.product,
       name: this.form.value.name,
-      company: this.form.value.company
+      price: this.form.value.price
     }).subscribe(() => {
       this.submitted = false
       this.alert.success('Продукт был обновлен')

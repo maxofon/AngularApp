@@ -12,13 +12,30 @@
       >
         <small
           *ngIf="form.get('name').errors.required"
-        >Введите название поста</small>
+        >Введите название продукта</small>
       </div>
     </div>
 
-    <!--<div class="form-control">
-      <quill-editor formControlName="text"></quill-editor>
-    </div-->>
+    <div class="form-control">
+      <label for="company">Название компании:</label>
+      <input id="company" type="text" formControlName="company">
+    </div>
+
+    <div
+            [ngClass]="{invalid: form.get('price').touched && form.get('price').invalid}"
+            class="form-control"
+    >
+      <label for="price">Цена продукта:</label>
+      <input id="price" type="numeric" formControlName="price">
+      <div
+              *ngIf="form.get('price').touched && form.get('price').invalid"
+              class="validation"
+      >
+        <small
+                *ngIf="form.get('price').errors.required"
+        >Введите цену продукта</small>
+      </div>
+    </div>
 
     <button
       [disabled]="form.invalid || submitted"
@@ -26,7 +43,6 @@
       class="btn btn-primary"
     >Обновить</button>
   </form>
-
 
 </div>
 
