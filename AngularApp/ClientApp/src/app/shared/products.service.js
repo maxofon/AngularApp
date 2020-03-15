@@ -33,7 +33,7 @@ var ProductsService = /** @class */ (function () {
         }));
     };
     ProductsService.prototype.getAll = function () {
-        return this.http.get(this.apiUrl + ".json")
+        return this.http.get("" + this.apiUrl)
             .pipe(map(function (response) {
             return Object
                 .keys(response)
@@ -41,16 +41,16 @@ var ProductsService = /** @class */ (function () {
         }));
     };
     ProductsService.prototype.getById = function (id) {
-        return this.http.get(this.apiUrl + "/products/" + id + ".json")
+        return this.http.get(this.apiUrl + "/" + id)
             .pipe(map(function (product) {
             return __assign(__assign({}, product), { id: id });
         }));
     };
     ProductsService.prototype.update = function (product) {
-        return this.http.patch(this.apiUrl + "/products/" + product.id + ".json", product);
+        return this.http.patch(this.apiUrl + "/products/" + product.id, product);
     };
     ProductsService.prototype.remove = function (id) {
-        return this.http.delete(this.apiUrl + "/products/" + id + ".json");
+        return this.http.delete(this.apiUrl + "/products/" + id);
     };
     ProductsService = __decorate([
         Injectable({ providedIn: 'root' }),

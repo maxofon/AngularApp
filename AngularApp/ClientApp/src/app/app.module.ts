@@ -9,6 +9,7 @@ import { MainLayoutComponent } from './shared/components/main-layout/main-layout
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { ProductComponent } from './shared/components/product/product.component';
+import {AdminModule} from './admin/admin.module';
 
 
 
@@ -17,7 +18,8 @@ import { ProductComponent } from './shared/components/product/product.component'
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        SharedModule
+        SharedModule,
+        AdminModule
     ],      
     declarations: [
         AppComponent,

@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h1>Создание нового продукта</h1>
+
+  <div
+    [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
+    class="form-control"
+  >
+    <label for="title">Название продукта:</label>
+    <input id="name" type="text" formControlName="name">
+    <div
+      *ngIf="form.get('name').touched && form.get('name').invalid"
+      class="validation"
+    >
+      <small
+        *ngIf="form.get('name').errors.required"
+      >Введите название продукта</small>
+    </div>
+  </div>
+
+  <!--<div class="form-control">
+    <label>Контент поста:</label>
+    <quill-editor formControlName="text"></quill-editor>
+  </div>-->
+
+  <div
+    [ngClass]="{invalid: form.get('company').touched && form.get('company').invalid}"
+    class="form-control"
+  >
+    <label for="company">Автор поста:</label>
+    <input id="company" type="text" formControlName="company">
+    <div
+      *ngIf="form.get('company').touched && form.get('company').invalid"
+      class="validation"
+    >
+      <small
+        *ngIf="form.get('company').errors.required"
+      >Введите название компании</small>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-block btn-dark"
+    [disabled]="form.invalid"
+    >Создать пост</button>
+</form>

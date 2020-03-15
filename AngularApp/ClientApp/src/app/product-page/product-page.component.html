@@ -2,7 +2,6 @@
   <div class="product">
     <div class="header">
       <h1>{{ product.name }}</h1>
-
       <button routerLink="/" class="btn btn-link">На главную</button>
     </div>
 
@@ -10,7 +9,7 @@
       <strong>{{ product.company }}</strong>
       <small>{{ product.price | currency:'USD' }}</small>
     </div>
-
+    
     <!--<div>
       <quill-view-html [content]="product.text"></quill-view-html>
     </div>-->

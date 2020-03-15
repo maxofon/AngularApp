@@ -18,6 +18,7 @@ var ProductPageComponent = /** @class */ (function () {
     }
     ProductPageComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log('init ProductPageComponent');
         this.product$ = this.route.params
             .pipe(switchMap(function (params) {
             return _this.productsService.getById(params['id']);

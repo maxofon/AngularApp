@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { ProductsService } from '../shared/products.service';
 var HomePageComponent = /** @class */ (function () {
+    //products: Product[]
     function HomePageComponent(productsService) {
         this.productsService = productsService;
     }
     HomePageComponent.prototype.ngOnInit = function () {
-        //this.products$ = this.productsService.getAll()
+        //this.products = [];
+        this.products$ = this.productsService.getAll();
     };
     HomePageComponent = __decorate([
         Component({

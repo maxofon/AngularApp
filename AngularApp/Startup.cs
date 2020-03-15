@@ -37,6 +37,8 @@ namespace AngularApp
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            //services.AddCors(); // добавляем сервисы CORS
+
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie("Cookies", options => {
@@ -80,7 +82,11 @@ namespace AngularApp
             {
                 app.UseDeveloperExceptionPage();
             }
-                       
+
+            //app.UseCors(builder => builder.WithOrigins("https://localhost:4200")
+            //                .AllowAnyHeader()
+            //                .AllowAnyMethod());
+
             //app.UseDefaultFiles();
             //app.UseStaticFiles();
 
@@ -88,6 +94,8 @@ namespace AngularApp
             app.UseAuthorization();     // авторизация
 
             app.UseMvc();
+
+            
 
             app.UseStaticFiles();
             if (!env.IsDevelopment())
