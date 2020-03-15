@@ -23,7 +23,7 @@ export class ProductsService {
   }
 
   getAll(): Observable<Product[]> {
-      return this.http.get(`${this.apiUrl}.json`)
+      return this.http.get(`${this.apiUrl}`)
       .pipe(map((response: {[key: string]: any}) => {
         return Object
           .keys(response)
@@ -36,7 +36,7 @@ export class ProductsService {
   }
 
     getById(id: string): Observable<Product> {
-        return this.http.get<Product>(`${this.apiUrl}/products/${id}.json`)
+        return this.http.get<Product>(`${this.apiUrl}/${id}`)
             .pipe(map((product: Product) => {
         return {
           ...product,id,
@@ -46,10 +46,10 @@ export class ProductsService {
   }
 
     update(product: Product): Observable<Product> {
-        return this.http.patch<Product>(`${this.apiUrl}/products/${product.id}.json`, product)
+        return this.http.patch<Product>(`${this.apiUrl}/products/${product.id}`, product)
   }
 
   remove(id: string): Observable<void> {
-      return this.http.delete<void>(`${this.apiUrl}/products/${id}.json`);
+      return this.http.delete<void>(`${this.apiUrl}/products/${id}`);
   }
 }

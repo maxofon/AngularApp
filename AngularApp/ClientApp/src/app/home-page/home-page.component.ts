@@ -9,8 +9,8 @@ import {Product} from '../shared/interfaces';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-    //products$: Observable<Product[]>;
-    products: Product[]
+    products$: Observable<Product[]>;
+    //products: Product[]
 
   constructor(
     private productsService: ProductsService
@@ -18,7 +18,7 @@ export class HomePageComponent implements OnInit {
 
     ngOnInit(): void {
         //this.products = [];
-      //this.products$ = this.productsService.getAll()
+      this.products$ = this.productsService.getAll()
   }
 
 }

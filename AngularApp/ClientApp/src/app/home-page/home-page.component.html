@@ -1,6 +1,5 @@
 <div
-  
-    *ngIf="products; else loading"
+  *ngIf="products$ | async as products; else loading"
   class="products"
 >
   <app-product

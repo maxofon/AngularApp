@@ -17,13 +17,16 @@ export class ProductPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService
-  ) { }
+  ) {
+      
+  }
 
-  ngOnInit(): void {
-    this.product$ = this.route.params
-      .pipe(switchMap((params: Params) => {
-        return this.productsService.getById(params['id'])
-      }))
+    ngOnInit(): void {        
+        console.log('init ProductPageComponent');
+        this.product$ = this.route.params
+          .pipe(switchMap((params: Params) => {
+            return this.productsService.getById(params['id'])
+          }))
   }
 
 }
