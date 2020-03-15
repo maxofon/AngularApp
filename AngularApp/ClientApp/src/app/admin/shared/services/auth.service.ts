@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {FbAuthResponse, User} from '../../../shared/interfaces';
+import {FbAuthResponse} from '../../../shared/interfaces';
 import {Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
+import {User} from '../../../shared/interfaces/User';
 
 @Injectable({providedIn: 'root'})
 

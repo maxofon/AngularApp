@@ -3,7 +3,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {ProductsService} from '../../shared/products.service';
 import {switchMap} from 'rxjs/operators';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Product} from '../../shared/interfaces';
+import {Product} from '../../shared/interfaces/Product';
 import {Subscription} from 'rxjs';
 import {AlertService} from "../shared/services/alert.service";
 

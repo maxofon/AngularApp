@@ -26,7 +26,7 @@
             class="form-control"
     >
       <label for="price">Цена продукта:</label>
-      <input id="price" type="numeric" formControlName="price">
+      <input id="price" type="number" formControlName="price">
       <div
               *ngIf="form.get('price').touched && form.get('price').invalid"
               class="validation"
