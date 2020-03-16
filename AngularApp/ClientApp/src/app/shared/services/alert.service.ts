@@ -8,14 +8,14 @@ export interface Alert {
   text: string
 }
 
-@Injectable({providedIn:'root'})
+@Injectable({providedIn: 'root'})
 export class AlertService {
   public alert$ = new Subject<Alert>()
 
   success(text: string) {
     console.log(text);
+    // console.log(this.alert$);
     this.alert$.next({type: 'success', text})
-
   }
 
   warning(text: string) {

@@ -12,5 +12,10 @@
   <button
     [routerLink]="['/product', product.id]"
     class="btn btn-dark"
-  >Open</button>
+  >Открыть</button>
+
+  <button
+          (click)="addToCart(product.id)"
+          class="btn btn-dark"
+  >Добавить в корзину</button>
 </div>

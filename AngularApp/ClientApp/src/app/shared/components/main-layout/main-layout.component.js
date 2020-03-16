@@ -8,8 +8,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { AuthService } from '../../../admin/shared/services/auth.service';
 var MainLayoutComponent = /** @class */ (function () {
-    function MainLayoutComponent() {
+    function MainLayoutComponent(auth) {
+        this.auth = auth;
     }
     MainLayoutComponent.prototype.ngOnInit = function () {
     };
@@ -19,7 +21,7 @@ var MainLayoutComponent = /** @class */ (function () {
             templateUrl: './main-layout.component.html',
             styleUrls: ['./main-layout.component.scss']
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [AuthService])
     ], MainLayoutComponent);
     return MainLayoutComponent;
 }());

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Product} from '../../interfaces/Product';
+import {AlertService} from '../../../admin/shared/services/alert.service';
+import {CartService} from '../../services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -9,9 +11,17 @@ import {Product} from '../../interfaces/Product';
 export class ProductComponent implements OnInit {
   @Input() product: Product
 
-  constructor() { }
+  constructor(
+      private alert: AlertService,
+      private cartService: CartService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  addToCart(id: string) {
+    this.cartService.create(id).subscribe(() => {
+      this.alert.success(`Продукт ${this.product.name} добавлен в корзину`)
+    })
+  }
 }
