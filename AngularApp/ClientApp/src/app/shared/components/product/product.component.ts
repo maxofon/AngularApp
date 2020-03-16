@@ -12,17 +12,11 @@ export class ProductComponent implements OnInit {
   @Input() product: Product
 
   constructor(
-      private alert: AlertService,
-      private cartService: CartService
+      public alert: AlertService,
+      public cartService: CartService
   ) { }
 
   ngOnInit(): void {
   }
 
-  addToCart(id: string) {
-    this.cartService.create(id).subscribe(() => {
-      this.cartService.updateTotal();
-      this.alert.success(`Продукт ${this.product.name} добавлен в корзину`)
-    })
-  }
 }

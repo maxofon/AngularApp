@@ -23,6 +23,7 @@ export class CartPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pSub = this.cartService.getAll().subscribe(carts => {
       this.carts = carts
+      this.loaded = true;
     })
   }
 

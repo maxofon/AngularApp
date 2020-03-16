@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {ProductsService} from '../shared/services/products.service';
 import {Product} from '../shared/interfaces/Product';
 import {switchMap} from 'rxjs/operators';
+import {CartService} from '../shared/services/cart.service';
+import {AlertService} from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-product-page',
@@ -16,7 +18,9 @@ export class ProductPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    public cartService: CartService,
+    public alert: AlertService
   ) {
       
   }

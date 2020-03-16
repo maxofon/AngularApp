@@ -37,4 +37,10 @@ export class CartService {
             this.totalAmount$.next(response.toString())
         })
     }
+
+    addToCart(id: string) {
+        this.create(id).subscribe(() => {
+            this.updateTotal();
+        })
+    }
 }

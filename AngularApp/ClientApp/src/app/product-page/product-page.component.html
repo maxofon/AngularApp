@@ -11,6 +11,11 @@
     </div>
 
   </div>
+
+  <button
+          (click)="this.cartService.addToCart(product.id); alert.success('Продукт был добавлен в корзину')"
+          class="btn btn-success"
+  >Добавить в корзину</button>
 </div>
 
 <ng-template #loading>

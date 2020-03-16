@@ -18,10 +18,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.cartService.updateTotal();
     this.cartSub = this.cartService.totalAmount$.subscribe((value) => {
       this.totalAmount = value
     })
+
+    this.cartService.updateTotal();
   }
 
   ngOnDestroy(): void {
