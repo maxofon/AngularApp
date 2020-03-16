@@ -12,8 +12,8 @@ export class CartService {
     constructor(private http: HttpClient) {
     }
 
-    create(productId: string): Observable<Cart> {
-        return this.http.post<Cart>(`${this.apiUrl}/${productId}`, null);
+    create(productId: string): Observable<void> {
+        return this.http.post<void>(`${this.apiUrl}/${productId}`, null);
     }
 
     getAll(): Observable<Cart[]> {
