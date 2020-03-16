@@ -8,7 +8,7 @@
       <a [routerLink]="['/']">Angular Blog</a>
     </li>
     <li routerLinkActive="active">
-      <a [routerLink]="['/cart']">Корзина</a>
+      <a [routerLink]="['/cart']">Корзина ({{ totalAmount | currency:'USD' }})</a>
     </li>
   </ul>
 </nav>

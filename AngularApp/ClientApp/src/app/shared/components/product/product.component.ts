@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
 
   addToCart(id: string) {
     this.cartService.create(id).subscribe(() => {
+      this.cartService.updateTotal();
       this.alert.success(`Продукт ${this.product.name} добавлен в корзину`)
     })
   }

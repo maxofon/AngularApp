@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Cart} from '../interfaces/Cart';
 
 @Injectable({providedIn: 'root'})
 export class CartService {
+    public totalAmount$ = new Subject<string>();
+
     apiUrl: string = 'https://localhost:44344/api/cart';
 
     constructor(private http: HttpClient) {
@@ -28,5 +30,11 @@ export class CartService {
 
     remove(id: string): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
+
+    updateTotal() {
+        this.http.get(`${this.apiUrl}/getTotal`).subscribe((response) => {
+            this.totalAmount$.next(response.toString())
+        })
     }
 }

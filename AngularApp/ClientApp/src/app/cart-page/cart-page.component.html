@@ -14,7 +14,7 @@
             <td>{{ idx + 1 }}</td>
             <td>{{ cart.product.name }}</td>
             <td>{{ cart.quantity }}</td>
-            <td>{{ cart.price | currency:'USD' }}</td>
+            <td>{{ cart.price | currency:'USD'}}</td>
             <td>
                 <a (click)="remove(cart.id)">Удалить</a>
             </td>
@@ -24,6 +24,11 @@
 </div>
 
 <ng-template #loading>
-    <p class="text-center">Идет загрузка...</p>
+    <div *ngIf="loaded; else inProcess">
+        <p>Корзина пуста</p>
+    </div>
+    <ng-template #inProcess>
+        <p class="text-center">Идет загрузка...</p>
+    </ng-template>
 </ng-template>
 

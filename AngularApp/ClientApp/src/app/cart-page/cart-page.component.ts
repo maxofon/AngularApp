@@ -10,10 +10,10 @@ import {CartService} from '../shared/services/cart.service';
   styleUrls: ['./cart-page.component.scss']
 })
 export class CartPageComponent implements OnInit, OnDestroy {
-
   carts: Cart[] = []
   pSub: Subscription
   dSub: Subscription
+  loaded: boolean
 
   constructor(
       private alert: AlertService,
@@ -29,6 +29,8 @@ export class CartPageComponent implements OnInit, OnDestroy {
   remove(id: string): void {
     this.dSub = this.cartService.remove(id).subscribe(() => {
       this.carts = this.carts.filter(cart => cart.id !== id);
+      this.cartService.updateTotal();
+      this.loaded = true;
       this.alert.danger('Продукт был удален из корзины');
     })
   }
