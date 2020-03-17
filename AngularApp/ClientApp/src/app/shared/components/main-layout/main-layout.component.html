@@ -1,4 +1,4 @@
-<app-alert></app-alert>
+<app-alert [delay]="1000"></app-alert>
 <nav class="navbar bg-primary">
 
 
@@ -9,6 +9,10 @@
     </li>
     <li routerLinkActive="active">
       <a [routerLink]="['/cart']">Корзина ({{ totalAmount | currency:'USD' }})</a>
+    </li>
+
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin']">Админка</a>
     </li>
   </ul>
 </nav>

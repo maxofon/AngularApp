@@ -8,8 +8,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input } from '@angular/core';
+import { AlertService } from '../../../admin/shared/services/alert.service';
+import { CartService } from '../../services/cart.service';
 var ProductComponent = /** @class */ (function () {
-    function ProductComponent() {
+    function ProductComponent(alert, cartService) {
+        this.alert = alert;
+        this.cartService = cartService;
     }
     ProductComponent.prototype.ngOnInit = function () {
     };
@@ -23,7 +27,8 @@ var ProductComponent = /** @class */ (function () {
             templateUrl: './product.component.html',
             styleUrls: ['./product.component.scss']
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [AlertService,
+            CartService])
     ], ProductComponent);
     return ProductComponent;
 }());

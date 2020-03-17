@@ -21,7 +21,7 @@ var AlertService = /** @class */ (function () {
         this.alert$.next({ type: 'danger', text: text });
     };
     AlertService = __decorate([
-        Injectable()
+        Injectable({ providedIn: 'root' })
     ], AlertService);
     return AlertService;
 }());

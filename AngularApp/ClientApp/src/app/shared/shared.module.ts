@@ -1,10 +1,13 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {AlertComponent} from '../admin/shared/components/alert/alert.component';
+import {AlertComponent} from './components/alert/alert.component';
+import {CommonModule} from '@angular/common';
+
 
 @NgModule({
   imports: [
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   declarations: [
     AlertComponent

@@ -16,8 +16,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from "./shared/services/auth.guard";
 import { SearchPipe } from './shared/search.pipe';
-import { AlertComponent } from './shared/components/alert/alert.component';
-import { AlertService } from "./shared/services/alert.service";
 var AdminModule = /** @class */ (function () {
     function AdminModule() {
     }
@@ -29,8 +27,7 @@ var AdminModule = /** @class */ (function () {
                 DashboardPageComponent,
                 CreatePageComponent,
                 EditPageComponent,
-                SearchPipe,
-                AlertComponent
+                SearchPipe
             ],
             imports: [
                 CommonModule,
@@ -51,7 +48,7 @@ var AdminModule = /** @class */ (function () {
                 FormsModule
             ],
             exports: [RouterModule],
-            providers: [AuthGuard, AlertService]
+            providers: [AuthGuard]
         })
     ], AdminModule);
     return AdminModule;

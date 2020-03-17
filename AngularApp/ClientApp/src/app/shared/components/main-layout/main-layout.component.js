@@ -9,11 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { AuthService } from '../../../admin/shared/services/auth.service';
+import { CartService } from '../../services/cart.service';
 var MainLayoutComponent = /** @class */ (function () {
-    function MainLayoutComponent(auth) {
+    function MainLayoutComponent(auth, cartService) {
         this.auth = auth;
+        this.cartService = cartService;
     }
     MainLayoutComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.cartSub = this.cartService.totalAmount$.subscribe(function (value) {
+            _this.totalAmount = value;
+        });
+        this.cartService.updateTotal();
+    };
+    MainLayoutComponent.prototype.ngOnDestroy = function () {
+        if (this.cartSub) {
+            this.cartSub.unsubscribe();
+        }
     };
     MainLayoutComponent = __decorate([
         Component({
@@ -21,7 +33,8 @@ var MainLayoutComponent = /** @class */ (function () {
             templateUrl: './main-layout.component.html',
             styleUrls: ['./main-layout.component.scss']
         }),
-        __metadata("design:paramtypes", [AuthService])
+        __metadata("design:paramtypes", [AuthService,
+            CartService])
     ], MainLayoutComponent);
     return MainLayoutComponent;
 }());

@@ -1,0 +1,79 @@
+<form class="card" [formGroup]="form">
+    <h2>Регистрация</h2>
+
+    <div class="alert alert-danger" *ngIf="(auth.error$ | async) as error">
+        {{ error }}
+    </div>
+
+    <div class="alert alert-info" *ngIf="message">
+        {{ message }}
+    </div>
+
+    <div
+            [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+            class="form-control"
+    >
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email">
+        <div
+                *ngIf="form.get('email').touched && form.get('email').invalid"
+                class="validation"
+        >
+            <small
+                    *ngIf="form.get('email').errors.required"
+            >Нужно ввести email</small>
+            <small
+                    *ngIf="form.get('email').errors.email"
+            >Email должен быть email</small>
+        </div>
+    </div>
+
+    <div
+            [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}"
+            class="form-control"
+    >
+        <label for="password">Password:</label>
+        <input id="password" type="password" formControlName="password">
+        <div
+                *ngIf="form.get('password').touched && form.get('password').invalid"
+                class="validation">
+            <small
+                    *ngIf="form.get('password').errors.required"
+            >Нужно ввести пароль</small>
+
+            <small
+                    *ngIf="form.get('password').errors.minlength"
+            >Пароль должен быть не менее {{form.get('password').errors.minlength.requiredLength}}.
+                Сейчас введено {{form.get('password').errors.minlength.actualLength}} символов</small>
+        </div>
+    </div>
+
+    <div
+            [ngClass]="{invalid: form.get('confirmPassword').touched && form.get('confirmPassword').invalid}"
+            class="form-control"
+    >
+        <label for="confirmPassword">Confirm password:</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword">
+        <div
+                *ngIf="form.get('confirmPassword').touched && form.get('confirmPassword').invalid"
+                class="validation">
+            <small
+                    *ngIf="form.get('confirmPassword').errors.required"
+            >Нужно подтвердить пароль</small>
+        </div>
+
+        <small
+                *ngIf="form.get('confirmPassword').touched && form.errors && form.errors.notEqual"
+        >Пароли должны совпадать</small>
+
+    </div>
+
+    <button
+            [disabled]="form.invalid || submitted"
+            type="submit"
+            class="btn btn-primary"
+            (click)="submit()"
+    >Зарегистрироваться</button>
+</form>
+
+

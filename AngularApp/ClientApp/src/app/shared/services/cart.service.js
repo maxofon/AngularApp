@@ -9,13 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 var CartService = /** @class */ (function () {
     function CartService(http) {
         this.http = http;
+        this.totalAmount$ = new Subject();
         this.apiUrl = 'https://localhost:44344/api/cart';
     }
-    CartService.prototype.create = function (cart) {
-        return this.http.post("" + this.apiUrl, cart);
+    CartService.prototype.create = function (productId) {
+        return this.http.post(this.apiUrl + "/" + productId, null);
     };
     CartService.prototype.getAll = function () {
         return this.http.get("" + this.apiUrl);
@@ -28,6 +30,18 @@ var CartService = /** @class */ (function () {
     };
     CartService.prototype.remove = function (id) {
         return this.http.delete(this.apiUrl + "/" + id);
+    };
+    CartService.prototype.updateTotal = function () {
+        var _this = this;
+        this.http.get(this.apiUrl + "/getTotal").subscribe(function (response) {
+            _this.totalAmount$.next(response.toString());
+        });
+    };
+    CartService.prototype.addToCart = function (id) {
+        var _this = this;
+        this.create(id).subscribe(function () {
+            _this.updateTotal();
+        });
     };
     CartService = __decorate([
         Injectable({ providedIn: 'root' }),

@@ -11,10 +11,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../shared/services/products.service';
 import { switchMap } from 'rxjs/operators';
+import { CartService } from '../shared/services/cart.service';
+import { AlertService } from '../shared/services/alert.service';
 var ProductPageComponent = /** @class */ (function () {
-    function ProductPageComponent(route, productsService) {
+    function ProductPageComponent(route, productsService, cartService, alert) {
         this.route = route;
         this.productsService = productsService;
+        this.cartService = cartService;
+        this.alert = alert;
     }
     ProductPageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -31,7 +35,9 @@ var ProductPageComponent = /** @class */ (function () {
             styleUrls: ['./product-page.component.scss']
         }),
         __metadata("design:paramtypes", [ActivatedRoute,
-            ProductsService])
+            ProductsService,
+            CartService,
+            AlertService])
     ], ProductPageComponent);
     return ProductPageComponent;
 }());

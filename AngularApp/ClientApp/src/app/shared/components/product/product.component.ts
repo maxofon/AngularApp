@@ -12,11 +12,15 @@ export class ProductComponent implements OnInit {
   @Input() product: Product
 
   constructor(
-      public alert: AlertService,
-      public cartService: CartService
+      private alert: AlertService,
+      private cartService: CartService
   ) { }
 
   ngOnInit(): void {
   }
 
+  addToCart(id: string) {
+    this.cartService.addToCart(id);
+    this.alert.success('Продукт был добавлен в корзину')
+  }
 }

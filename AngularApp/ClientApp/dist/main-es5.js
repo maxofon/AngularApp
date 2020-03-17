@@ -1626,9 +1626,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _alert_alert_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! ../alert/alert.component */
-    "./src/app/admin/shared/components/alert/alert.component.ts");
+    var _shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../../../shared/components/alert/alert.component */
+    "./src/app/shared/components/alert/alert.component.ts");
     /* harmony import */
 
 
@@ -1770,7 +1770,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.auth.isAuthenticated());
         }
       },
-      directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__["AlertComponent"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterOutlet"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkActive"]],
+      directives: [_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__["AlertComponent"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterOutlet"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkActive"]],
       styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3NoYXJlZC9jb21wb25lbnRzL2FkbWluLWxheW91dC9hZG1pbi1sYXlvdXQuY29tcG9uZW50LnNjc3MifQ== */"]
     });
     /*@__PURE__*/
@@ -1790,161 +1790,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]
         }];
       }, null);
-    })();
-    /***/
-
-  },
-
-  /***/
-  "./src/app/admin/shared/components/alert/alert.component.ts":
-  /*!******************************************************************!*\
-    !*** ./src/app/admin/shared/components/alert/alert.component.ts ***!
-    \******************************************************************/
-
-  /*! exports provided: AlertComponent */
-
-  /***/
-  function srcAppAdminSharedComponentsAlertAlertComponentTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "AlertComponent", function () {
-      return AlertComponent;
-    });
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-    /* harmony import */
-
-
-    var _services_alert_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! ../../services/alert.service */
-    "./src/app/admin/shared/services/alert.service.ts");
-
-    var _c0 = function _c0(a0, a1, a2) {
-      return {
-        "alert-success": a0,
-        "alert-warning": a1,
-        "alert-danger": a2
-      };
-    };
-
-    function AlertComponent_div_0_Template(rf, ctx) {
-      if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 1);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 2);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "p");
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-      }
-
-      if (rf & 2) {
-        var ctx_r24 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction3"](2, _c0, ctx_r24.type === "success", ctx_r24.type === "warning", ctx_r24.type === "danger"));
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r24.text);
-      }
-    }
-
-    var AlertComponent =
-    /*#__PURE__*/
-    function () {
-      function AlertComponent(alertService) {
-        _classCallCheck(this, AlertComponent);
-
-        this.alertService = alertService;
-        this.delay = 5000;
-        this.type = 'success';
-      }
-
-      _createClass(AlertComponent, [{
-        key: "ngOnInit",
-        value: function ngOnInit() {
-          var _this7 = this;
-
-          this.aSub = this.alertService.alert$.subscribe(function (alert) {
-            _this7.text = alert.text;
-            _this7.type = alert.type;
-            var timeout = setTimeout(function () {
-              clearTimeout(timeout);
-              _this7.text = '';
-            }, _this7.delay);
-          });
-        }
-      }, {
-        key: "ngOnDestroy",
-        value: function ngOnDestroy() {
-          if (this.aSub) {
-            this.aSub.unsubscribe();
-          }
-        }
-      }]);
-
-      return AlertComponent;
-    }();
-
-    AlertComponent.ɵfac = function AlertComponent_Factory(t) {
-      return new (t || AlertComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_alert_service__WEBPACK_IMPORTED_MODULE_1__["AlertService"]));
-    };
-
-    AlertComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
-      type: AlertComponent,
-      selectors: [["app-alert"]],
-      inputs: {
-        delay: "delay"
-      },
-      decls: 1,
-      vars: 1,
-      consts: [["class", "alert-wrap", 4, "ngIf"], [1, "alert-wrap"], [1, "alert", 3, "ngClass"]],
-      template: function AlertComponent_Template(rf, ctx) {
-        if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, AlertComponent_div_0_Template, 4, 6, "div", 0);
-        }
-
-        if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.text);
-        }
-      },
-      styles: [".alert-wrap[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 50px;\n  right: 40px;\n  max-width: 200px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYWRtaW4vc2hhcmVkL2NvbXBvbmVudHMvYWxlcnQvQzpcXFVzZXJzXFxNYXhpbSBSZXpuaWtvdlxcc291cmNlXFxyZXBvc1xcQW5ndWxhckFwcFxcQW5ndWxhckFwcFxcQW5ndWxhckFwcFxcQ2xpZW50QXBwL3NyY1xcYXBwXFxhZG1pblxcc2hhcmVkXFxjb21wb25lbnRzXFxhbGVydFxcYWxlcnQuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL2FkbWluL3NoYXJlZC9jb21wb25lbnRzL2FsZXJ0L2FsZXJ0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtFQUNBLFNBQUE7RUFDQSxXQUFBO0VBQ0EsZ0JBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3NoYXJlZC9jb21wb25lbnRzL2FsZXJ0L2FsZXJ0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmFsZXJ0LXdyYXAge1xyXG4gIHBvc2l0aW9uOiBmaXhlZDtcclxuICB0b3A6IDUwcHg7XHJcbiAgcmlnaHQ6IDQwcHg7XHJcbiAgbWF4LXdpZHRoOiAyMDBweDtcclxufVxyXG4iLCIuYWxlcnQtd3JhcCB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgdG9wOiA1MHB4O1xuICByaWdodDogNDBweDtcbiAgbWF4LXdpZHRoOiAyMDBweDtcbn0iXX0= */"]
-    });
-    /*@__PURE__*/
-
-    (function () {
-      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AlertComponent, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
-        args: [{
-          selector: 'app-alert',
-          templateUrl: './alert.component.html',
-          styleUrls: ['./alert.component.scss']
-        }]
-      }], function () {
-        return [{
-          type: _services_alert_service__WEBPACK_IMPORTED_MODULE_1__["AlertService"]
-        }];
-      }, {
-        delay: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
-        }]
-      });
     })();
     /***/
 
@@ -2912,28 +2757,28 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(CartPageComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this8 = this;
+          var _this7 = this;
 
           this.pSub = this.cartService.getAll().subscribe(function (carts) {
-            _this8.carts = carts;
-            _this8.loaded = true;
+            _this7.carts = carts;
+            _this7.loaded = true;
           });
         }
       }, {
         key: "remove",
         value: function remove(id) {
-          var _this9 = this;
+          var _this8 = this;
 
           this.dSub = this.cartService.remove(id).subscribe(function () {
-            _this9.carts = _this9.carts.filter(function (cart) {
+            _this8.carts = _this8.carts.filter(function (cart) {
               return cart.id !== id;
             });
 
-            _this9.cartService.updateTotal();
+            _this8.cartService.updateTotal();
 
-            _this9.loaded = true;
+            _this8.loaded = true;
 
-            _this9.alert.danger('Продукт был удален из корзины');
+            _this8.alert.danger('Продукт был удален из корзины');
           });
         }
       }, {
@@ -3321,11 +3166,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ProductPageComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this10 = this;
+          var _this9 = this;
 
           console.log('init ProductPageComponent');
           this.product$ = this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (params) {
-            return _this10.productsService.getById(params['id']);
+            return _this9.productsService.getById(params['id']);
           }));
         }
       }]);
@@ -3389,6 +3234,161 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   },
 
   /***/
+  "./src/app/shared/components/alert/alert.component.ts":
+  /*!************************************************************!*\
+    !*** ./src/app/shared/components/alert/alert.component.ts ***!
+    \************************************************************/
+
+  /*! exports provided: AlertComponent */
+
+  /***/
+  function srcAppSharedComponentsAlertAlertComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AlertComponent", function () {
+      return AlertComponent;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _services_alert_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../services/alert.service */
+    "./src/app/shared/services/alert.service.ts");
+
+    var _c0 = function _c0(a0, a1, a2) {
+      return {
+        "alert-success": a0,
+        "alert-warning": a1,
+        "alert-danger": a2
+      };
+    };
+
+    function AlertComponent_div_0_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "p");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var ctx_r24 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction3"](2, _c0, ctx_r24.type === "success", ctx_r24.type === "warning", ctx_r24.type === "danger"));
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r24.text);
+      }
+    }
+
+    var AlertComponent =
+    /*#__PURE__*/
+    function () {
+      function AlertComponent(alertService) {
+        _classCallCheck(this, AlertComponent);
+
+        this.alertService = alertService;
+        this.delay = 3000;
+        this.type = 'success';
+      }
+
+      _createClass(AlertComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          var _this10 = this;
+
+          this.aSub = this.alertService.alert$.subscribe(function (alert) {
+            _this10.text = alert.text;
+            _this10.type = alert.type;
+            var timeout = setTimeout(function () {
+              clearTimeout(timeout);
+              _this10.text = '';
+            }, _this10.delay);
+          });
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          if (this.aSub) {
+            this.aSub.unsubscribe();
+          }
+        }
+      }]);
+
+      return AlertComponent;
+    }();
+
+    AlertComponent.ɵfac = function AlertComponent_Factory(t) {
+      return new (t || AlertComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_alert_service__WEBPACK_IMPORTED_MODULE_1__["AlertService"]));
+    };
+
+    AlertComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+      type: AlertComponent,
+      selectors: [["app-alert"]],
+      inputs: {
+        delay: "delay"
+      },
+      decls: 1,
+      vars: 1,
+      consts: [["class", "alert-wrap", 4, "ngIf"], [1, "alert-wrap"], [1, "alert", 3, "ngClass"]],
+      template: function AlertComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, AlertComponent_div_0_Template, 4, 6, "div", 0);
+        }
+
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.text);
+        }
+      },
+      styles: [".alert-wrap[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 50px;\n  right: 40px;\n  max-width: 200px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvYWxlcnQvQzpcXFVzZXJzXFxNYXhpbSBSZXpuaWtvdlxcc291cmNlXFxyZXBvc1xcQW5ndWxhckFwcFxcQW5ndWxhckFwcFxcQW5ndWxhckFwcFxcQ2xpZW50QXBwL3NyY1xcYXBwXFxzaGFyZWRcXGNvbXBvbmVudHNcXGFsZXJ0XFxhbGVydC5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvYWxlcnQvYWxlcnQuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxlQUFBO0VBQ0EsU0FBQTtFQUNBLFdBQUE7RUFDQSxnQkFBQTtBQ0NGIiwiZmlsZSI6InNyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvYWxlcnQvYWxlcnQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYWxlcnQtd3JhcCB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHRvcDogNTBweDtcclxuICByaWdodDogNDBweDtcclxuICBtYXgtd2lkdGg6IDIwMHB4O1xyXG59XHJcbiIsIi5hbGVydC13cmFwIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICB0b3A6IDUwcHg7XG4gIHJpZ2h0OiA0MHB4O1xuICBtYXgtd2lkdGg6IDIwMHB4O1xufSJdfQ== */"]
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AlertComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+          selector: 'app-alert',
+          templateUrl: './alert.component.html',
+          styleUrls: ['./alert.component.scss']
+        }]
+      }], function () {
+        return [{
+          type: _services_alert_service__WEBPACK_IMPORTED_MODULE_1__["AlertService"]
+        }];
+      }, {
+        delay: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }]
+      });
+    })();
+    /***/
+
+  },
+
+  /***/
   "./src/app/shared/components/main-layout/main-layout.component.ts":
   /*!************************************************************************!*\
     !*** ./src/app/shared/components/main-layout/main-layout.component.ts ***!
@@ -3428,9 +3428,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! ../../../admin/shared/components/alert/alert.component */
-    "./src/app/admin/shared/components/alert/alert.component.ts");
+    var _alert_alert_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../alert/alert.component */
+    "./src/app/shared/components/alert/alert.component.ts");
     /* harmony import */
 
 
@@ -3573,7 +3573,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.auth.isAuthenticated());
         }
       },
-      directives: [_admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__["AlertComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterOutlet"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkActive"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkWithHref"]],
+      directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__["AlertComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterOutlet"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkActive"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkWithHref"]],
       pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["CurrencyPipe"]],
       styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL21haW4tbGF5b3V0L21haW4tbGF5b3V0LmNvbXBvbmVudC5zY3NzIn0= */"]
     });
@@ -4136,9 +4136,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! ../admin/shared/components/alert/alert.component */
-    "./src/app/admin/shared/components/alert/alert.component.ts");
+    var _components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ./components/alert/alert.component */
+    "./src/app/shared/components/alert/alert.component.ts");
 
     var SharedModule = function SharedModule() {
       _classCallCheck(this, SharedModule);
@@ -4156,9 +4156,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     (function () {
       (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](SharedModule, {
-        declarations: [_admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]],
+        declarations: [_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]],
         imports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"]],
-        exports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"], _admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]]
+        exports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"], _components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]]
       });
     })();
     /*@__PURE__*/
@@ -4169,8 +4169,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
         args: [{
           imports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"]],
-          declarations: [_admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]],
-          exports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"], _admin_shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]]
+          declarations: [_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]],
+          exports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"], _components_alert_alert_component__WEBPACK_IMPORTED_MODULE_2__["AlertComponent"]]
         }]
       }], null, null);
     })();

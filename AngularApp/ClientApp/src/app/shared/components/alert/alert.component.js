@@ -12,7 +12,7 @@ import { AlertService } from "../../services/alert.service";
 var AlertComponent = /** @class */ (function () {
     function AlertComponent(alertService) {
         this.alertService = alertService;
-        this.delay = 5000;
+        this.delay = 3000;
         this.type = 'success';
     }
     AlertComponent.prototype.ngOnInit = function () {

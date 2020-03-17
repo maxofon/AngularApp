@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AlertComponent } from './components/alert/alert.component';
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
@@ -14,8 +15,12 @@ var SharedModule = /** @class */ (function () {
             imports: [
                 HttpClientModule
             ],
+            declarations: [
+                AlertComponent
+            ],
             exports: [
-                HttpClientModule
+                HttpClientModule,
+                AlertComponent
             ]
         })
     ], SharedModule);

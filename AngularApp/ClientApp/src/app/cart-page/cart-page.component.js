@@ -20,12 +20,15 @@ var CartPageComponent = /** @class */ (function () {
         var _this = this;
         this.pSub = this.cartService.getAll().subscribe(function (carts) {
             _this.carts = carts;
+            _this.loaded = true;
         });
     };
     CartPageComponent.prototype.remove = function (id) {
         var _this = this;
         this.dSub = this.cartService.remove(id).subscribe(function () {
             _this.carts = _this.carts.filter(function (cart) { return cart.id !== id; });
+            _this.cartService.updateTotal();
+            _this.loaded = true;
             _this.alert.danger('Продукт был удален из корзины');
         });
     };

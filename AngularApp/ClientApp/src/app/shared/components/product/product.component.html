@@ -15,7 +15,7 @@
   >Открыть</button>
 
   <button
-          (click)="this.cartService.addToCart(product.id); this.alert.success('Продукт был добавлен в корзину')"
+          (click)="addToCart(product.id)"
           class="btn btn-success"
   >Добавить в корзину</button>
 </div>
