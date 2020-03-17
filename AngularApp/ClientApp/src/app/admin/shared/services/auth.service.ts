@@ -8,30 +8,31 @@ import {User} from '../../../shared/interfaces/User';
 @Injectable({providedIn: 'root'})
 
 export class AuthService {
-  public error$: Subject<string> = new Subject<string>()
+  public error$: Subject<string> = new Subject<string>();
+  apiUrl: string = 'api/account';
 
   constructor(private http: HttpClient) {
   }
 
-  get token(): string {
-    //const expDate = new Date(localStorage.getItem('fb-token-exp'));
-    //if (new Date > expDate) {
-    //  this.logout();
-    //  return null;
-    //}
+  get user(): string {
+    const expDate = new Date(localStorage.getItem('expires'));
+    if (new Date > expDate) {
+     this.logout();
+     return null;
+    }
 
-    //return localStorage.getItem('fb-token')
-
-      return 'test'
+    return localStorage.getItem('user-name')
   }
 
   login(user: User): Observable<any> {
-    user.returnSecureToken = true;
-    //return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
-    //  .pipe(
-    //    tap(this.setToken),
-    //    catchError(this.handleError.bind(this))
-    //  )
+    // user.returnSecureToken = true;
+    return this.http.post(`${this.apiUrl}/login`, user)
+     .pipe(
+       // tap(this.setToken),
+       tap(this.setUser),
+       catchError(this.handleError.bind(this))
+     )
+
       return new Subject<string>();
   }
 
@@ -40,24 +41,25 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    // return !!this.token;
-    return true;
+    return !!this.user;
+    // return true;
   }
 
   private handleError(error: HttpErrorResponse) {
     const {message} = error.error.error
+    this.error$.next(message)
 
-    switch (message) {
-      case 'INVALID_EMAIL':
-        this.error$.next('Неверный email')
-        break
-      case 'INVALID_PASSWORD':
-        this.error$.next('Неверный пароль')
-        break
-      case 'EMAIL_NOT_FOUND':
-        this.error$.next('Такого email нет')
-        break
-    }
+    // switch (message) {
+    //   case 'INVALID_EMAIL':
+    //     this.error$.next('Неверный email')
+    //     break
+    //   case 'INVALID_PASSWORD':
+    //     this.error$.next('Неверный пароль')
+    //     break
+    //   case 'EMAIL_NOT_FOUND':
+    //     this.error$.next('Такого email нет')
+    //     break
+    // }
 
     console.log(this.error$)
 
@@ -72,6 +74,16 @@ export class AuthService {
     } else {
       localStorage.clear()
     }
-
   }
+
+  private setUser(response: User | null) {
+    if (response) {
+      const expDate = new Date(new Date().getTime() + 3600000); //1 час
+      localStorage.setItem('expires', expDate.toString())
+      localStorage.setItem('user-name', response.name)
+    } else {
+      localStorage.clear()
+    }
+  }
+
 }

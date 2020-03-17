@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../../admin/shared/services/auth.service';
 import {CartService} from '../../services/cart.service';
 import {Subject, Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',
@@ -14,7 +15,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   constructor(
       public auth: AuthService,
-      private cartService: CartService
+      private cartService: CartService,
+      private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -31,4 +33,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  logout($event: MouseEvent) {
+    event.preventDefault();
+    this.auth.logout();
+    this.router.navigate(['/login'])
+  }
 }
