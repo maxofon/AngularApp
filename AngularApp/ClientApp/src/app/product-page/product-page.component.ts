@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs';
 import {ProductsService} from '../shared/services/products.service';
@@ -6,6 +6,7 @@ import {Product} from '../shared/interfaces/Product';
 import {switchMap} from 'rxjs/operators';
 import {CartService} from '../shared/services/cart.service';
 import {AlertService} from '../shared/services/alert.service';
+import {AuthService} from '../admin/shared/services/auth.service';
 
 @Component({
   selector: 'app-product-page',
@@ -13,10 +14,10 @@ import {AlertService} from '../shared/services/alert.service';
   styleUrls: ['./product-page.component.scss']
 })
 export class ProductPageComponent implements OnInit {
-
   product$: Observable<Product>
 
   constructor(
+    private auth: AuthService,
     private route: ActivatedRoute,
     private productsService: ProductsService,
     public cartService: CartService,

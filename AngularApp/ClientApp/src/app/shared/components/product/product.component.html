@@ -14,7 +14,7 @@
     class="btn btn-dark"
   >Открыть</button>
 
-  <button
+  <button *ngIf="showAddCart"
           (click)="addToCart(product.id)"
           class="btn btn-success"
   >Добавить в корзину</button>

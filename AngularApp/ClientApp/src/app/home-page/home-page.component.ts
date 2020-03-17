@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ProductsService} from '../shared/services/products.service';
 import {Observable} from 'rxjs';
 import {Product} from '../shared/interfaces/Product';
+import {AuthService} from '../admin/shared/services/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -13,7 +14,8 @@ export class HomePageComponent implements OnInit {
     //products: Product[]
 
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private auth: AuthService
   ) { }
 
     ngOnInit(): void {

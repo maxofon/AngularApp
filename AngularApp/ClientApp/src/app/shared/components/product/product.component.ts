@@ -10,6 +10,7 @@ import {CartService} from '../../services/cart.service';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product
+  @Input() showAddCart: boolean
 
   constructor(
       private alert: AlertService,
