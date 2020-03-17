@@ -43,7 +43,7 @@ export class RegisterPageComponent implements OnInit {
       ]),
       password: new FormControl(null, [
         Validators.required,
-
+        Validators.minLength(5)
       ]),
       confirmPassword: new FormControl(null, [
         Validators.required

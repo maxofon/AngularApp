@@ -8,10 +8,6 @@
       <a [routerLink]="['/cart']">Корзина ({{ totalAmount | currency:'USD' }})</a>
     </li>
 
-    <li routerLinkActive="active">
-      <a [routerLink]="['/admin']">Админка</a>
-    </li>
-
     <li *ngIf="auth.isAuthenticated(); else signIn" routerLinkActive="active">
       <a href="#" (click)="logout($event)">Выйти</a>
     </li>
@@ -23,7 +19,10 @@
   </ul>
 
   <div *ngIf="auth.user as userName">
-    <h5>{{ userName }}</h5>
+    <h5>Привет, {{ userName }}</h5>
+  </div>
+  <div>
+    <a [routerLink]="['/admin']">Админка</a>
   </div>
 </nav>
 
