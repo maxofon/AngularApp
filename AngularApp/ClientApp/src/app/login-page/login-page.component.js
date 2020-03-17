@@ -11,11 +11,13 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../admin/shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../shared/services/cart.service';
 var LoginPageComponent = /** @class */ (function () {
-    function LoginPageComponent(auth, router, route) {
+    function LoginPageComponent(auth, router, route, cartService) {
         this.auth = auth;
         this.router = router;
         this.route = route;
+        this.cartService = cartService;
         this.submitted = false;
     }
     LoginPageComponent.prototype.ngOnInit = function () {
@@ -51,6 +53,7 @@ var LoginPageComponent = /** @class */ (function () {
             _this.form.reset;
             _this.router.navigate(['/']);
             _this.submitted = false;
+            _this.cartService.updateTotal();
         }, function () {
             _this.submitted = false;
         });
@@ -63,7 +66,8 @@ var LoginPageComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [AuthService,
             Router,
-            ActivatedRoute])
+            ActivatedRoute,
+            CartService])
     ], LoginPageComponent);
     return LoginPageComponent;
 }());

@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertComponent } from './components/alert/alert.component';
 import { CommonModule } from '@angular/common';
+import { AlertService } from './services/alert.service';
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
@@ -23,7 +24,8 @@ var SharedModule = /** @class */ (function () {
             exports: [
                 HttpClientModule,
                 AlertComponent
-            ]
+            ],
+            providers: [AlertService]
         })
     ], SharedModule);
     return SharedModule;

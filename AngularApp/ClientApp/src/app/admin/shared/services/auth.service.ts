@@ -9,7 +9,6 @@ import {User} from '../../../shared/interfaces/User';
 
 export class AuthService {
   public error$: Subject<string> = new Subject<string>();
-  public userName$: Subject<string> = new Subject<string>();
   apiUrl: string = 'api/account';
 
   constructor(private http: HttpClient) {
@@ -62,9 +61,9 @@ export class AuthService {
   }
 
   private setUser(response: User | null) {
-    console.log(response);
+    // console.log(response);
     if (response) {
-      const expDate = new Date(new Date().getTime() + 3600000); //1 час
+      const expDate = new Date(new Date().getTime() + 60000); //1 мин
       localStorage.setItem('expires', expDate.toString())
       localStorage.setItem('user-name', response.name)
       localStorage.setItem('user-email', response.email)

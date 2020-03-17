@@ -23,7 +23,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
 import { switchMap } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from "../shared/services/alert.service";
+import { AlertService } from '../../shared/services/alert.service';
 var EditPageComponent = /** @class */ (function () {
     function EditPageComponent(alert, route, productsService) {
         this.alert = alert;

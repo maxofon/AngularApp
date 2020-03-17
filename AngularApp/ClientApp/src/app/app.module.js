@@ -15,7 +15,6 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { ProductComponent } from './shared/components/product/product.component';
 import { AdminModule } from './admin/admin.module';
-;
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';

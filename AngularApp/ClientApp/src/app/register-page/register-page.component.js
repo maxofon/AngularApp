@@ -12,11 +12,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../admin/shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyValidators } from '../shared/my.validators';
+import { CartService } from '../shared/services/cart.service';
 var RegisterPageComponent = /** @class */ (function () {
-    function RegisterPageComponent(auth, router, route) {
+    function RegisterPageComponent(auth, router, route, cartService) {
         this.auth = auth;
         this.router = router;
         this.route = route;
+        this.cartService = cartService;
         this.submitted = false;
     }
     RegisterPageComponent.prototype.ngOnInit = function () {
@@ -58,12 +60,10 @@ var RegisterPageComponent = /** @class */ (function () {
             _this.form.reset;
             _this.router.navigate(['/']);
             _this.submitted = false;
+            _this.cartService.updateTotal();
         }, function () {
             _this.submitted = false;
         });
-        // this.form.reset;
-        // this.router.navigate(['/admin','dashboard'])
-        // this.submitted = false;
     };
     RegisterPageComponent = __decorate([
         Component({
@@ -73,7 +73,8 @@ var RegisterPageComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [AuthService,
             Router,
-            ActivatedRoute])
+            ActivatedRoute,
+            CartService])
     ], RegisterPageComponent);
     return RegisterPageComponent;
 }());

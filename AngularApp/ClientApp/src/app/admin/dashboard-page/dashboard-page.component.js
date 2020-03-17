@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ProductsService } from '../../shared/services/products.service';
-import { AlertService } from '../shared/services/alert.service';
+import { AlertService } from '../../shared/services/alert.service';
 var DashboardPageComponent = /** @class */ (function () {
     function DashboardPageComponent(alert, productsService) {
         this.alert = alert;

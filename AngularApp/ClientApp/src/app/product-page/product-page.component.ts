@@ -20,8 +20,8 @@ export class ProductPageComponent implements OnInit {
     private auth: AuthService,
     private route: ActivatedRoute,
     private productsService: ProductsService,
-    public cartService: CartService,
-    public alert: AlertService
+    private cartService: CartService,
+    private alert: AlertService
   ) {
       
   }
@@ -34,4 +34,8 @@ export class ProductPageComponent implements OnInit {
           }))
   }
 
+    addToCart(id: string) {
+        this.cartService.addToCart(id);
+        this.alert.success('Продукт был добавлен в корзину')
+    }
 }

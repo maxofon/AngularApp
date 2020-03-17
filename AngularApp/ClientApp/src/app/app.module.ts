@@ -9,10 +9,9 @@ import { MainLayoutComponent } from './shared/components/main-layout/main-layout
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { ProductComponent } from './shared/components/product/product.component';
-import {AdminModule} from './admin/admin.module';;
-import { CartPageComponent } from './cart-page/cart-page.component'
-;
-import { LoginPageComponent } from './login-page/login-page.component';
+import {AdminModule} from './admin/admin.module';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component'
 
 
@@ -31,9 +30,8 @@ import { RegisterPageComponent } from './register-page/register-page.component'
         HomePageComponent,
         ProductPageComponent,
         ProductComponent,
-        CartPageComponent
-,
-        LoginPageComponent,
+        CartPageComponent,
+        LoginPageComponent,
         RegisterPageComponent
     ],
     bootstrap: [AppComponent]

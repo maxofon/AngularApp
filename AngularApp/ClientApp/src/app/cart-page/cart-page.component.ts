@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Cart} from '../shared/interfaces/Cart';
-import {AlertService} from '../admin/shared/services/alert.service';
 import {Subscription} from 'rxjs';
 import {CartService} from '../shared/services/cart.service';
+import {AlertService} from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-cart-page',

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductsService} from '../../shared/services/products.service';
 import {Product} from '../../shared/interfaces/Product';
 import {Subscription} from 'rxjs';
-import {AlertService} from '../shared/services/alert.service';
+import {AlertService} from '../../shared/services/alert.service';
 
 @Component({
   selector: 'app-dashboard-page',

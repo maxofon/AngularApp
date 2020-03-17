@@ -8,8 +8,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { AlertService } from '../admin/shared/services/alert.service';
 import { CartService } from '../shared/services/cart.service';
+import { AlertService } from '../shared/services/alert.service';
 var CartPageComponent = /** @class */ (function () {
     function CartPageComponent(alert, cartService) {
         this.alert = alert;

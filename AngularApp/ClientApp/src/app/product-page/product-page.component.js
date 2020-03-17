@@ -30,6 +30,10 @@ var ProductPageComponent = /** @class */ (function () {
             return _this.productsService.getById(params['id']);
         }));
     };
+    ProductPageComponent.prototype.addToCart = function (id) {
+        this.cartService.addToCart(id);
+        this.alert.success('Продукт был добавлен в корзину');
+    };
     ProductPageComponent = __decorate([
         Component({
             selector: 'app-product-page',

@@ -13,7 +13,7 @@
   </div>
 
   <button *ngIf="this.auth.isAuthenticated()"
-          (click)="this.cartService.addToCart(product.id); alert.success('Продукт был добавлен в корзину')"
+          (click)="addToCart(product.id)"
           class="btn btn-success"
   >Добавить в корзину</button>
 </div>

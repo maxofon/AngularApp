@@ -60,11 +60,12 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.setUser = function (response) {
-        console.log(response);
+        // console.log(response);
         if (response) {
-            var expDate = new Date(new Date().getTime() + 3600000); //1 час
+            var expDate = new Date(new Date().getTime() + 60000); //1 мин
             localStorage.setItem('expires', expDate.toString());
             localStorage.setItem('user-name', response.name);
+            localStorage.setItem('user-email', response.email);
         }
         else {
             localStorage.clear();
