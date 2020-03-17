@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ProductsService } from '../shared/services/products.service';
+import { AuthService } from '../admin/shared/services/auth.service';
 var HomePageComponent = /** @class */ (function () {
     //products: Product[]
-    function HomePageComponent(productsService) {
+    function HomePageComponent(productsService, auth) {
         this.productsService = productsService;
+        this.auth = auth;
     }
     HomePageComponent.prototype.ngOnInit = function () {
         //this.products = [];
@@ -24,7 +26,8 @@ var HomePageComponent = /** @class */ (function () {
             templateUrl: './home-page.component.html',
             styleUrls: ['./home-page.component.scss']
         }),
-        __metadata("design:paramtypes", [ProductsService])
+        __metadata("design:paramtypes", [ProductsService,
+            AuthService])
     ], HomePageComponent);
     return HomePageComponent;
 }());

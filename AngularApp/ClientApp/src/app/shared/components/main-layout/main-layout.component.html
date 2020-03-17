@@ -4,7 +4,7 @@
     <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
       <a [routerLink]="['/']">Angular Blog</a>
     </li>
-    <li routerLinkActive="active">
+    <li routerLinkActive="active" *ngIf="auth.isAuthenticated()">
       <a [routerLink]="['/cart']">Корзина ({{ totalAmount | currency:'USD' }})</a>
     </li>
 
@@ -21,6 +21,10 @@
       </li>
     </ng-template>
   </ul>
+
+  <div *ngIf="auth.user as userName">
+    <h5>{{ userName }}</h5>
+  </div>
 </nav>
 
 <div class="container">

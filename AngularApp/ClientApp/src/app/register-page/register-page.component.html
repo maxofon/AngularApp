@@ -10,10 +10,26 @@
     </div>
 
     <div
+            [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
+            class="form-control"
+    >
+        <label for="name">Введите имя:</label>
+        <input id="name" type="text" formControlName="name">
+        <div
+                *ngIf="form.get('name').touched && form.get('name').invalid"
+                class="validation"
+        >
+            <small
+                    *ngIf="form.get('name').errors.required"
+            >Нужно ввести имя</small>
+        </div>
+    </div>
+
+    <div
             [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
             class="form-control"
     >
-        <label for="email">Email:</label>
+        <label for="email">Введите Email:</label>
         <input id="email" type="email" formControlName="email">
         <div
                 *ngIf="form.get('email').touched && form.get('email').invalid"

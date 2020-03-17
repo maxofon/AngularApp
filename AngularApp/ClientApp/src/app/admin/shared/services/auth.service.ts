@@ -9,6 +9,7 @@ import {User} from '../../../shared/interfaces/User';
 
 export class AuthService {
   public error$: Subject<string> = new Subject<string>();
+  public userName$: Subject<string> = new Subject<string>();
   apiUrl: string = 'api/account';
 
   constructor(private http: HttpClient) {
@@ -32,8 +33,6 @@ export class AuthService {
        tap(this.setUser),
        catchError(this.handleError.bind(this))
      )
-
-      return new Subject<string>();
   }
 
   logout() {
@@ -46,23 +45,9 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    const {message} = error.error.error
-    this.error$.next(message)
-
-    // switch (message) {
-    //   case 'INVALID_EMAIL':
-    //     this.error$.next('Неверный email')
-    //     break
-    //   case 'INVALID_PASSWORD':
-    //     this.error$.next('Неверный пароль')
-    //     break
-    //   case 'EMAIL_NOT_FOUND':
-    //     this.error$.next('Такого email нет')
-    //     break
-    // }
-
-    console.log(this.error$)
-
+    console.log(error)
+    this.error$.next(error.error)
+    // console.log('this.error$',this.error$)
     return throwError(error)
   }
 
@@ -77,13 +62,23 @@ export class AuthService {
   }
 
   private setUser(response: User | null) {
+    console.log(response);
     if (response) {
       const expDate = new Date(new Date().getTime() + 3600000); //1 час
       localStorage.setItem('expires', expDate.toString())
       localStorage.setItem('user-name', response.name)
+      localStorage.setItem('user-email', response.email)
     } else {
       localStorage.clear()
     }
   }
 
+  register(user: User): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, user)
+        .pipe(
+            // tap(this.setToken),
+            tap(this.setUser),
+            catchError(this.handleError.bind(this))
+        )
+  }
 }

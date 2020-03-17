@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -17,6 +17,8 @@ import { ProductComponent } from './shared/components/product/product.component'
 import { AdminModule } from './admin/admin.module';
 ;
 import { CartPageComponent } from './cart-page/cart-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -27,7 +29,8 @@ var AppModule = /** @class */ (function () {
                 FormsModule,
                 AppRoutingModule,
                 SharedModule,
-                AdminModule
+                AdminModule,
+                ReactiveFormsModule
             ],
             declarations: [
                 AppComponent,
@@ -35,7 +38,9 @@ var AppModule = /** @class */ (function () {
                 HomePageComponent,
                 ProductPageComponent,
                 ProductComponent,
-                CartPageComponent
+                CartPageComponent,
+                LoginPageComponent,
+                RegisterPageComponent
             ],
             bootstrap: [AppComponent]
         })

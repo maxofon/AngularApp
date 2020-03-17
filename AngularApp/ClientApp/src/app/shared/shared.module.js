@@ -7,13 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertComponent } from './components/alert/alert.component';
+import { CommonModule } from '@angular/common';
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
     SharedModule = __decorate([
         NgModule({
             imports: [
-                HttpClientModule
+                HttpClientModule,
+                CommonModule
             ],
             declarations: [
                 AlertComponent

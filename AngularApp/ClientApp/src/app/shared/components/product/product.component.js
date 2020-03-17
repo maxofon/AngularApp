@@ -17,10 +17,18 @@ var ProductComponent = /** @class */ (function () {
     }
     ProductComponent.prototype.ngOnInit = function () {
     };
+    ProductComponent.prototype.addToCart = function (id) {
+        this.cartService.addToCart(id);
+        this.alert.success('Продукт был добавлен в корзину');
+    };
     __decorate([
         Input(),
         __metadata("design:type", Object)
     ], ProductComponent.prototype, "product", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], ProductComponent.prototype, "showAddCart", void 0);
     ProductComponent = __decorate([
         Component({
             selector: 'app-product',

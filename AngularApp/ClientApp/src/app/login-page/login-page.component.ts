@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../admin/shared/services/auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {User} from '../shared/interfaces/User';
+import {CartService} from '../shared/services/cart.service';
 
 @Component({
   selector: 'login-page',
@@ -11,13 +12,14 @@ import {User} from '../shared/interfaces/User';
 })
 export class LoginPageComponent implements OnInit {
   form: FormGroup
-  submitted: boolean =  false;
+  submitted: boolean =  false
   message: string
 
   constructor(
       public auth: AuthService,
       private router: Router,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -57,13 +59,9 @@ export class LoginPageComponent implements OnInit {
       this.form.reset;
       this.router.navigate(['/'])
       this.submitted = false;
+      this.cartService.updateTotal();
     }, () => {
       this.submitted = false
     });
-
-    this.form.reset;
-    this.router.navigate(['/admin','dashboard'])
-    this.submitted = false;
-
   }
 }

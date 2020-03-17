@@ -10,54 +10,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 var AuthService = /** @class */ (function () {
     function AuthService(http) {
         this.http = http;
         this.error$ = new Subject();
+        this.apiUrl = 'api/account';
     }
-    Object.defineProperty(AuthService.prototype, "token", {
+    Object.defineProperty(AuthService.prototype, "user", {
         get: function () {
-            //const expDate = new Date(localStorage.getItem('fb-token-exp'));
-            //if (new Date > expDate) {
-            //  this.logout();
-            //  return null;
-            //}
-            //return localStorage.getItem('fb-token')
-            return 'test';
+            var expDate = new Date(localStorage.getItem('expires'));
+            if (new Date > expDate) {
+                this.logout();
+                return null;
+            }
+            return localStorage.getItem('user-name');
         },
         enumerable: true,
         configurable: true
     });
     AuthService.prototype.login = function (user) {
-        user.returnSecureToken = true;
-        //return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
-        //  .pipe(
-        //    tap(this.setToken),
-        //    catchError(this.handleError.bind(this))
-        //  )
-        return new Subject();
+        // user.returnSecureToken = true;
+        return this.http.post(this.apiUrl + "/login", user)
+            .pipe(
+        // tap(this.setToken),
+        tap(this.setUser), catchError(this.handleError.bind(this)));
     };
     AuthService.prototype.logout = function () {
         this.setToken(null);
     };
     AuthService.prototype.isAuthenticated = function () {
-        // return !!this.token;
-        return true;
+        return !!this.user;
+        // return true;
     };
     AuthService.prototype.handleError = function (error) {
-        var message = error.error.error.message;
-        switch (message) {
-            case 'INVALID_EMAIL':
-                this.error$.next('Неверный email');
-                break;
-            case 'INVALID_PASSWORD':
-                this.error$.next('Неверный пароль');
-                break;
-            case 'EMAIL_NOT_FOUND':
-                this.error$.next('Такого email нет');
-                break;
-        }
-        console.log(this.error$);
+        console.log(error);
+        this.error$.next(error.error);
+        // console.log('this.error$',this.error$)
         return throwError(error);
     };
     AuthService.prototype.setToken = function (response) {
@@ -69,6 +58,23 @@ var AuthService = /** @class */ (function () {
         else {
             localStorage.clear();
         }
+    };
+    AuthService.prototype.setUser = function (response) {
+        console.log(response);
+        if (response) {
+            var expDate = new Date(new Date().getTime() + 3600000); //1 час
+            localStorage.setItem('expires', expDate.toString());
+            localStorage.setItem('user-name', response.name);
+        }
+        else {
+            localStorage.clear();
+        }
+    };
+    AuthService.prototype.register = function (user) {
+        return this.http.post(this.apiUrl + "/register", user)
+            .pipe(
+        // tap(this.setToken),
+        tap(this.setUser), catchError(this.handleError.bind(this)));
     };
     AuthService = __decorate([
         Injectable({ providedIn: 'root' }),

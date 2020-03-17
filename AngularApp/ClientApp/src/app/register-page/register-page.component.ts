@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../admin/shared/services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MyValidators} from '../shared/my.validators';
+import {User} from '../shared/interfaces/User';
+import {CartService} from '../shared/services/cart.service';
 
 @Component({
   selector: 'register-page',
@@ -18,7 +20,8 @@ export class RegisterPageComponent implements OnInit {
   constructor(
       public auth: AuthService,
       private router: Router,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -31,13 +34,16 @@ export class RegisterPageComponent implements OnInit {
     // })
 
     this.form = new FormGroup({
+      name: new FormControl(null, [
+        Validators.required
+      ]),
       email: new FormControl(null, [
         Validators.required,
         Validators.email
       ]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.minLength(5)
+
       ]),
       confirmPassword: new FormControl(null, [
         Validators.required
@@ -52,23 +58,20 @@ export class RegisterPageComponent implements OnInit {
 
     this.submitted = true;
 
-    // const user: User = {
-    //   email: this.form.value.email,
-    //   password: this.form.value.password
-    // }
+    const user: User = {
+      name: this.form.value.name,
+      email: this.form.value.email,
+      password: this.form.value.password
+    }
 
-    // this.auth.login(user).subscribe(() => {
-    //   this.form.reset;
-    //   this.router.navigate(['/admin','dashboard'])
-    //   this.submitted = false;
-    // }, () => {
-    //   this.submitted = false
-    // });
-
-    this.form.reset;
-    this.router.navigate(['/admin','dashboard'])
-    this.submitted = false;
-
+    this.auth.register(user).subscribe(() => {
+      this.form.reset;
+      this.router.navigate(['/'])
+      this.submitted = false;
+      this.cartService.updateTotal();
+    }, () => {
+      this.submitted = false
+    });
   }
 
 }

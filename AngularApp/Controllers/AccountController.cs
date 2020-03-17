@@ -95,7 +95,7 @@ namespace AngularApp.Controllers
                         return Ok(user);
                     }
 
-                    return BadRequest($"Пользователь {model.Email} не найден.");
+                    return BadRequest($"Пользователь {model.Email} не найден или пароль неверный.");
                 }
 
                 return BadRequest(ModelState);
@@ -122,7 +122,7 @@ namespace AngularApp.Controllers
 
                         await Authenticate(model.Email); // аутентификация
 
-                        return Ok(user);
+                        return Ok(model);
                     }
                 }
                 return BadRequest(ModelState);
