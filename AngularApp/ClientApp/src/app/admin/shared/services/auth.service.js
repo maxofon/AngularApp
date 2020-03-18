@@ -36,6 +36,13 @@ var AuthService = /** @class */ (function () {
         // tap(this.setToken),
         tap(this.setUser), catchError(this.handleError.bind(this)));
     };
+    AuthService.prototype.loginAsAdmin = function (user) {
+        // user.returnSecureToken = true;
+        return this.http.post(this.apiUrl + "/loginAdmin", user)
+            .pipe(
+        // tap(this.setToken),
+        tap(this.setUser), catchError(this.handleError.bind(this)));
+    };
     AuthService.prototype.logout = function () {
         this.setToken(null);
     };

@@ -21,10 +21,15 @@ namespace AngularApp.Controllers
     {
         private IUserService _userServ;
         private readonly IUserRepository _userRepo;
+        private readonly IRoleRepository _roleRepo;
 
-        public AccountController(IUserRepository userRepo, IUserService userServ)
+        public AccountController(
+            IUserRepository userRepo,
+            IRoleRepository roleRepo,
+            IUserService userServ)
         {
             _userRepo = userRepo;
+            _roleRepo = roleRepo;
             _userServ = userServ;
         }
 
@@ -90,7 +95,7 @@ namespace AngularApp.Controllers
                     var user = userList.FirstOrDefault();
                     if (user != null)
                     {
-                        await Authenticate(user.Email); // аутентификация
+                        await Authenticate(user); // аутентификация
 
                         return Ok(user);
                     }
@@ -107,7 +112,7 @@ namespace AngularApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody]RegisterModel model)
+        public async Task<IActionResult> LoginAdmin([FromBody]LoginModel model)
         {
             try
             {
@@ -115,15 +120,64 @@ namespace AngularApp.Controllers
                 {
                     var userList = await _userRepo.FindByAsync(u => u.Email == model.Email && u.Password == model.Password);
                     var user = userList.FirstOrDefault();
+                    if (user != null)
+                    {
+                        int roleId = user.RoleId.HasValue ? (int)user.RoleId : 0;                        
+                        BL.Role userRole = await _roleRepo.GetByIdAsync(roleId);
+
+                        if (userRole.Name != "admin")
+                        {
+                            return BadRequest($"{model.Email}, к сожалению вы не ADMIN. Войдите как ADMIN");
+                        }
+
+                        await Authenticate(user); // аутентификация
+
+                        return Ok(user);
+                    }
+
+                    return BadRequest($"Пользователь {model.Email} не найден или пароль неверный.");
+                }
+
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody]RegisterModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var userList = await _userRepo.FindByAsync(u => u.Email == model.Email);
+                    var user = userList.FirstOrDefault();
                     if (user == null)
                     {
+                        var roleList = await _roleRepo.FindByAsync(r => r.Name == "user");
+                        BL.Role userRole = roleList.FirstOrDefault();
+
                         // добавляем пользователя в бд
-                        await _userRepo.SaveAsync(new BL.User { Name = model.Name, Email = model.Email, Password = model.Password });
+                        var newUserId =  await _userRepo.SaveAsync(new BL.User { 
+                            Name = model.Name, 
+                            Email = model.Email, 
+                            Password = model.Password,
+                            RoleId = userRole?.Id,
+                            Role = userRole
+                        });
 
-                        await Authenticate(model.Email); // аутентификация
+                        // добавляем пользователя в бд
+                        var newUser = await _userRepo.GetByIdAsync(newUserId);
 
-                        return Ok(model);
+                        await Authenticate(newUser); // аутентификация
+
+                        return Ok(newUser);
                     }
+
+                    return BadRequest($"Пользователь {model.Email} уже зарегистрирован.");
                 }
                 return BadRequest(ModelState);
             }
@@ -133,12 +187,13 @@ namespace AngularApp.Controllers
             }           
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(BL.User user)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name ?? "null")
             };
 
             // создаем объект ClaimsIdentity

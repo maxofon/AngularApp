@@ -34,6 +34,16 @@ export class AuthService {
      )
   }
 
+  loginAsAdmin(user: User): Observable<any> {
+    // user.returnSecureToken = true;
+    return this.http.post(`${this.apiUrl}/loginAdmin`, user)
+        .pipe(
+            // tap(this.setToken),
+            tap(this.setUser),
+            catchError(this.handleError.bind(this))
+        )
+  }
+
   logout() {
     this.setToken(null)
   }

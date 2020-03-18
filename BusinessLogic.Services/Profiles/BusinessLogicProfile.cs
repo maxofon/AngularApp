@@ -13,6 +13,7 @@ namespace BusinessLogic.Services.Profiles
             CreateMap<BL.OrderLine, DA.OrderLine>().ReverseMap();
             CreateMap<BL.CartLine, DA.CartLine>().ReverseMap();            
             CreateMap<BL.User, DA.User>().ReverseMap();                     
+            CreateMap<BL.Role, DA.Role>().ReverseMap();                     
         }
     }
 }

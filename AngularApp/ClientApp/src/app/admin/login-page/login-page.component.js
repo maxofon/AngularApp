@@ -49,7 +49,7 @@ var LoginPageComponent = /** @class */ (function () {
             email: this.form.value.email,
             password: this.form.value.password
         };
-        this.auth.login(user).subscribe(function () {
+        this.auth.loginAsAdmin(user).subscribe(function () {
             _this.form.reset;
             _this.router.navigate(['/admin', 'dashboard']);
             _this.submitted = false;

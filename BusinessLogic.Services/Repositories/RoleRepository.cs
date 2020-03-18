@@ -13,44 +13,41 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class RoleRepository : IRoleRepository
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public UserRepository(IMapper mapper, IContextFactory contextFactory)
+        public RoleRepository(IMapper mapper, IContextFactory contextFactory)
         {
             _mapper = mapper;
             _contextFactory = contextFactory;
         }
 
-        public async Task<ICollection<BL.User>> GetAsync()
+        public async Task<ICollection<BL.Role>> GetAsync()
         {
             using (var context = _contextFactory.GetProductContext())
             {
-                var entity = await context.
-                    Users
-                    .Include(u => u.Role)
-                    .ToListAsync();
+                var entity = await context.Roles.ToListAsync();
 
                 return entity.Select(item =>
                 {
-                    var mapEntity = _mapper.Map<BL.User>(item);
+                    var mapEntity = _mapper.Map<BL.Role>(item);
                     return mapEntity;
                 }).ToList();
             }
         }
 
-        public async Task<BL.User> GetByIdAsync(int id)
+        public async Task<BL.Role> GetByIdAsync(int id)
         {
             using (var context = _contextFactory.GetProductContext())
             {
-                var entity = await context.Users.Include(u => u.Role).FirstOrDefaultAsync(x => x.Id == id);
-                return _mapper.Map<BL.User>(entity);
+                var entity = await context.Roles.FirstOrDefaultAsync(x => x.Id == id);
+                return _mapper.Map<BL.Role>(entity);
             }
         }
 
-        public async Task<int> SaveAsync(BL.User entity)
+        public async Task<int> SaveAsync(BL.Role entity)
         {
             try
             {
@@ -59,14 +56,14 @@ namespace BusinessLogic.Services.Repositories
                 using (var context = _contextFactory.GetProductContext())
                 {
                     var entityModel = await context
-                    .Users
+                    .Roles
                     .FirstOrDefaultAsync(item => item.Id.Equals(entity.Id));
 
                     if (entityModel == null)
                     {
-                        entityModel = new DA.User();
+                        entityModel = new DA.Role();
                         MapForUpdateEntity(entity, entityModel);
-                        await context.Users.AddAsync(entityModel);
+                        await context.Roles.AddAsync(entityModel);
                     }
                     else
                     {
@@ -91,12 +88,12 @@ namespace BusinessLogic.Services.Repositories
                 using (var context = _contextFactory.GetProductContext())
                 {
                     var entityModel = context
-                        .Users
+                        .Roles
                         .FirstOrDefault(item => item.Id.Equals(id));
 
                     if (entityModel == null) return;
 
-                    await Task.Run(() => context.Users.Remove(entityModel));
+                    await Task.Run(() => context.Roles.Remove(entityModel));
 
                     context.SaveChanges();
                 }
@@ -107,30 +104,27 @@ namespace BusinessLogic.Services.Repositories
             }
         }
 
-        private void MapForUpdateEntity(BL.User entity, DA.User daEntity)
+        private void MapForUpdateEntity(BL.Role entity, DA.Role daEntity)
         {
             daEntity.Id = entity.Id;
-            daEntity.Name = entity.Name;
-            daEntity.Email = entity.Email;
-            daEntity.Password = entity.Password;
-            daEntity.RoleId = entity.RoleId;
+            daEntity.Name = entity.Name;        
         }
 
-        public async Task<ICollection<BL.User>> FindByAsync(Expression<Func<DA.User, bool>> predicate)
+        public async Task<ICollection<BL.Role>> FindByAsync(Expression<Func<DA.Role, bool>> predicate)
         {
             try
             {
                 using (var context = _contextFactory.GetProductContext())
                 {
                     var entity = await context
-                        .Users
-                        .Include(u => u.Role)
+                        .Roles
+                        //.Include(u => u.Role)
                         .Where(predicate)
                         .ToListAsync();
 
                     return entity.Select(item =>
                                 {
-                                    var mapEntity = _mapper.Map<BL.User>(item);
+                                    var mapEntity = _mapper.Map<BL.Role>(item);
                                     return mapEntity;
                                 })
                                 .ToList();

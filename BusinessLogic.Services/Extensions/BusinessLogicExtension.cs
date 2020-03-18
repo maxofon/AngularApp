@@ -21,6 +21,7 @@ namespace BusinessLogic.Services.Extensions
             services.AddTransient<IOrderLineRepository, OrderLineRepository>();
             services.AddTransient<ICartLineRepository, CartLineRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserService, UserService>();

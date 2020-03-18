@@ -596,7 +596,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       return ["/admin", "product", a2, "edit"];
     };
 
-    function DashboardPageComponent_div_0_tr_15_Template(rf, ctx) {
+    function DashboardPageComponent_div_0_tr_17_Template(rf, ctx) {
       if (rf & 1) {
         var _r79 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
@@ -638,7 +638,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "a", 6);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function DashboardPageComponent_div_0_tr_15_Template_a_click_13_listener() {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function DashboardPageComponent_div_0_tr_17_Template_a_click_13_listener() {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r79);
 
           var product_r76 = ctx.$implicit;
@@ -735,15 +735,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "th");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0435");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "tbody");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "tbody");
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](15, DashboardPageComponent_div_0_tr_15_Template, 15, 10, "tr", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](17, DashboardPageComponent_div_0_tr_17_Template, 15, 10, "tr", 4);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](16, "searchProducts");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](18, "searchProducts");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -759,9 +765,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r72.searchStr);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](15);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](16, 2, ctx_r72.products, ctx_r72.searchStr));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](18, 2, ctx_r72.products, ctx_r72.searchStr));
       }
     }
 
@@ -835,7 +841,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       consts: [[4, "ngIf", "ngIfElse"], ["loading", ""], [1, "form-control"], ["type", "text", "placeholder", "\u041D\u0430\u0439\u0442\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043F\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044E...", 3, "ngModel", "ngModelChange"], [4, "ngFor", "ngForOf"], [1, "btn", "btn-link", "open", 3, "routerLink"], [3, "click"], [1, "text-center"]],
       template: function DashboardPageComponent_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, DashboardPageComponent_div_0_Template, 17, 5, "div", 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, DashboardPageComponent_div_0_Template, 19, 5, "div", 0);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, DashboardPageComponent_ng_template_1_Template, 2, 0, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
         }
@@ -1428,31 +1434,34 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
-            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(6)])
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(5)])
           });
         }
       }, {
         key: "submit",
         value: function submit() {
+          var _this7 = this;
+
           if (this.form.invalid) {
             return;
           }
 
-          this.submitted = true; // const user: User = {
-          //   email: this.form.value.email,
-          //   password: this.form.value.password
-          // }
-          // this.auth.login(user).subscribe(() => {
-          //   this.form.reset;
-          //   this.router.navigate(['/admin','dashboard'])
-          //   this.submitted = false;
-          // }, () => {
-          //   this.submitted = false
-          // });
+          this.submitted = true;
+          var user = {
+            email: this.form.value.email,
+            password: this.form.value.password
+          };
+          this.auth.loginAsAdmin(user).subscribe(function () {
+            _this7.form.reset;
 
-          this.form.reset;
-          this.router.navigate(['/admin', 'dashboard']);
-          this.submitted = false;
+            _this7.router.navigate(['/admin', 'dashboard']);
+
+            _this7.submitted = false;
+          }, function () {
+            _this7.submitted = false;
+          }); // this.form.reset;
+          // this.router.navigate(['/admin','dashboard'])
+          // this.submitted = false;
         }
       }]);
 
@@ -1747,7 +1756,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "Angular Admin");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "Angular Blog");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2022,6 +2031,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function login(user) {
           // user.returnSecureToken = true;
           return this.http.post("".concat(this.apiUrl, "/login"), user).pipe( // tap(this.setToken),
+          Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
+        }
+      }, {
+        key: "loginAsAdmin",
+        value: function loginAsAdmin(user) {
+          // user.returnSecureToken = true;
+          return this.http.post("".concat(this.apiUrl, "/loginAdmin"), user).pipe( // tap(this.setToken),
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
         }
       }, {
@@ -2700,28 +2716,28 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(CartPageComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this7 = this;
+          var _this8 = this;
 
           this.pSub = this.cartService.getAll().subscribe(function (carts) {
-            _this7.carts = carts;
-            _this7.loaded = true;
+            _this8.carts = carts;
+            _this8.loaded = true;
           });
         }
       }, {
         key: "remove",
         value: function remove(id) {
-          var _this8 = this;
+          var _this9 = this;
 
           this.dSub = this.cartService.remove(id).subscribe(function () {
-            _this8.carts = _this8.carts.filter(function (cart) {
+            _this9.carts = _this9.carts.filter(function (cart) {
               return cart.id !== id;
             });
 
-            _this8.cartService.updateTotal();
+            _this9.cartService.updateTotal();
 
-            _this8.loaded = true;
+            _this9.loaded = true;
 
-            _this8.alert.danger('Продукт был удален из корзины');
+            _this9.alert.danger('Продукт был удален из корзины');
           });
         }
       }, {
@@ -3181,7 +3197,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "submit",
         value: function submit() {
-          var _this9 = this;
+          var _this10 = this;
 
           if (this.form.invalid) {
             return;
@@ -3193,15 +3209,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             password: this.form.value.password
           };
           this.auth.login(user).subscribe(function () {
-            _this9.form.reset;
+            _this10.form.reset;
 
-            _this9.router.navigate(['/']);
+            _this10.router.navigate(['/']);
 
-            _this9.submitted = false;
+            _this10.submitted = false;
 
-            _this9.cartService.updateTotal();
+            _this10.cartService.updateTotal();
           }, function () {
-            _this9.submitted = false;
+            _this10.submitted = false;
           });
         }
       }]);
@@ -3534,11 +3550,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ProductPageComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this10 = this;
+          var _this11 = this;
 
           console.log('init ProductPageComponent');
           this.product$ = this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (params) {
-            return _this10.productsService.getById(params['id']);
+            return _this11.productsService.getById(params['id']);
           }));
         }
       }, {
@@ -3912,7 +3928,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "submit",
         value: function submit() {
-          var _this11 = this;
+          var _this12 = this;
 
           if (this.form.invalid) {
             return;
@@ -3925,15 +3941,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             password: this.form.value.password
           };
           this.auth.register(user).subscribe(function () {
-            _this11.form.reset;
+            _this12.form.reset;
 
-            _this11.router.navigate(['/']);
+            _this12.router.navigate(['/']);
 
-            _this11.submitted = false;
+            _this12.submitted = false;
 
-            _this11.cartService.updateTotal();
+            _this12.cartService.updateTotal();
           }, function () {
-            _this11.submitted = false;
+            _this12.submitted = false;
           });
         }
       }]);
@@ -4220,15 +4236,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(AlertComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this12 = this;
+          var _this13 = this;
 
           this.aSub = this.alertService.alert$.subscribe(function (alert) {
-            _this12.text = alert.text;
-            _this12.type = alert.type;
+            _this13.text = alert.text;
+            _this13.type = alert.type;
             var timeout = setTimeout(function () {
               clearTimeout(timeout);
-              _this12.text = '';
-            }, _this12.delay);
+              _this13.text = '';
+            }, _this13.delay);
           });
         }
       }, {
@@ -4478,10 +4494,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(MainLayoutComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this13 = this;
+          var _this14 = this;
 
           this.cartSub = this.cartService.totalAmount$.subscribe(function (value) {
-            _this13.totalAmount = value;
+            _this14.totalAmount = value;
           });
           this.cartService.updateTotal();
         }
@@ -5049,19 +5065,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "updateTotal",
         value: function updateTotal() {
-          var _this14 = this;
+          var _this15 = this;
 
           this.http.get("".concat(this.apiUrl, "/getTotal")).subscribe(function (response) {
-            _this14.totalAmount$.next(response.toString());
+            _this15.totalAmount$.next(response.toString());
           });
         }
       }, {
         key: "addToCart",
         value: function addToCart(id) {
-          var _this15 = this;
+          var _this16 = this;
 
           this.create(id).subscribe(function () {
-            _this15.updateTotal();
+            _this16.updateTotal();
           });
         }
       }]);
