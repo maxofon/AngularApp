@@ -13,7 +13,7 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class ProductRepository : IProductRepository<BL.Product>
+    public class ProductRepository : IProductRepository
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;

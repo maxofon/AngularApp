@@ -16,11 +16,11 @@ namespace BusinessLogic.Services.Extensions
         /// <returns></returns>
         public static IServiceCollection ConfigureBusinessLogic(this IServiceCollection services)
         {
-            services.AddTransient<IProductRepository<Product>, ProductRepository>();
-            services.AddTransient<IOrderRepository<Order>, OrderRepository>();
-            services.AddTransient<IOrderLineRepository<OrderLine>, OrderLineRepository>();
-            services.AddTransient<ICartLineRepository<CartLine>, CartLineRepository>();
-            services.AddTransient<IUserRepository<User>, UserRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderLineRepository, OrderLineRepository>();
+            services.AddTransient<ICartLineRepository, CartLineRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserService, UserService>();

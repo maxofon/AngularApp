@@ -17,12 +17,12 @@ namespace AngularApp.Controllers
     public class CartController : Controller
     {
         private IUserService _userServ;
-        private readonly ICartLineRepository<BL.CartLine> _cartLineRepo;
-        private readonly IProductRepository<BL.Product> _productRepo;
+        private readonly ICartLineRepository _cartLineRepo;
+        private readonly IProductRepository _productRepo;
         private readonly IMapper _mapper;
 
-        public CartController(ICartLineRepository<BL.CartLine> cartLineRepo, 
-                            IProductRepository<BL.Product> productRepo,
+        public CartController(ICartLineRepository cartLineRepo, 
+                            IProductRepository productRepo,
                             IUserService userServ, 
                             IMapper mapper)
         {

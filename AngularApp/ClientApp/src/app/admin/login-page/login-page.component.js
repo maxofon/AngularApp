@@ -35,29 +35,30 @@ var LoginPageComponent = /** @class */ (function () {
             ]),
             password: new FormControl(null, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(5)
             ])
         });
     };
     LoginPageComponent.prototype.submit = function () {
+        var _this = this;
         if (this.form.invalid) {
             return;
         }
         this.submitted = true;
-        // const user: User = {
-        //   email: this.form.value.email,
-        //   password: this.form.value.password
-        // }
-        // this.auth.login(user).subscribe(() => {
-        //   this.form.reset;
-        //   this.router.navigate(['/admin','dashboard'])
-        //   this.submitted = false;
-        // }, () => {
-        //   this.submitted = false
-        // });
-        this.form.reset;
-        this.router.navigate(['/admin', 'dashboard']);
-        this.submitted = false;
+        var user = {
+            email: this.form.value.email,
+            password: this.form.value.password
+        };
+        this.auth.login(user).subscribe(function () {
+            _this.form.reset;
+            _this.router.navigate(['/admin', 'dashboard']);
+            _this.submitted = false;
+        }, function () {
+            _this.submitted = false;
+        });
+        // this.form.reset;
+        // this.router.navigate(['/admin','dashboard'])
+        // this.submitted = false;
     };
     LoginPageComponent = __decorate([
         Component({

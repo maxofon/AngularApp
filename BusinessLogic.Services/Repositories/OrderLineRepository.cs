@@ -13,7 +13,7 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class OrderLineRepository : IOrderLineRepository<BL.OrderLine>
+    public class OrderLineRepository : IOrderLineRepository
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;

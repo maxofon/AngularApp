@@ -17,14 +17,14 @@ namespace AngularApp.Controllers
     public class OrderController : Controller
     {
         private IUserService _userServ;
-        private readonly IOrderLineRepository<BL.OrderLine> _orderLineRepo;
-        private readonly ICartLineRepository<BL.CartLine> _cartLineRepo;
-        private readonly IOrderRepository<BL.Order> _orderRepo;
+        private readonly IOrderLineRepository _orderLineRepo;
+        private readonly ICartLineRepository _cartLineRepo;
+        private readonly IOrderRepository _orderRepo;
         private readonly IMapper _mapper;
 
-        public OrderController(IOrderLineRepository<BL.OrderLine> orderLineRepo,
-                            IOrderRepository<BL.Order> orderRepo,
-                            ICartLineRepository<BL.CartLine> cartLineRepo,
+        public OrderController(IOrderLineRepository orderLineRepo,
+                            IOrderRepository orderRepo,
+                            ICartLineRepository cartLineRepo,
                             IUserService userServ,
                             IMapper mapper)
         {

@@ -13,7 +13,7 @@ using DA = DataAccess.Models;
 
 namespace BusinessLogic.Services.Repositories
 {
-    public class CartLineRepository : ICartLineRepository<BL.CartLine>
+    public class CartLineRepository : ICartLineRepository
     {
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;

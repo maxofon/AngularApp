@@ -39,6 +39,7 @@ var RegisterPageComponent = /** @class */ (function () {
             ]),
             password: new FormControl(null, [
                 Validators.required,
+                Validators.minLength(5)
             ]),
             confirmPassword: new FormControl(null, [
                 Validators.required

@@ -4,11 +4,12 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DA = DataAccess.Models;
+using BL = BusinessLogic.ModelsDTO;
 
 namespace BusinessLogic.Interfaces.Repositories
 {
-    public interface IOrderRepository<T> : IBaseRepository<T> where T: class
+    public interface IOrderRepository: IBaseRepository<BL.Order>
     {
-        Task<ICollection<T>> FindByAsync(Expression<Func<DA.Order,bool>> predicate);
+        Task<ICollection<BL.Order>> FindByAsync(Expression<Func<DA.Order,bool>> predicate);
     }
 }

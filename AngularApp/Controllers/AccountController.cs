@@ -20,9 +20,9 @@ namespace AngularApp.Controllers
     public class AccountController : Controller
     {
         private IUserService _userServ;
-        private readonly IUserRepository<BL.User> _userRepo;
+        private readonly IUserRepository _userRepo;
 
-        public AccountController(IUserRepository<BL.User> userRepo, IUserService userServ)
+        public AccountController(IUserRepository userRepo, IUserService userServ)
         {
             _userRepo = userRepo;
             _userServ = userServ;

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic.ModelsDTO\BusinessLogic.ModelsDTO.csproj" />
     <ProjectReference Include="..\DataAccess.Models\DataAccess.Models.csproj" />
   </ItemGroup>
 

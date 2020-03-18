@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../shared/interfaces/User';
 import {AuthService} from '../shared/services/auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {User} from '../../shared/interfaces/User';
 
 @Component({
   selector: 'app-login-page',
@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit {
       ]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(5)
       ])
     })
   }
@@ -48,22 +48,22 @@ export class LoginPageComponent implements OnInit {
 
     this.submitted = true;
 
-    // const user: User = {
-    //   email: this.form.value.email,
-    //   password: this.form.value.password
-    // }
+    const user: User = {
+      email: this.form.value.email,
+      password: this.form.value.password
+    }
 
-    // this.auth.login(user).subscribe(() => {
-    //   this.form.reset;
-    //   this.router.navigate(['/admin','dashboard'])
-    //   this.submitted = false;
-    // }, () => {
-    //   this.submitted = false
-    // });
+    this.auth.login(user).subscribe(() => {
+      this.form.reset;
+      this.router.navigate(['/admin','dashboard'])
+      this.submitted = false;
+    }, () => {
+      this.submitted = false
+    });
 
-    this.form.reset;
-    this.router.navigate(['/admin','dashboard'])
-    this.submitted = false;
+    // this.form.reset;
+    // this.router.navigate(['/admin','dashboard'])
+    // this.submitted = false;
 
   }
 }
