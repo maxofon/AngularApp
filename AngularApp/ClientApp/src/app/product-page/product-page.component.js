@@ -13,7 +13,7 @@ import { ProductsService } from '../shared/services/products.service';
 import { switchMap } from 'rxjs/operators';
 import { CartService } from '../shared/services/cart.service';
 import { AlertService } from '../shared/services/alert.service';
-import { AuthService } from '../admin/shared/services/auth.service';
+import { AuthService } from '../shared/services/auth.service';
 var ProductPageComponent = /** @class */ (function () {
     function ProductPageComponent(auth, route, productsService, cartService, alert) {
         this.auth = auth;

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ProductsService } from '../shared/services/products.service';
-import { AuthService } from '../admin/shared/services/auth.service';
+import { AuthService } from '../shared/services/auth.service';
 var HomePageComponent = /** @class */ (function () {
     //products: Product[]
     function HomePageComponent(productsService, auth) {

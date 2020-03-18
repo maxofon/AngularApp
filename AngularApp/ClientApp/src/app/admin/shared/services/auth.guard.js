@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthService } from "./auth.service";
+import { AuthService } from "../../../shared/services/auth.service";
 var AuthGuard = /** @class */ (function () {
     function AuthGuard(auth, router) {
         this.auth = auth;

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {FbAuthResponse} from '../../../shared/interfaces';
+import {FbAuthResponse} from '../interfaces';
 import {Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {User} from '../../../shared/interfaces/User';
+import {User} from '../interfaces/User';
 
 @Injectable({providedIn: 'root'})
 
@@ -53,6 +53,11 @@ export class AuthService {
     // return true;
   }
 
+  isAdmin(): boolean {
+    return !!localStorage.getItem('admin');
+    // return true;
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error)
     this.error$.next(error.error)
@@ -77,6 +82,9 @@ export class AuthService {
       localStorage.setItem('expires', expDate.toString())
       localStorage.setItem('user-name', response.name)
       localStorage.setItem('user-email', response.email)
+      if (response.role.name == 'admin') {
+        localStorage.setItem('admin', 'true')
+      }
     } else {
       localStorage.clear()
     }

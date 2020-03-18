@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from "./shared/services/auth.guard";
 import {SearchPipe} from './shared/search.pipe';
+import {AuthAdminGuard} from './shared/services/auth-admin.guard';
 
 
 @NgModule({
@@ -31,16 +32,16 @@ import {SearchPipe} from './shared/search.pipe';
         path: 'admin', component: AdminLayoutComponent, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
           {path: 'login', component: LoginPageComponent},
-          {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
-          {path: 'create', component: CreatePageComponent, canActivate: [AuthGuard]},
-          {path: 'product/:id/edit', component: EditPageComponent, canActivate: [AuthGuard]},
+          {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthAdminGuard]},
+          {path: 'create', component: CreatePageComponent, canActivate: [AuthAdminGuard]},
+          {path: 'product/:id/edit', component: EditPageComponent, canActivate: [AuthAdminGuard]},
         ]
       }
     ]),
     FormsModule
   ],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard,AuthAdminGuard]
 })
 
 export class AdminModule { }

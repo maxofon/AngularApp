@@ -45,6 +45,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
 /* harmony import */ var _shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shared/services/auth.guard */ "./src/app/admin/shared/services/auth.guard.ts");
 /* harmony import */ var _shared_search_pipe__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./shared/search.pipe */ "./src/app/admin/shared/search.pipe.ts");
+/* harmony import */ var _shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./shared/services/auth-admin.guard */ "./src/app/admin/shared/services/auth-admin.guard.ts");
+
 
 
 
@@ -62,7 +64,7 @@ __webpack_require__.r(__webpack_exports__);
 class AdminModule {
 }
 AdminModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: AdminModule });
-AdminModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function AdminModule_Factory(t) { return new (t || AdminModule)(); }, providers: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]], imports: [[
+AdminModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function AdminModule_Factory(t) { return new (t || AdminModule)(); }, providers: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"], _shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]], imports: [[
             _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormsModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ReactiveFormsModule"],
@@ -72,9 +74,9 @@ AdminModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInject
                     path: 'admin', component: _shared_components_admin_layout_admin_layout_component__WEBPACK_IMPORTED_MODULE_3__["AdminLayoutComponent"], children: [
                         { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
                         { path: 'login', component: _login_page_login_page_component__WEBPACK_IMPORTED_MODULE_4__["LoginPageComponent"] },
-                        { path: 'dashboard', component: _dashboard_page_dashboard_page_component__WEBPACK_IMPORTED_MODULE_5__["DashboardPageComponent"], canActivate: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]] },
-                        { path: 'create', component: _create_page_create_page_component__WEBPACK_IMPORTED_MODULE_6__["CreatePageComponent"], canActivate: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]] },
-                        { path: 'product/:id/edit', component: _edit_page_edit_page_component__WEBPACK_IMPORTED_MODULE_7__["EditPageComponent"], canActivate: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]] },
+                        { path: 'dashboard', component: _dashboard_page_dashboard_page_component__WEBPACK_IMPORTED_MODULE_5__["DashboardPageComponent"], canActivate: [_shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]] },
+                        { path: 'create', component: _create_page_create_page_component__WEBPACK_IMPORTED_MODULE_6__["CreatePageComponent"], canActivate: [_shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]] },
+                        { path: 'product/:id/edit', component: _edit_page_edit_page_component__WEBPACK_IMPORTED_MODULE_7__["EditPageComponent"], canActivate: [_shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]] },
                     ]
                 }
             ]),
@@ -111,16 +113,16 @@ AdminModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInject
                             path: 'admin', component: _shared_components_admin_layout_admin_layout_component__WEBPACK_IMPORTED_MODULE_3__["AdminLayoutComponent"], children: [
                                 { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
                                 { path: 'login', component: _login_page_login_page_component__WEBPACK_IMPORTED_MODULE_4__["LoginPageComponent"] },
-                                { path: 'dashboard', component: _dashboard_page_dashboard_page_component__WEBPACK_IMPORTED_MODULE_5__["DashboardPageComponent"], canActivate: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]] },
-                                { path: 'create', component: _create_page_create_page_component__WEBPACK_IMPORTED_MODULE_6__["CreatePageComponent"], canActivate: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]] },
-                                { path: 'product/:id/edit', component: _edit_page_edit_page_component__WEBPACK_IMPORTED_MODULE_7__["EditPageComponent"], canActivate: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]] },
+                                { path: 'dashboard', component: _dashboard_page_dashboard_page_component__WEBPACK_IMPORTED_MODULE_5__["DashboardPageComponent"], canActivate: [_shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]] },
+                                { path: 'create', component: _create_page_create_page_component__WEBPACK_IMPORTED_MODULE_6__["CreatePageComponent"], canActivate: [_shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]] },
+                                { path: 'product/:id/edit', component: _edit_page_edit_page_component__WEBPACK_IMPORTED_MODULE_7__["EditPageComponent"], canActivate: [_shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]] },
                             ]
                         }
                     ]),
                     _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormsModule"]
                 ],
                 exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
-                providers: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"]]
+                providers: [_shared_services_auth_guard__WEBPACK_IMPORTED_MODULE_10__["AuthGuard"], _shared_services_auth_admin_guard__WEBPACK_IMPORTED_MODULE_12__["AuthAdminGuard"]]
             }]
     }], null, null); })();
 
@@ -613,7 +615,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageComponent", function() { return LoginPageComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
-/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
@@ -698,6 +700,9 @@ class LoginPageComponent {
         this.submitted = false;
     }
     ngOnInit() {
+        if (this.auth.isAuthenticated() && this.auth.isAdmin()) {
+            this.router.navigate(['/admin', 'dashboard']);
+        }
         this.route.queryParams.subscribe((params) => {
             if (params['loginAgain']) {
                 this.message = 'Пожалуйста, введите данные.';
@@ -806,7 +811,7 @@ LoginPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminLayoutComponent", function() { return AdminLayoutComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _shared_components_alert_alert_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../shared/components/alert/alert.component */ "./src/app/shared/components/alert/alert.component.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
@@ -857,7 +862,7 @@ class AdminLayoutComponent {
         this.router.navigate(['/admin', 'login']);
     }
 }
-AdminLayoutComponent.ɵfac = function AdminLayoutComponent_Factory(t) { return new (t || AdminLayoutComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
+AdminLayoutComponent.ɵfac = function AdminLayoutComponent_Factory(t) { return new (t || AdminLayoutComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
 AdminLayoutComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AdminLayoutComponent, selectors: [["app-admin-layout"]], decls: 8, vars: 1, consts: [[1, "navbar", "bg-primary"], ["routerLink", "/"], [4, "ngIf"], ["routerLinkActive", "active"], [3, "routerLink"], ["href", "#", 3, "click"]], template: function AdminLayoutComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-alert");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "nav", 0);
@@ -882,7 +887,7 @@ AdminLayoutComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
                 templateUrl: './admin-layout.component.html',
                 styleUrls: ['./admin-layout.component.scss']
             }]
-    }], function () { return [{ type: _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
+    }], function () { return [{ type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
 
 
 /***/ }),
@@ -922,6 +927,52 @@ SearchPipe.ɵpipe = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefinePipe"]
 
 /***/ }),
 
+/***/ "./src/app/admin/shared/services/auth-admin.guard.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/admin/shared/services/auth-admin.guard.ts ***!
+  \***********************************************************/
+/*! exports provided: AuthAdminGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthAdminGuard", function() { return AuthAdminGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+
+
+
+class AuthAdminGuard {
+    constructor(auth, router) {
+        this.auth = auth;
+        this.router = router;
+    }
+    canActivate(route, state) {
+        if (this.auth.isAuthenticated() && this.auth.isAdmin()) {
+            console.log('You are admin');
+            return true;
+        }
+        else {
+            this.auth.logout();
+            this.router.navigate(['/admin', 'login'], {
+                queryParams: {
+                    loginAgain: true
+                }
+            });
+        }
+    }
+}
+AuthAdminGuard.ɵfac = function AuthAdminGuard_Factory(t) { return new (t || AuthAdminGuard)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
+AuthAdminGuard.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthAdminGuard, factory: AuthAdminGuard.ɵfac });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthAdminGuard, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "./src/app/admin/shared/services/auth.guard.ts":
 /*!*****************************************************!*\
   !*** ./src/app/admin/shared/services/auth.guard.ts ***!
@@ -933,7 +984,7 @@ SearchPipe.ɵpipe = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefinePipe"]
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 
 
@@ -959,110 +1010,11 @@ class AuthGuard {
         }
     }
 }
-AuthGuard.ɵfac = function AuthGuard_Factory(t) { return new (t || AuthGuard)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
+AuthGuard.ɵfac = function AuthGuard_Factory(t) { return new (t || AuthGuard)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
 AuthGuard.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthGuard, factory: AuthGuard.ɵfac });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthGuard, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
-    }], function () { return [{ type: _auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
-
-
-/***/ }),
-
-/***/ "./src/app/admin/shared/services/auth.service.ts":
-/*!*******************************************************!*\
-  !*** ./src/app/admin/shared/services/auth.service.ts ***!
-  \*******************************************************/
-/*! exports provided: AuthService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
-
-
-
-
-
-class AuthService {
-    constructor(http) {
-        this.http = http;
-        this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
-        this.apiUrl = 'api/account';
-    }
-    get user() {
-        const expDate = new Date(localStorage.getItem('expires'));
-        if (new Date > expDate) {
-            this.logout();
-            return null;
-        }
-        return localStorage.getItem('user-name');
-    }
-    login(user) {
-        // user.returnSecureToken = true;
-        return this.http.post(`${this.apiUrl}/login`, user)
-            .pipe(
-        // tap(this.setToken),
-        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
-    }
-    loginAsAdmin(user) {
-        // user.returnSecureToken = true;
-        return this.http.post(`${this.apiUrl}/loginAdmin`, user)
-            .pipe(
-        // tap(this.setToken),
-        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
-    }
-    logout() {
-        this.setToken(null);
-    }
-    isAuthenticated() {
-        return !!this.user;
-        // return true;
-    }
-    handleError(error) {
-        console.log(error);
-        this.error$.next(error.error);
-        // console.log('this.error$',this.error$)
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])(error);
-    }
-    setToken(response) {
-        if (response) {
-            const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
-            localStorage.setItem('fb-token', response.idToken);
-            localStorage.setItem('fb-token-exp', expDate.toString());
-        }
-        else {
-            localStorage.clear();
-        }
-    }
-    setUser(response) {
-        // console.log(response);
-        if (response) {
-            const expDate = new Date(new Date().getTime() + 60000); //1 мин
-            localStorage.setItem('expires', expDate.toString());
-            localStorage.setItem('user-name', response.name);
-            localStorage.setItem('user-email', response.email);
-        }
-        else {
-            localStorage.clear();
-        }
-    }
-    register(user) {
-        return this.http.post(`${this.apiUrl}/register`, user)
-            .pipe(
-        // tap(this.setToken),
-        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
-    }
-}
-AuthService.ɵfac = function AuthService_Factory(t) { return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
-AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthService, factory: AuthService.ɵfac, providedIn: 'root' });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthService, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
-        args: [{ providedIn: 'root' }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
 
 
 /***/ }),
@@ -1417,7 +1369,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePageComponent", function() { return HomePageComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _shared_services_products_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/services/products.service */ "./src/app/shared/services/products.service.ts");
-/* harmony import */ var _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../admin/shared/services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 /* harmony import */ var _shared_components_product_product_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/components/product/product.component */ "./src/app/shared/components/product/product.component.ts");
 
@@ -1458,7 +1410,7 @@ class HomePageComponent {
         this.products$ = this.productsService.getAll();
     }
 }
-HomePageComponent.ɵfac = function HomePageComponent_Factory(t) { return new (t || HomePageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_products_service__WEBPACK_IMPORTED_MODULE_1__["ProductsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"])); };
+HomePageComponent.ɵfac = function HomePageComponent_Factory(t) { return new (t || HomePageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_products_service__WEBPACK_IMPORTED_MODULE_1__["ProductsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"])); };
 HomePageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomePageComponent, selectors: [["app-home-page"]], decls: 4, vars: 4, consts: [["class", "products", 4, "ngIf", "ngIfElse"], ["loading", ""], [1, "products"], [3, "product", "showAddCart", 4, "ngFor", "ngForOf"], [3, "product", "showAddCart"], [1, "text-center"]], template: function HomePageComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, HomePageComponent_div_0_Template, 2, 1, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](1, "async");
@@ -1474,7 +1426,7 @@ HomePageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
                 templateUrl: './home-page.component.html',
                 styleUrls: ['./home-page.component.scss']
             }]
-    }], function () { return [{ type: _shared_services_products_service__WEBPACK_IMPORTED_MODULE_1__["ProductsService"] }, { type: _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }]; }, null); })();
+    }], function () { return [{ type: _shared_services_products_service__WEBPACK_IMPORTED_MODULE_1__["ProductsService"] }, { type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }]; }, null); })();
 
 
 /***/ }),
@@ -1491,7 +1443,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageComponent", function() { return LoginPageComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
-/* harmony import */ var _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../admin/shared/services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/services/cart.service */ "./src/app/shared/services/cart.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
@@ -1617,7 +1569,7 @@ class LoginPageComponent {
         });
     }
 }
-LoginPageComponent.ɵfac = function LoginPageComponent_Factory(t) { return new (t || LoginPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_cart_service__WEBPACK_IMPORTED_MODULE_4__["CartService"])); };
+LoginPageComponent.ɵfac = function LoginPageComponent_Factory(t) { return new (t || LoginPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_cart_service__WEBPACK_IMPORTED_MODULE_4__["CartService"])); };
 LoginPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: LoginPageComponent, selectors: [["login-page"]], decls: 20, vars: 16, consts: [[1, "card", 3, "formGroup"], ["class", "alert alert-danger", 4, "ngIf"], ["class", "alert alert-info", 4, "ngIf"], [1, "form-control", 3, "ngClass"], ["for", "email"], ["id", "email", "type", "email", "formControlName", "email"], ["class", "validation", 4, "ngIf"], ["for", "password"], ["id", "password", "type", "password", "formControlName", "password"], ["type", "submit", 1, "btn", "btn-primary", 3, "disabled", "click"], [3, "routerLink"], [1, "alert", "alert-danger"], [1, "alert", "alert-info"], [1, "validation"], [4, "ngIf"]], template: function LoginPageComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "form", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h2");
@@ -1674,7 +1626,7 @@ LoginPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
                 templateUrl: './login-page.component.html',
                 styleUrls: ['./login-page.component.scss']
             }]
-    }], function () { return [{ type: _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }, { type: _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_4__["CartService"] }]; }, null); })();
+    }], function () { return [{ type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }, { type: _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_4__["CartService"] }]; }, null); })();
 
 
 /***/ }),
@@ -1691,7 +1643,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductPageComponent", function() { return ProductPageComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
-/* harmony import */ var _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../admin/shared/services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _shared_services_products_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/services/products.service */ "./src/app/shared/services/products.service.ts");
 /* harmony import */ var _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/services/cart.service */ "./src/app/shared/services/cart.service.ts");
@@ -1773,7 +1725,7 @@ class ProductPageComponent {
         this.alert.success('Продукт был добавлен в корзину');
     }
 }
-ProductPageComponent.ɵfac = function ProductPageComponent_Factory(t) { return new (t || ProductPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_products_service__WEBPACK_IMPORTED_MODULE_4__["ProductsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_6__["AlertService"])); };
+ProductPageComponent.ɵfac = function ProductPageComponent_Factory(t) { return new (t || ProductPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_products_service__WEBPACK_IMPORTED_MODULE_4__["ProductsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_6__["AlertService"])); };
 ProductPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ProductPageComponent, selectors: [["app-product-page"]], decls: 4, vars: 4, consts: [[4, "ngIf", "ngIfElse"], ["loading", ""], [1, "product"], [1, "header"], ["routerLink", "/", 1, "btn", "btn-link"], [1, "info"], ["class", "btn btn-success", 3, "click", 4, "ngIf"], [1, "btn", "btn-success", 3, "click"], [1, "text-center"]], template: function ProductPageComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, ProductPageComponent_div_0_Template, 14, 7, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](1, "async");
@@ -1789,7 +1741,7 @@ ProductPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
                 templateUrl: './product-page.component.html',
                 styleUrls: ['./product-page.component.scss']
             }]
-    }], function () { return [{ type: _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }, { type: _shared_services_products_service__WEBPACK_IMPORTED_MODULE_4__["ProductsService"] }, { type: _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"] }, { type: _shared_services_alert_service__WEBPACK_IMPORTED_MODULE_6__["AlertService"] }]; }, null); })();
+    }], function () { return [{ type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }, { type: _shared_services_products_service__WEBPACK_IMPORTED_MODULE_4__["ProductsService"] }, { type: _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"] }, { type: _shared_services_alert_service__WEBPACK_IMPORTED_MODULE_6__["AlertService"] }]; }, null); })();
 
 
 /***/ }),
@@ -1807,7 +1759,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
 /* harmony import */ var _shared_my_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/my.validators */ "./src/app/shared/my.validators.ts");
-/* harmony import */ var _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../admin/shared/services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/services/cart.service */ "./src/app/shared/services/cart.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
@@ -1974,7 +1926,7 @@ class RegisterPageComponent {
         });
     }
 }
-RegisterPageComponent.ɵfac = function RegisterPageComponent_Factory(t) { return new (t || RegisterPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"])); };
+RegisterPageComponent.ɵfac = function RegisterPageComponent_Factory(t) { return new (t || RegisterPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"])); };
 RegisterPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: RegisterPageComponent, selectors: [["register-page"]], decls: 31, vars: 25, consts: [[1, "card", 3, "formGroup"], ["class", "alert alert-danger", 4, "ngIf"], ["class", "alert alert-info", 4, "ngIf"], [1, "form-control", 3, "ngClass"], ["for", "name"], ["id", "name", "type", "text", "formControlName", "name"], ["class", "validation", 4, "ngIf"], ["for", "email"], ["id", "email", "type", "email", "formControlName", "email"], ["for", "password"], ["id", "password", "type", "password", "formControlName", "password"], ["for", "confirmPassword"], ["id", "confirmPassword", "type", "password", "formControlName", "confirmPassword"], [4, "ngIf"], ["type", "submit", 1, "btn", "btn-primary", 3, "disabled", "click"], [3, "routerLink"], [1, "alert", "alert-danger"], [1, "alert", "alert-info"], [1, "validation"]], template: function RegisterPageComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "form", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h2");
@@ -2056,7 +2008,7 @@ RegisterPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
                 templateUrl: './register-page.component.html',
                 styleUrls: ['./register-page.component.scss']
             }]
-    }], function () { return [{ type: _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] }, { type: _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"] }]; }, null); })();
+    }], function () { return [{ type: _shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] }, { type: _shared_services_cart_service__WEBPACK_IMPORTED_MODULE_5__["CartService"] }]; }, null); })();
 
 
 /***/ }),
@@ -2147,7 +2099,7 @@ AlertComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainLayoutComponent", function() { return MainLayoutComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../admin/shared/services/auth.service */ "./src/app/admin/shared/services/auth.service.ts");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _services_cart_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/cart.service */ "./src/app/shared/services/cart.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _alert_alert_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../alert/alert.component */ "./src/app/shared/components/alert/alert.component.ts");
@@ -2231,7 +2183,7 @@ class MainLayoutComponent {
         this.router.navigate(['/login']);
     }
 }
-MainLayoutComponent.ɵfac = function MainLayoutComponent_Factory(t) { return new (t || MainLayoutComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_cart_service__WEBPACK_IMPORTED_MODULE_2__["CartService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
+MainLayoutComponent.ɵfac = function MainLayoutComponent_Factory(t) { return new (t || MainLayoutComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_cart_service__WEBPACK_IMPORTED_MODULE_2__["CartService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
 MainLayoutComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MainLayoutComponent, selectors: [["app-main-layout"]], decls: 17, vars: 11, consts: [[3, "delay"], [1, "navbar", "bg-primary"], ["routerLinkActive", "active", 3, "routerLinkActiveOptions"], [3, "routerLink"], ["routerLinkActive", "active", 4, "ngIf"], ["routerLinkActive", "active", 4, "ngIf", "ngIfElse"], ["signIn", ""], [4, "ngIf"], [1, "container"], ["routerLinkActive", "active"], ["href", "#", 3, "click"]], template: function MainLayoutComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "app-alert", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "dfsdf");
@@ -2280,7 +2232,7 @@ MainLayoutComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
                 templateUrl: './main-layout.component.html',
                 styleUrls: ['./main-layout.component.scss']
             }]
-    }], function () { return [{ type: _admin_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _services_cart_service__WEBPACK_IMPORTED_MODULE_2__["CartService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }]; }, null); })();
+    }], function () { return [{ type: _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"] }, { type: _services_cart_service__WEBPACK_IMPORTED_MODULE_2__["CartService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }]; }, null); })();
 
 
 /***/ }),
@@ -2434,6 +2386,112 @@ AlertService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInje
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{ providedIn: 'root' }]
     }], null, null); })();
+
+
+/***/ }),
+
+/***/ "./src/app/shared/services/auth.service.ts":
+/*!*************************************************!*\
+  !*** ./src/app/shared/services/auth.service.ts ***!
+  \*************************************************/
+/*! exports provided: AuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+
+
+
+
+
+class AuthService {
+    constructor(http) {
+        this.http = http;
+        this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        this.apiUrl = 'api/account';
+    }
+    get user() {
+        const expDate = new Date(localStorage.getItem('expires'));
+        if (new Date > expDate) {
+            this.logout();
+            return null;
+        }
+        return localStorage.getItem('user-name');
+    }
+    login(user) {
+        // user.returnSecureToken = true;
+        return this.http.post(`${this.apiUrl}/login`, user)
+            .pipe(
+        // tap(this.setToken),
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
+    }
+    loginAsAdmin(user) {
+        // user.returnSecureToken = true;
+        return this.http.post(`${this.apiUrl}/loginAdmin`, user)
+            .pipe(
+        // tap(this.setToken),
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
+    }
+    logout() {
+        this.setToken(null);
+    }
+    isAuthenticated() {
+        return !!this.user;
+        // return true;
+    }
+    isAdmin() {
+        return !!localStorage.getItem('admin');
+        // return true;
+    }
+    handleError(error) {
+        console.log(error);
+        this.error$.next(error.error);
+        // console.log('this.error$',this.error$)
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])(error);
+    }
+    setToken(response) {
+        if (response) {
+            const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
+            localStorage.setItem('fb-token', response.idToken);
+            localStorage.setItem('fb-token-exp', expDate.toString());
+        }
+        else {
+            localStorage.clear();
+        }
+    }
+    setUser(response) {
+        // console.log(response);
+        if (response) {
+            const expDate = new Date(new Date().getTime() + 60000); //1 мин
+            localStorage.setItem('expires', expDate.toString());
+            localStorage.setItem('user-name', response.name);
+            localStorage.setItem('user-email', response.email);
+            if (response.role.name == 'admin') {
+                localStorage.setItem('admin', 'true');
+            }
+        }
+        else {
+            localStorage.clear();
+        }
+    }
+    register(user) {
+        return this.http.post(`${this.apiUrl}/register`, user)
+            .pipe(
+        // tap(this.setToken),
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(this.setUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError.bind(this)));
+    }
+}
+AuthService.ɵfac = function AuthService_Factory(t) { return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
+AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthService, factory: AuthService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{ providedIn: 'root' }]
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }]; }, null); })();
 
 
 /***/ }),

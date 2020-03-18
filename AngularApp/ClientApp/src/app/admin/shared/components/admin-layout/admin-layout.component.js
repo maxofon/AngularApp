@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 var AdminLayoutComponent = /** @class */ (function () {
     function AdminLayoutComponent(auth, router) {
         this.auth = auth;

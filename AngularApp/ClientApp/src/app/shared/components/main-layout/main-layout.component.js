@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { AuthService } from '../../../admin/shared/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 var MainLayoutComponent = /** @class */ (function () {

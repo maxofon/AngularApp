@@ -6,7 +6,7 @@ import {Product} from '../shared/interfaces/Product';
 import {switchMap} from 'rxjs/operators';
 import {CartService} from '../shared/services/cart.service';
 import {AlertService} from '../shared/services/alert.service';
-import {AuthService} from '../admin/shared/services/auth.service';
+import {AuthService} from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-product-page',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../shared/services/auth.service';
+import {AuthService} from '../../shared/services/auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {User} from '../../shared/interfaces/User';
 
@@ -21,6 +21,10 @@ export class LoginPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.auth.isAuthenticated() && this.auth.isAdmin()) {
+      this.router.navigate(['/admin','dashboard'])
+    }
+
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = 'Пожалуйста, введите данные.';
