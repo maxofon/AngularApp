@@ -12,7 +12,8 @@ import { ProductComponent } from './shared/components/product/product.component'
 import {AdminModule} from './admin/admin.module';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { RegisterPageComponent } from './register-page/register-page.component'
+import { RegisterPageComponent } from './register-page/register-page.component';
+import { OrderPageComponent } from './order-page/order-page.component'
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { RegisterPageComponent } from './register-page/register-page.component'
         ProductComponent,
         CartPageComponent,
         LoginPageComponent,
-        RegisterPageComponent
+        RegisterPageComponent,
+        OrderPageComponent
     ],
     bootstrap: [AppComponent]
 })

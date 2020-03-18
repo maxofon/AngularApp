@@ -1,0 +1,74 @@
+<form class="card" [formGroup]="form">
+    <h2>Оформить заказ</h2>
+
+<!--    <div class="alert alert-danger" *ngIf="(auth.error$ | async) as error">-->
+<!--        {{ error }}-->
+<!--    </div>-->
+
+    <div class="alert alert-info" *ngIf="message">
+        {{ message }}
+    </div>
+
+<!--    Имя-->
+    <div
+            [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
+            class="form-control"
+    >
+        <label for="name">Ваше имя:</label>
+        <input id="name" type="text" formControlName="name">
+        <div
+                *ngIf="form.get('name').touched && form.get('name').invalid"
+                class="validation">
+            <small
+                    *ngIf="form.get('name').errors.required"
+            >Нужно ввести имя</small>
+        </div>
+    </div>
+
+<!--    Фамилия-->
+    <div
+            [ngClass]="{invalid: form.get('surname').touched && form.get('surname').invalid}"
+            class="form-control"
+    >
+        <label for="surname">Ваше имя:</label>
+        <input id="surname" type="text" formControlName="surname">
+        <div
+                *ngIf="form.get('surname').touched && form.get('surname').invalid"
+                class="validation">
+            <small
+                    *ngIf="form.get('surname').errors.required"
+            >Нужно ввести имя</small>
+        </div>
+    </div>
+
+    <div
+            [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+            class="form-control"
+    >
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email">
+        <div
+                *ngIf="form.get('email').touched && form.get('email').invalid"
+                class="validation"
+        >
+            <small
+                    *ngIf="form.get('email').errors.required"
+            >Нужно ввести email</small>
+            <small
+                    *ngIf="form.get('email').errors.email"
+            >Email должен быть email</small>
+        </div>
+    </div>
+
+
+
+
+    <button
+            [disabled]="form.invalid || submitted"
+            type="submit"
+            class="btn btn-primary"
+            (click)="submit()"
+    >Войти</button>
+
+    <a [routerLink]="['/register']">Оформить</a>
+</form>

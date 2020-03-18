@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {FbAuthResponse} from '../interfaces';
 import {Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {User} from '../interfaces/User';
@@ -45,7 +44,8 @@ export class AuthService {
   }
 
   logout() {
-    this.setToken(null)
+    this.http.get(`${this.apiUrl}/logout`);
+    this.setUser(null);
   }
 
   isAuthenticated(): boolean {
@@ -63,16 +63,6 @@ export class AuthService {
     this.error$.next(error.error)
     // console.log('this.error$',this.error$)
     return throwError(error)
-  }
-
-  private setToken(response: FbAuthResponse | null) {
-    if (response) {
-      const expDate = new Date(new Date().getTime() + +response.expiresIn*1000);
-      localStorage.setItem('fb-token', response.idToken)
-      localStorage.setItem('fb-token-exp', expDate.toString())
-    } else {
-      localStorage.clear()
-    }
   }
 
   private setUser(response: User | null) {
