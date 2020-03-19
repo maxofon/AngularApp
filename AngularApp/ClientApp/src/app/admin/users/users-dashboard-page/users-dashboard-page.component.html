@@ -1,0 +1,35 @@
+<div *ngIf="users.length; else loading">
+<!--    <div class="form-control">-->
+<!--        <input type="text" placeholder="Найти продукт по названию..." [(ngModel)]="searchStr">-->
+<!--    </div>-->
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users ; let idx = index">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <button
+                        class="btn btn-link open"
+                        [routerLink]="['/admin/orders/dashboard', user.name]"
+                >Открыть заказы</button>
+
+                <a (click)="remove(user)">Удалить пользователя</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loading>
+    <p class="text-center">Идет загрузка...</p>
+</ng-template>

@@ -7,7 +7,7 @@ import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Params, Route} from '@angular/router';
 
 @Component({
-  selector: 'dashboard-page',
+  selector: 'orders-dashboard-page',
   templateUrl: './orders-dashboard-page.component.html',
   styleUrls: ['./orders-dashboard-page.component.scss']
 })
