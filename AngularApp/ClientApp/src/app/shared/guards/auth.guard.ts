@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs";
-import {AuthService} from "../../../shared/services/auth.service";
+import {AuthService} from "../services/auth.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate{
@@ -19,12 +19,8 @@ export class AuthGuard implements CanActivate{
       console.log('ping');
       return true
     } else {
-      this.auth.logout()
-      this.router.navigate(['/admin','login'], {
-        queryParams: {
-          loginAgain: true
-        }
-      })
+      // this.auth.logout()
+      this.router.navigate(['/login'])
     }
   }
 

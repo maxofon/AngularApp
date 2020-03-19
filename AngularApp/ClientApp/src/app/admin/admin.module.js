@@ -14,7 +14,7 @@ import { CreatePageComponent } from './create-page/create-page.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { AuthGuard } from "./shared/services/auth.guard";
+import { AuthGuard } from "../shared/guards/auth.guard";
 import { SearchPipe } from './shared/search.pipe';
 import { AuthAdminGuard } from './shared/services/auth-admin.guard';
 var AdminModule = /** @class */ (function () {
