@@ -5,4 +5,6 @@ export interface Order {
     address: string
     phone: string
     email: string
+    amount?: number
+    orderTime?: Date
 }

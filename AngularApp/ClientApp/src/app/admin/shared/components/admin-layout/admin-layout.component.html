@@ -7,10 +7,10 @@
 
   <ul *ngIf="auth.isAuthenticated()">
     <li routerLinkActive="active">
-      <a [routerLink]="['/admin','dashboard']">Главная</a>
+      <a [routerLink]="['/admin','dashboard']">Главная админки</a>
     </li>
     <li routerLinkActive="active">
-      <a [routerLink]="['/admin','create']">Создать</a>
+      <a [routerLink]="['/admin','create']">Создать товар</a>
     </li>
     <li>
       <a href="#" (click)="logout($event)">Выйти</a>

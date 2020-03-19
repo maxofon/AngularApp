@@ -19,6 +19,7 @@ import { CartPageComponent } from './cart-page/cart-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -43,7 +44,8 @@ var AppModule = /** @class */ (function () {
                 RegisterPageComponent,
                 OrderPageComponent
             ],
-            bootstrap: [AppComponent]
+            bootstrap: [AppComponent],
+            providers: [AuthGuard]
         })
     ], AppModule);
     return AppModule;

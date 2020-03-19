@@ -15,6 +15,8 @@ namespace DataAccess.Models
         public string Email { get; set; }
         public DateTime OrderTime { get; set; }
         public decimal Amount { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
     }
 }

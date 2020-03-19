@@ -43,6 +43,14 @@ var CartService = /** @class */ (function () {
             _this.updateTotal();
         });
     };
+    CartService.prototype.isCartNotEmpty = function () {
+        this.http.get("" + this.apiUrl).subscribe(function (carts) {
+            console.log(carts.length);
+            return (carts.length > 0);
+        });
+        console.log('asdf');
+        return false;
+    };
     CartService = __decorate([
         Injectable({ providedIn: 'root' }),
         __metadata("design:paramtypes", [HttpClient])

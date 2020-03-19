@@ -11,12 +11,16 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OrderService } from '../shared/services/order.service';
 import { CartService } from '../shared/services/cart.service';
+import { AlertService } from '../shared/services/alert.service';
 var OrderPageComponent = /** @class */ (function () {
-    function OrderPageComponent(auth, router, route, cartService) {
+    function OrderPageComponent(auth, alert, router, route, orderService, cartService) {
         this.auth = auth;
+        this.alert = alert;
         this.router = router;
         this.route = route;
+        this.orderService = orderService;
         this.cartService = cartService;
         this.submitted = false;
     }
@@ -41,6 +45,27 @@ var OrderPageComponent = /** @class */ (function () {
         });
     };
     OrderPageComponent.prototype.submit = function () {
+        var _this = this;
+        if (this.form.invalid) {
+            return;
+        }
+        this.submitted = true;
+        var order = {
+            name: this.form.value.name,
+            surname: this.form.value.surname,
+            email: this.form.value.email,
+            address: this.form.value.address,
+            phone: this.form.value.phone
+        };
+        this.orderService.create(order).subscribe(function () {
+            _this.form.reset;
+            _this.router.navigate(['/']);
+            _this.submitted = false;
+            _this.cartService.updateTotal();
+            _this.alert.success('Заказ успешно оформлен.');
+        }, function () {
+            _this.submitted = false;
+        });
     };
     OrderPageComponent = __decorate([
         Component({
@@ -49,8 +74,10 @@ var OrderPageComponent = /** @class */ (function () {
             styleUrls: ['./order-page.component.scss']
         }),
         __metadata("design:paramtypes", [AuthService,
+            AlertService,
             Router,
             ActivatedRoute,
+            OrderService,
             CartService])
     ], OrderPageComponent);
     return OrderPageComponent;

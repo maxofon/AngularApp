@@ -1,0 +1,46 @@
+<div *ngIf="orders.length; else loading">
+<!--    <div class="form-control">-->
+<!--        <input type="text" placeholder="Найти продукт по названию..." [(ngModel)]="searchStr">-->
+<!--    </div>-->
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Сумма заказа</th>
+            <th>Дата заказа</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let order of orders  ; let idx = index">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ order.name }}</td>
+            <td>{{ order.surname }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.phone }}</td>
+            <td>{{ order.email }}</td>
+            <td>{{ order.amount }}</td>
+            <td>{{ order.orderTime }}</td>
+            <td>
+                <button
+                        class="btn btn-link open"
+                        [routerLink]="['/admin','product', order.id, 'edit']"
+                >Открыть</button>
+
+                <a (click)="remove(order.id)">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loading>
+    <p class="text-center">Идет загрузка...</p>
+</ng-template>
+

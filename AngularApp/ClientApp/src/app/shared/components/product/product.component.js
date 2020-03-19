@@ -17,9 +17,9 @@ var ProductComponent = /** @class */ (function () {
     }
     ProductComponent.prototype.ngOnInit = function () {
     };
-    ProductComponent.prototype.addToCart = function (id) {
-        this.cartService.addToCart(id);
-        this.alert.success('Продукт был добавлен в корзину');
+    ProductComponent.prototype.addToCart = function (product) {
+        this.cartService.addToCart(product.id);
+        this.alert.success("\u041F\u0440\u043E\u0434\u0443\u043A\u0442 " + product.name + " \u0431\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u043A\u043E\u0440\u0437\u0438\u043D\u0443");
     };
     __decorate([
         Input(),

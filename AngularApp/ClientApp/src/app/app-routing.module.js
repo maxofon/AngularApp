@@ -13,13 +13,14 @@ import { CartPageComponent } from './cart-page/cart-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 var routes = [
     {
         path: '', component: MainLayoutComponent, children: [
             { path: '', redirectTo: '/', pathMatch: 'full' },
             { path: '', component: HomePageComponent },
             { path: 'product/:id', component: ProductPageComponent },
-            { path: 'cart', component: CartPageComponent },
+            { path: 'cart', component: CartPageComponent, canActivate: [AuthGuard] },
             { path: 'login', component: LoginPageComponent },
             { path: 'register', component: RegisterPageComponent },
             { path: 'order', component: OrderPageComponent }

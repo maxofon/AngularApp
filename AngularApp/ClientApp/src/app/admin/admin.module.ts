@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {SearchPipe} from './shared/search.pipe';
 import {AuthAdminGuard} from './shared/services/auth-admin.guard';
+import {OrdersDashboardPageComponent} from './orders/dashboard-page/orders-dashboard-page.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {AuthAdminGuard} from './shared/services/auth-admin.guard';
     DashboardPageComponent,
     CreatePageComponent,
     EditPageComponent,
+    OrdersDashboardPageComponent,
     SearchPipe
   ],
   imports: [
@@ -34,6 +36,7 @@ import {AuthAdminGuard} from './shared/services/auth-admin.guard';
           {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthAdminGuard]},
           {path: 'create', component: CreatePageComponent, canActivate: [AuthAdminGuard]},
           {path: 'product/:id/edit', component: EditPageComponent, canActivate: [AuthAdminGuard]},
+          {path: 'orders/dashboard/:userName', component: OrdersDashboardPageComponent, canActivate: [AuthAdminGuard]},
         ]
       }
     ]),

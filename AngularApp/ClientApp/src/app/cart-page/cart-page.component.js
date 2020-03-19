@@ -23,13 +23,14 @@ var CartPageComponent = /** @class */ (function () {
             _this.loaded = true;
         });
     };
-    CartPageComponent.prototype.remove = function (id) {
+    CartPageComponent.prototype.remove = function (cart) {
         var _this = this;
-        this.dSub = this.cartService.remove(id).subscribe(function () {
-            _this.carts = _this.carts.filter(function (cart) { return cart.id !== id; });
+        var amount = cart.price * cart.quantity;
+        this.dSub = this.cartService.remove(cart.id).subscribe(function () {
+            _this.carts = _this.carts.filter(function (c) { return c.id !== cart.id; });
             _this.cartService.updateTotal();
             _this.loaded = true;
-            _this.alert.danger('Продукт был удален из корзины');
+            _this.alert.danger("\u041F\u0440\u043E\u0434\u0443\u043A\u0442 \u043D\u0430 \u0441\u0443\u043C\u043C\u0443 " + amount + " \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u0438\u0437 \u043A\u043E\u0440\u0437\u0438\u043D\u044B");
         });
     };
     CartPageComponent.prototype.ngOnDestroy = function () {

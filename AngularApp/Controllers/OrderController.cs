@@ -20,17 +20,20 @@ namespace AngularApp.Controllers
         private readonly IOrderLineRepository _orderLineRepo;
         private readonly ICartLineRepository _cartLineRepo;
         private readonly IOrderRepository _orderRepo;
+        private readonly IUserRepository _userRepo;
         private readonly IMapper _mapper;
 
         public OrderController(IOrderLineRepository orderLineRepo,
                             IOrderRepository orderRepo,
                             ICartLineRepository cartLineRepo,
+                            IUserRepository userRepo,
                             IUserService userServ,
                             IMapper mapper)
         {
             _orderLineRepo = orderLineRepo;
             _cartLineRepo = cartLineRepo;
             _orderRepo = orderRepo;
+            _userRepo = userRepo;
             _userServ = userServ;
             _mapper = mapper;
         }
@@ -52,6 +55,27 @@ namespace AngularApp.Controllers
             {
                 return BadRequest($"{ex.Message}");
             }            
+        }
+
+        [HttpGet("{name}")]
+        public async Task<ActionResult<IEnumerable<API.Order>>> GetByName(string name)
+        {
+            try
+            {
+                var userList = await _userRepo.FindByAsync(u => u.Name == name);
+                var user = userList.FirstOrDefault();
+                var entities = await _orderRepo.FindByAsync(o => o.UserId == user.Id);
+
+                return entities.Select(item =>
+                {
+                    var mapEntity = _mapper.Map<API.Order>(item);
+                    return mapEntity;
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
         }
 
         [HttpPost]
