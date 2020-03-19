@@ -18,6 +18,7 @@ import { AdminModule } from './admin/admin.module';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
+import { OrderPageComponent } from './order-page/order-page.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -39,7 +40,8 @@ var AppModule = /** @class */ (function () {
                 ProductComponent,
                 CartPageComponent,
                 LoginPageComponent,
-                RegisterPageComponent
+                RegisterPageComponent,
+                OrderPageComponent
             ],
             bootstrap: [AppComponent]
         })

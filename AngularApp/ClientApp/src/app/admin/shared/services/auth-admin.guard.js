@@ -7,31 +7,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../../shared/services/auth.service';
-var AdminLayoutComponent = /** @class */ (function () {
-    function AdminLayoutComponent(auth, router) {
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../../../shared/services/auth.service";
+var AuthAdminGuard = /** @class */ (function () {
+    function AuthAdminGuard(auth, router) {
         this.auth = auth;
         this.router = router;
     }
-    AdminLayoutComponent.prototype.ngOnInit = function () {
+    AuthAdminGuard.prototype.canActivate = function (route, state) {
+        if (this.auth.isAuthenticated() && this.auth.isAdmin()) {
+            console.log('You are admin');
+            return true;
+        }
+        else {
+            // this.auth.logout()
+            this.router.navigate(['/admin', 'login'], {
+                queryParams: {
+                    loginAgain: true
+                }
+            });
+        }
     };
-    AdminLayoutComponent.prototype.logout = function ($event) {
-        event.preventDefault();
-        this.auth.logout();
-        this.router.navigate(['/admin', 'login']);
-    };
-    AdminLayoutComponent = __decorate([
-        Component({
-            selector: 'app-admin-layout',
-            templateUrl: './admin-layout.component.html',
-            styleUrls: ['./admin-layout.component.scss']
-        }),
+    AuthAdminGuard = __decorate([
+        Injectable(),
         __metadata("design:paramtypes", [AuthService,
             Router])
-    ], AdminLayoutComponent);
-    return AdminLayoutComponent;
+    ], AuthAdminGuard);
+    return AuthAdminGuard;
 }());
-export { AdminLayoutComponent };
-//# sourceMappingURL=admin-layout.component.js.map
+export { AuthAdminGuard };
+//# sourceMappingURL=auth-admin.guard.js.map

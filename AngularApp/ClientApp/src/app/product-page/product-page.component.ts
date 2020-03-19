@@ -34,8 +34,8 @@ export class ProductPageComponent implements OnInit {
           }))
   }
 
-    addToCart(id: string) {
-        this.cartService.addToCart(id);
-        this.alert.success('Продукт был добавлен в корзину')
+    addToCart(product: Product) {
+        this.cartService.addToCart(product.id);
+        this.alert.success(`Продукт ${product.name} был добавлен в корзину`)
     }
 }

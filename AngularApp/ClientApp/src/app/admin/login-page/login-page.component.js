@@ -20,6 +20,9 @@ var LoginPageComponent = /** @class */ (function () {
     }
     LoginPageComponent.prototype.ngOnInit = function () {
         var _this = this;
+        if (this.auth.isAuthenticated() && this.auth.isAdmin()) {
+            this.router.navigate(['/admin', 'dashboard']);
+        }
         this.route.queryParams.subscribe(function (params) {
             if (params['loginAgain']) {
                 _this.message = 'Пожалуйста, введите данные.';

@@ -1,4 +1,8 @@
 <div *ngIf="carts.length; else loading">
+    <button class="btn btn-sm">
+        <a [routerLink]="['/order']">Оформить заказ</a>
+    </button>
+
     <table>
         <thead>
         <tr>
@@ -16,7 +20,7 @@
             <td>{{ cart.quantity }}</td>
             <td>{{ cart.price | currency:'USD'}}</td>
             <td>
-                <a (click)="remove(cart.id)">Удалить</a>
+                <a (click)="remove(cart)">Удалить</a>
             </td>
         </tr>
         </tbody>

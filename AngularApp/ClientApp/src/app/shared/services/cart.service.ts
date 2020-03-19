@@ -43,4 +43,13 @@ export class CartService {
             this.updateTotal();
         })
     }
+
+    isCartNotEmpty(): boolean {
+        this.http.get<Cart[]>(`${this.apiUrl}`).subscribe((carts) => {
+            console.log(carts.length)
+            return (carts.length > 0)
+        })
+        console.log('asdf')
+        return false
+    }
 }

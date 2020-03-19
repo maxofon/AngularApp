@@ -44,10 +44,15 @@ var AuthService = /** @class */ (function () {
         tap(this.setUser), catchError(this.handleError.bind(this)));
     };
     AuthService.prototype.logout = function () {
-        this.setToken(null);
+        this.http.get(this.apiUrl + "/logout");
+        this.setUser(null);
     };
     AuthService.prototype.isAuthenticated = function () {
         return !!this.user;
+        // return true;
+    };
+    AuthService.prototype.isAdmin = function () {
+        return !!localStorage.getItem('admin');
         // return true;
     };
     AuthService.prototype.handleError = function (error) {
@@ -56,16 +61,6 @@ var AuthService = /** @class */ (function () {
         // console.log('this.error$',this.error$)
         return throwError(error);
     };
-    AuthService.prototype.setToken = function (response) {
-        if (response) {
-            var expDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
-            localStorage.setItem('fb-token', response.idToken);
-            localStorage.setItem('fb-token-exp', expDate.toString());
-        }
-        else {
-            localStorage.clear();
-        }
-    };
     AuthService.prototype.setUser = function (response) {
         // console.log(response);
         if (response) {
@@ -73,6 +68,9 @@ var AuthService = /** @class */ (function () {
             localStorage.setItem('expires', expDate.toString());
             localStorage.setItem('user-name', response.name);
             localStorage.setItem('user-email', response.email);
+            if (response.role.name == 'admin') {
+                localStorage.setItem('admin', 'true');
+            }
         }
         else {
             localStorage.clear();

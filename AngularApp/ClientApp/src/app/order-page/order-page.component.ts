@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../shared/services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {OrderService} from '../shared/services/order.service';
+import {Order} from '../shared/interfaces/Order';
 import {CartService} from '../shared/services/cart.service';
+import {Alert, AlertService} from '../shared/services/alert.service';
 
 @Component({
   selector: 'order-page',
@@ -12,12 +15,13 @@ import {CartService} from '../shared/services/cart.service';
 export class OrderPageComponent implements OnInit {
   form: FormGroup
   submitted: boolean =  false
-  message: string
 
   constructor(
       public auth: AuthService,
+      public alert: AlertService,
       private router: Router,
       private route: ActivatedRoute,
+      private orderService: OrderService,
       private cartService: CartService
   ) { }
 
@@ -43,6 +47,28 @@ export class OrderPageComponent implements OnInit {
   }
 
   submit() {
+    if (this.form.invalid) {
+      return
+    }
 
+    this.submitted = true;
+
+    const order: Order = {
+      name: this.form.value.name,
+      surname: this.form.value.surname,
+      email: this.form.value.email,
+      address: this.form.value.address,
+      phone: this.form.value.phone
+    }
+
+    this.orderService.create(order).subscribe(() => {
+      this.form.reset;
+      this.router.navigate(['/'])
+      this.submitted = false;
+      this.cartService.updateTotal();
+      this.alert.success('Заказ успешно оформлен.')
+    }, () => {
+      this.submitted = false
+    });
   }
 }

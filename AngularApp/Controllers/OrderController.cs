@@ -40,7 +40,7 @@ namespace AngularApp.Controllers
         {
             try
             {
-                var entities = await _orderLineRepo.GetAsync();
+                var entities = await _orderRepo.GetAsync();
 
                 return entities.Select(item =>
                 {

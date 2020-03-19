@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../admin/shared/services/auth.service';
+import { AuthService } from '../shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../shared/services/cart.service';
 var LoginPageComponent = /** @class */ (function () {

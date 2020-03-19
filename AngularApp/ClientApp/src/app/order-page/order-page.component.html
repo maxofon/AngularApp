@@ -1,12 +1,6 @@
 <form class="card" [formGroup]="form">
-    <h2>Оформить заказ</h2>
-
-<!--    <div class="alert alert-danger" *ngIf="(auth.error$ | async) as error">-->
-<!--        {{ error }}-->
-<!--    </div>-->
-
-    <div class="alert alert-info" *ngIf="message">
-        {{ message }}
+    <div class="btn btn-block">
+        <h3>Введите ваши данные</h3>
     </div>
 
 <!--    Имя-->
@@ -30,22 +24,23 @@
             [ngClass]="{invalid: form.get('surname').touched && form.get('surname').invalid}"
             class="form-control"
     >
-        <label for="surname">Ваше имя:</label>
+        <label for="surname">Ваша фамилия:</label>
         <input id="surname" type="text" formControlName="surname">
         <div
                 *ngIf="form.get('surname').touched && form.get('surname').invalid"
                 class="validation">
             <small
                     *ngIf="form.get('surname').errors.required"
-            >Нужно ввести имя</small>
+            >Нужно ввести фамилию</small>
         </div>
     </div>
 
+<!--    Email-->
     <div
             [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
             class="form-control"
     >
-        <label for="email">Email:</label>
+        <label for="email">Ваш Email:</label>
         <input id="email" type="email" formControlName="email">
         <div
                 *ngIf="form.get('email').touched && form.get('email').invalid"
@@ -60,7 +55,39 @@
         </div>
     </div>
 
+<!--    Address-->
+    <div
+            [ngClass]="{invalid: form.get('address').touched && form.get('address').invalid}"
+            class="form-control"
+    >
+        <label for="address">Ваш адрес:</label>
+        <input id="address" type="text" formControlName="address">
+        <div
+                *ngIf="form.get('address').touched && form.get('address').invalid"
+                class="validation"
+        >
+            <small
+                    *ngIf="form.get('address').errors.required"
+            >Нужно ввести адрес</small>
+        </div>
+    </div>
 
+<!--    Phone-->
+    <div
+            [ngClass]="{invalid: form.get('phone').touched && form.get('phone').invalid}"
+            class="form-control"
+    >
+        <label for="phone">Ваш телефон:</label>
+        <input id="phone" type="text" formControlName="phone">
+        <div
+                *ngIf="form.get('phone').touched && form.get('phone').invalid"
+                class="validation"
+        >
+            <small
+                    *ngIf="form.get('phone').errors.required"
+            >Нужно ввести телефон</small>
+        </div>
+    </div>
 
 
     <button
@@ -68,7 +95,5 @@
             type="submit"
             class="btn btn-primary"
             (click)="submit()"
-    >Войти</button>
-
-    <a [routerLink]="['/register']">Оформить</a>
+    >Оформить</button>
 </form>
