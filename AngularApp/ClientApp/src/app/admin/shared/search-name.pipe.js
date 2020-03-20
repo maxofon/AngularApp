@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Pipe } from '@angular/core';
-var SearchPipe = /** @class */ (function () {
+var SearchNamePipe = /** @class */ (function () {
     function SearchPipe() {
     }
     SearchPipe.prototype.transform = function (products, search) {
@@ -24,5 +24,5 @@ var SearchPipe = /** @class */ (function () {
     ], SearchPipe);
     return SearchPipe;
 }());
-export { SearchPipe };
+export { SearchNamePipe };
 //# sourceMappingURL=search.pipe.js.map

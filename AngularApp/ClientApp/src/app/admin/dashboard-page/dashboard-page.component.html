@@ -1,6 +1,6 @@
 <div *ngIf="products.length; else loading">
   <div class="form-control">
-    <input type="text" placeholder="Найти продукт по названию..." [(ngModel)]="searchStr">
+    <input type="text" placeholder="Найти по названию..." [(ngModel)]="searchStr">
   </div>
 
   <table>
@@ -14,14 +14,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let product of products | searchProducts:searchStr ; let idx = index">
+    <tr *ngFor="let product of products | searchName:searchStr ; let idx = index">
       <td>{{ idx + 1 }}</td>
       <td>{{ product.name }}</td>
       <td>{{ product.company }}</td>
       <td>{{ product.price | currency:'USD' }}</td>
       <td>
         <button
-          class="btn btn-link open"
+          class="btn btn-success open"
           [routerLink]="['/admin','product', product.id, 'edit']"
         >Открыть</button>
 

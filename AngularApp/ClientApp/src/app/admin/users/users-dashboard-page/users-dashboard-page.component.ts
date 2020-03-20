@@ -14,6 +14,7 @@ export class UsersDashboardPageComponent implements OnInit {
   users: User[] = []
   pSub: Subscription
   dSub: Subscription
+  searchStr = '';
 
   constructor(
       private alert: AlertService,
