@@ -27,7 +27,7 @@ export class OrderPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl(null, [
+      name: new FormControl(`${this.auth.user}`, [
         Validators.required
       ]),
       surname: new FormControl(null, [
@@ -36,7 +36,7 @@ export class OrderPageComponent implements OnInit {
       address: new FormControl(null, [
         Validators.required
       ]),
-      email: new FormControl(null, [
+      email: new FormControl(`${this.auth.email}`, [
         Validators.required,
         Validators.email
       ]),
@@ -66,7 +66,7 @@ export class OrderPageComponent implements OnInit {
       this.router.navigate(['/'])
       this.submitted = false;
       this.cartService.updateTotal();
-      this.alert.success('Заказ успешно оформлен.')
+      this.alert.success(`${this.auth.user}, Ваш заказ успешно оформлен.`)
     }, () => {
       this.submitted = false
     });

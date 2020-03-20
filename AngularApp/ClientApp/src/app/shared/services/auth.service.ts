@@ -23,6 +23,16 @@ export class AuthService {
     return localStorage.getItem('user-name')
   }
 
+  get email(): string {
+    const expDate = new Date(localStorage.getItem('expires'));
+    if (new Date > expDate) {
+      this.logout();
+      return null;
+    }
+
+    return localStorage.getItem('user-email')
+  }
+
   login(user: User): Observable<any> {
     // user.returnSecureToken = true;
     return this.http.post(`${this.apiUrl}/login`, user)
