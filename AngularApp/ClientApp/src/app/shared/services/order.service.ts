@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Order} from '../interfaces/Order';
+import {map} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class OrderService {
@@ -15,11 +16,40 @@ export class OrderService {
     }
 
     getAll(): Observable<Order[]> {
-        return this.http.get<Order[]>(`${this.apiUrl}`);
+        return this.http.get<Order[]>(`${this.apiUrl}`)
+            .pipe(map((response: Order[]) => {
+                return response.map((order) => {
+                    return {
+                        ...order,
+                        orderTime: new Date(order.orderTime)
+                    }
+                })
+            }));
     }
 
+    // getAll(): Observable<Post[]> {
+    //     return this.http.get(`${environment.fbDbUrl}/posts.json`)
+    //         .pipe(map((response: {[key: string]: any}) => {
+    //             return Object
+    //                 .keys(response)
+    //                 .map(key => ({
+    //                     ...response[key],
+    //                     id: key,
+    //                     date: new Date(response[key].date)
+    //                 }));
+    //         }));
+    // }
+
     getByUsername(username: string): Observable<Order[]> {
-        return this.http.get<Order[]>(`${this.apiUrl}/${username}`);
+        return this.http.get<Order[]>(`${this.apiUrl}/${username}`)
+            .pipe(map((response: Order[]) => {
+                return response.map((order) => {
+                    return {
+                        ...order,
+                        orderTime: new Date(order.orderTime)
+                    }
+                })
+            }));
     }
 
     getById(id: string): Observable<Order> {

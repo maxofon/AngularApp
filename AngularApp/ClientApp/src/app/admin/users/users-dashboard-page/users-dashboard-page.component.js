@@ -15,6 +15,7 @@ var UsersDashboardPageComponent = /** @class */ (function () {
         this.alert = alert;
         this.userService = userService;
         this.users = [];
+        this.searchStr = '';
     }
     UsersDashboardPageComponent.prototype.ngOnInit = function () {
         var _this = this;

@@ -22,11 +22,7 @@ var AuthAdminGuard = /** @class */ (function () {
         }
         else {
             // this.auth.logout()
-            this.router.navigate(['/admin', 'login'], {
-                queryParams: {
-                    loginAgain: true
-                }
-            });
+            this.router.navigate(['/admin', 'login']);
         }
     };
     AuthAdminGuard = __decorate([

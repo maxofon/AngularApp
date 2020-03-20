@@ -7,12 +7,12 @@ import {User} from '../../shared/interfaces/User';
 })
 
 export class SearchNamePipe implements PipeTransform{
-  transform(products, search = ''): Product[] | User[] {
+  transform(products: any, search = ''): Product[] | User[] {
     if (!search.trim()) {
       return products
     }
 
-    return products.filter(product => {
+    return products.filter((product: any) => {
       return product.name.toLowerCase().includes(search.toLowerCase())
     })
   }

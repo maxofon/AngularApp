@@ -6,9 +6,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Pipe } from '@angular/core';
 var SearchNamePipe = /** @class */ (function () {
-    function SearchPipe() {
+    function SearchNamePipe() {
     }
-    SearchPipe.prototype.transform = function (products, search) {
+    SearchNamePipe.prototype.transform = function (products, search) {
         if (search === void 0) { search = ''; }
         if (!search.trim()) {
             return products;
@@ -17,12 +17,12 @@ var SearchNamePipe = /** @class */ (function () {
             return product.name.toLowerCase().includes(search.toLowerCase());
         });
     };
-    SearchPipe = __decorate([
+    SearchNamePipe = __decorate([
         Pipe({
-            name: 'searchProducts'
+            name: 'searchName'
         })
-    ], SearchPipe);
-    return SearchPipe;
+    ], SearchNamePipe);
+    return SearchNamePipe;
 }());
 export { SearchNamePipe };
-//# sourceMappingURL=search.pipe.js.map
+//# sourceMappingURL=search-name.pipe.js.map

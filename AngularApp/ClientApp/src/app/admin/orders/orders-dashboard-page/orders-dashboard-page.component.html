@@ -26,7 +26,7 @@
             <td>{{ order.phone }}</td>
             <td>{{ order.email }}</td>
             <td>{{ order.amount }}</td>
-            <td>{{ order.orderTime }}</td>
+            <td>{{ order.orderTime | date:'medium':null:'ru'}}</td>
             <td>
                 <button
                         class="btn btn-link open"
