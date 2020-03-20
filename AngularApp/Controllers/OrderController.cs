@@ -96,6 +96,7 @@ namespace AngularApp.Controllers
                 //    return BadRequest("Cart is empty.");
 
                 order.OrderTime = DateTime.Now;
+                order.UserId = user.Id;
                 order.Amount = cartLines.Sum(c => c.Price * c.Quantity);
 
                 //маппировка, сохранение, получение ID новой записи 
@@ -121,6 +122,45 @@ namespace AngularApp.Controllers
             {
                 return BadRequest($"{ex.Message}");
             }            
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]API.Order order)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var newItemId = await _orderRepo.SaveAsync(_mapper.Map<BL.Order>(order));
+                    return Ok(await _orderRepo.GetByIdAsync(newItemId));
+                }
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var order = await _orderRepo.GetByIdAsync(id);
+                if (order != null)
+                {
+                    await _orderRepo.DeleteAsync(id);
+                    return Ok(order);
+                }
+
+                return BadRequest("Order not found.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
         }
     }
 }

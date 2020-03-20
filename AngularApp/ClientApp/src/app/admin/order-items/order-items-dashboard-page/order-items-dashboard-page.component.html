@@ -1,0 +1,39 @@
+<div *ngIf="orderItems.length; else loading">
+    <!--    <div class="form-control">-->
+    <!--        <input type="text" placeholder="Найти продукт по названию..." [(ngModel)]="searchStr">-->
+    <!--    </div>-->
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Сумма</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let orderItem of orderItems  ; let idx = index">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ orderItem.quantity }}</td>
+            <td>{{ orderItem.price }}</td>
+            <td>{{ orderItem.price * orderItem.quantity }}</td>
+            <td>
+                <a (click)="remove(orderItem.id)">Удалить строку заказа</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loading>
+    <div *ngIf="loaded; else inProcess" class="btn btn-block">
+        <p>Заказов нет</p>
+    </div>
+    <ng-template #inProcess>
+        <p class="text-center">Идет загрузка...</p>
+    </ng-template>
+</ng-template>
+
+

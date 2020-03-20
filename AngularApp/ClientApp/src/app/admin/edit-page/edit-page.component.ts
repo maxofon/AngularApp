@@ -52,7 +52,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       price: this.form.value.price
     }).subscribe(() => {
       this.submitted = false
-      this.alert.success('Продукт был обновлен')
+      this.alert.success(`Продукт ${this.product.name} был обновлен`)
     })
   }
 

@@ -1,4 +1,4 @@
-<app-alert></app-alert>
+<app-alert [delay]="3000"></app-alert>
 
 <nav class="navbar bg-primary">
   <h1>
@@ -8,6 +8,9 @@
   <ul *ngIf="auth.isAuthenticated()">
     <li routerLinkActive="active">
       <a [routerLink]="['/admin','dashboard']">Главная админки</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin','users','dashboard']">Пользователи</a>
     </li>
     <li routerLinkActive="active">
       <a [routerLink]="['/admin','create']">Создать товар</a>

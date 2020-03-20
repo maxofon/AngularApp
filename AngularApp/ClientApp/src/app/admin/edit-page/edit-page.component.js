@@ -54,7 +54,7 @@ var EditPageComponent = /** @class */ (function () {
         this.submitted = true;
         this.uSub = this.productsService.update(__assign(__assign({}, this.product), { name: this.form.value.name, price: this.form.value.price })).subscribe(function () {
             _this.submitted = false;
-            _this.alert.success('Продукт был обновлен');
+            _this.alert.success("\u041F\u0440\u043E\u0434\u0443\u043A\u0442 " + _this.product.name + " \u0431\u044B\u043B \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D");
         });
     };
     EditPageComponent.prototype.ngOnDestroy = function () {

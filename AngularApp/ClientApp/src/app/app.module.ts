@@ -13,7 +13,7 @@ import {AdminModule} from './admin/admin.module';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
-import { OrderPageComponent } from './order-page/order-page.component'
+import { OrderPageComponent } from './order-page/order-page.component';
 import {AuthGuard} from './shared/guards/auth.guard';
 
 @NgModule({
@@ -33,8 +33,7 @@ import {AuthGuard} from './shared/guards/auth.guard';
         ProductComponent,
         CartPageComponent,
         LoginPageComponent,
-        RegisterPageComponent
-,
+        RegisterPageComponent,
         OrderPageComponent
     ],
     bootstrap: [AppComponent],

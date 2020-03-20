@@ -20,6 +20,9 @@ var OrderService = /** @class */ (function () {
     OrderService.prototype.getAll = function () {
         return this.http.get("" + this.apiUrl);
     };
+    OrderService.prototype.getByUsername = function (username) {
+        return this.http.get(this.apiUrl + "/" + username);
+    };
     OrderService.prototype.getById = function (id) {
         return this.http.get(this.apiUrl + "/" + id);
     };

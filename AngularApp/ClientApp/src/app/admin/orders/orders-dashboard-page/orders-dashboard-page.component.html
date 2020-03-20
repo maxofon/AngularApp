@@ -30,10 +30,10 @@
             <td>
                 <button
                         class="btn btn-link open"
-                        [routerLink]="['/admin','product', order.id, 'edit']"
-                >Открыть</button>
+                        [routerLink]="['/admin','order-items', 'dashboard', order.id]"
+                >Открыть детали</button>
 
-                <a (click)="remove(order.id)">Удалить</a>
+                <a (click)="remove(order.id)">Удалить заказ</a>
             </td>
         </tr>
         </tbody>
@@ -41,6 +41,11 @@
 </div>
 
 <ng-template #loading>
-    <p class="text-center">Идет загрузка...</p>
+    <div *ngIf="loaded; else inProcess" class="btn btn-block">
+        <p>Заказов нет</p>
+    </div>
+    <ng-template #inProcess>
+        <p class="text-center">Идет загрузка...</p>
+    </ng-template>
 </ng-template>
 

@@ -12,6 +12,7 @@ import {SearchPipe} from './shared/search.pipe';
 import {AuthAdminGuard} from './shared/services/auth-admin.guard';
 import {OrdersDashboardPageComponent} from './orders/orders-dashboard-page/orders-dashboard-page.component';
 import {UsersDashboardPageComponent} from './users/users-dashboard-page/users-dashboard-page.component';
+import {OrderItemsDashboardPageComponent} from './order-items/order-items-dashboard-page/order-items-dashboard-page.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {UsersDashboardPageComponent} from './users/users-dashboard-page/users-da
     CreatePageComponent,
     EditPageComponent,
     OrdersDashboardPageComponent,
+    OrderItemsDashboardPageComponent,
     UsersDashboardPageComponent,
     SearchPipe
   ],
@@ -38,7 +40,8 @@ import {UsersDashboardPageComponent} from './users/users-dashboard-page/users-da
           {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthAdminGuard]},
           {path: 'create', component: CreatePageComponent, canActivate: [AuthAdminGuard]},
           {path: 'product/:id/edit', component: EditPageComponent, canActivate: [AuthAdminGuard]},
-          {path: 'orders/dashboard/:userName', component: OrdersDashboardPageComponent, canActivate: [AuthAdminGuard]},
+          {path: 'orders/:userName', component: OrdersDashboardPageComponent, canActivate: [AuthAdminGuard]},
+          {path: 'order-items/dashboard/:orderId', component: OrderItemsDashboardPageComponent, canActivate: [AuthAdminGuard]},
           {path: 'users/dashboard', component: UsersDashboardPageComponent, canActivate: [AuthAdminGuard]},
         ]
       }

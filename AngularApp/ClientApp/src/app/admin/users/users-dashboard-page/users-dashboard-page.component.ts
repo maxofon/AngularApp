@@ -37,8 +37,10 @@ export class UsersDashboardPageComponent implements OnInit {
 
   remove(user: User): void {
     this.dSub = this.userService.remove(user.id).subscribe(() => {
-      this.users = this.users.filter(user => user.id !== user.id);
+      this.users = this.users.filter(u => u.id !== user.id);
       this.alert.danger(`Пользователь ${user.email} был удален`);
+    },(error) => {
+      this.alert.danger(`Нельзя удалить пользователя ${user.email}`)
     })
   }
 

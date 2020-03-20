@@ -8,20 +8,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-var EditPageComponent = /** @class */ (function () {
-    function EditPageComponent() {
+var UsersEditPageComponent = /** @class */ (function () {
+    function UsersEditPageComponent() {
     }
-    EditPageComponent.prototype.ngOnInit = function () {
+    UsersEditPageComponent.prototype.ngOnInit = function () {
     };
-    EditPageComponent = __decorate([
+    UsersEditPageComponent = __decorate([
         Component({
             selector: 'edit-page',
-            templateUrl: './edit-page.component.html',
-            styleUrls: ['./edit-page.component.scss']
+            templateUrl: './users-edit-page.component.html',
+            styleUrls: ['./users-edit-page.component.scss']
         }),
         __metadata("design:paramtypes", [])
-    ], EditPageComponent);
-    return EditPageComponent;
+    ], UsersEditPageComponent);
+    return UsersEditPageComponent;
 }());
-export { EditPageComponent };
-//# sourceMappingURL=edit-page.component.js.map
+export { UsersEditPageComponent };
+//# sourceMappingURL=users-edit-page.component.js.map

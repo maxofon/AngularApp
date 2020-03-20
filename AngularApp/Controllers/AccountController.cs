@@ -65,7 +65,7 @@ namespace AngularApp.Controllers
                 return BadRequest($"{ex.Message}");
             }
            
-        }
+        }      
 
         [HttpGet]
         public IActionResult GetCookies()

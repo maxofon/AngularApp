@@ -115,7 +115,8 @@ namespace BusinessLogic.Services.Repositories
             daEntity.Phone = entity.Phone;
             daEntity.Email = entity.Email;
             daEntity.OrderTime = entity.OrderTime;            
-            daEntity.Amount = entity.Amount;            
+            daEntity.Amount = entity.Amount;
+            daEntity.UserId = entity.UserId;
         }
 
         public async Task<ICollection<BL.Order>> FindByAsync(Expression<Func<DA.Order, bool>> predicate)

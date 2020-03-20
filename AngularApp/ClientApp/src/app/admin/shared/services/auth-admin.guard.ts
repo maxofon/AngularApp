@@ -20,11 +20,7 @@ export class AuthAdminGuard implements CanActivate{
       return true
     } else {
       // this.auth.logout()
-      this.router.navigate(['/admin','login'], {
-        queryParams: {
-          loginAgain: true
-        }
-      })
+      this.router.navigate(['/admin','login'])
     }
   }
 }

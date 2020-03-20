@@ -19,10 +19,9 @@
             <td>{{ user.email }}</td>
             <td>
                 <button
-                        class="btn btn-link open"
-                        [routerLink]="['/admin/orders/dashboard', user.name]"
+                        class="btn btn-success open"
+                        [routerLink]="['/admin','orders', user.name]"
                 >Открыть заказы</button>
-
                 <a (click)="remove(user)">Удалить пользователя</a>
             </td>
         </tr>

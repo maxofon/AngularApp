@@ -68,7 +68,7 @@ export class AuthService {
   private setUser(response: User | null) {
     // console.log(response);
     if (response) {
-      const expDate = new Date(new Date().getTime() + 60000); //1 мин
+      const expDate = new Date(new Date().getTime() + 600000); //10 мин
       localStorage.setItem('expires', expDate.toString())
       localStorage.setItem('user-name', response.name)
       localStorage.setItem('user-email', response.email)

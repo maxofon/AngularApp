@@ -15,6 +15,7 @@ export class OrdersDashboardPageComponent implements OnInit, OnDestroy {
   orders: Order[] = []
   pSub: Subscription
   dSub: Subscription
+  loaded: boolean = false
 
   constructor(
       private alert: AlertService,
@@ -29,6 +30,7 @@ export class OrdersDashboardPageComponent implements OnInit, OnDestroy {
                 }))
                 .subscribe((orders: Order[]) => {
                   this.orders = orders
+                  this.loaded = true
                 })
   }
 
