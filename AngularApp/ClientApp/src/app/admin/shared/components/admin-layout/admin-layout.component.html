@@ -2,12 +2,12 @@
 
 <nav class="navbar bg-primary">
   <h1>
-    <a routerLink="/">Angular Blog</a>
+    <a routerLink="/">Сайт</a>
   </h1>
 
   <ul *ngIf="auth.isAuthenticated()">
     <li routerLinkActive="active">
-      <a [routerLink]="['/admin','dashboard']">Главная админки</a>
+      <a [routerLink]="['/admin','dashboard']">Товары</a>
     </li>
     <li routerLinkActive="active">
       <a [routerLink]="['/admin','users','dashboard']">Пользователи</a>
