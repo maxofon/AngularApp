@@ -21,6 +21,19 @@ namespace DataAccess.Database.Contexts
                 context.SaveChanges();
             }
 
+            if (!context.Roles.Any())
+            {
+                context.Roles.Add(new Role { Name = "user" });
+                context.Roles.Add(new Role { Name = "admin" });               
+                context.SaveChanges();
+            }
+
+            if (!context.Users.Any())
+            {
+                context.Users.Add(new User { Name = "admin", Email = "admin@tut.by", Password = "12345", RoleId = 2 });
+                context.SaveChanges();
+            }
+
         }      
 
     }
