@@ -30,11 +30,13 @@ namespace BusinessLogic.Services.Repositories
             {
                 var entity = await context
                     .Orders
+                    .Include(o => o.OrderLines)
                     .ToListAsync();
 
                 return entity.Select(item =>
                 {
                     var mapEntity = _mapper.Map<BL.Order>(item);
+                    mapEntity.Amount = item.OrderLines.Sum(ol => ol.Price * ol.Quantity);
                     return mapEntity;
                 }).ToList();
             }
@@ -127,12 +129,14 @@ namespace BusinessLogic.Services.Repositories
                 {
                     var entity = await context
                         .Orders
+                        .Include(o => o.OrderLines)
                         .Where(predicate)
                         .ToListAsync();
 
                     return entity.Select(item =>
                             {
                                 var mapEntity = _mapper.Map<BL.Order>(item);
+                                mapEntity.Amount = item.OrderLines.Sum(ol => ol.Price * ol.Quantity);
                                 return mapEntity;
                             })
                             .ToList();

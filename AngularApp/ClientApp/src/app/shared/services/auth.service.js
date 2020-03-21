@@ -29,6 +29,18 @@ var AuthService = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(AuthService.prototype, "email", {
+        get: function () {
+            var expDate = new Date(localStorage.getItem('expires'));
+            if (new Date > expDate) {
+                this.logout();
+                return null;
+            }
+            return localStorage.getItem('user-email');
+        },
+        enumerable: true,
+        configurable: true
+    });
     AuthService.prototype.login = function (user) {
         // user.returnSecureToken = true;
         return this.http.post(this.apiUrl + "/login", user)

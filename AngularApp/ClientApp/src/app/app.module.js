@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
+import ruLocale from '@angular/common/locales/ru';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
@@ -20,6 +21,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(ruLocale, 'ru');
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }

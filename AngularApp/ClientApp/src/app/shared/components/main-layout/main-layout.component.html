@@ -2,7 +2,7 @@
 <nav class="navbar bg-primary">
   <ul>
     <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-      <a [routerLink]="['/']">Angular Blog</a>
+      <a [routerLink]="['/']">Angular App</a>
     </li>
     <li routerLinkActive="active" *ngIf="auth.isAuthenticated()">
       <a [routerLink]="['/cart']">Корзина ({{ totalAmount | currency:'USD' }})</a>

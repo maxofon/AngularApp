@@ -37,7 +37,7 @@
           [ngClass]="{invalid: form.get('price').touched && form.get('price').invalid}"
           class="form-control"
   >
-    <label for="price">Цена продукта:</label>
+    <label for="price">Цена продукта:</label><br>
     <input id="price" type="number" formControlName="price">
     <div
             *ngIf="form.get('price').touched && form.get('price').invalid"

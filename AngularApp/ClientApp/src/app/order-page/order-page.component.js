@@ -26,7 +26,7 @@ var OrderPageComponent = /** @class */ (function () {
     }
     OrderPageComponent.prototype.ngOnInit = function () {
         this.form = new FormGroup({
-            name: new FormControl(null, [
+            name: new FormControl("" + this.auth.user, [
                 Validators.required
             ]),
             surname: new FormControl(null, [
@@ -35,7 +35,7 @@ var OrderPageComponent = /** @class */ (function () {
             address: new FormControl(null, [
                 Validators.required
             ]),
-            email: new FormControl(null, [
+            email: new FormControl("" + this.auth.email, [
                 Validators.required,
                 Validators.email
             ]),
@@ -62,7 +62,7 @@ var OrderPageComponent = /** @class */ (function () {
             _this.router.navigate(['/']);
             _this.submitted = false;
             _this.cartService.updateTotal();
-            _this.alert.success('Заказ успешно оформлен.');
+            _this.alert.success(_this.auth.user + ", \u0412\u0430\u0448 \u0437\u0430\u043A\u0430\u0437 \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D.");
         }, function () {
             _this.submitted = false;
         });

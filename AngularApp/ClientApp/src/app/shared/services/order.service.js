@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,6 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 var OrderService = /** @class */ (function () {
     function OrderService(http) {
         this.http = http;
@@ -18,10 +30,32 @@ var OrderService = /** @class */ (function () {
         return this.http.post("" + this.apiUrl, order);
     };
     OrderService.prototype.getAll = function () {
-        return this.http.get("" + this.apiUrl);
+        return this.http.get("" + this.apiUrl)
+            .pipe(map(function (response) {
+            return response.map(function (order) {
+                return __assign(__assign({}, order), { orderTime: new Date(order.orderTime) });
+            });
+        }));
     };
+    // getAll(): Observable<Post[]> {
+    //     return this.http.get(`${environment.fbDbUrl}/posts.json`)
+    //         .pipe(map((response: {[key: string]: any}) => {
+    //             return Object
+    //                 .keys(response)
+    //                 .map(key => ({
+    //                     ...response[key],
+    //                     id: key,
+    //                     date: new Date(response[key].date)
+    //                 }));
+    //         }));
+    // }
     OrderService.prototype.getByUsername = function (username) {
-        return this.http.get(this.apiUrl + "/" + username);
+        return this.http.get(this.apiUrl + "/" + username)
+            .pipe(map(function (response) {
+            return response.map(function (order) {
+                return __assign(__assign({}, order), { orderTime: new Date(order.orderTime) });
+            });
+        }));
     };
     OrderService.prototype.getById = function (id) {
         return this.http.get(this.apiUrl + "/" + id);
